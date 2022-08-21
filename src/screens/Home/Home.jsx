@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box } from '@mui/material'
 import { Header } from '~/components/Layouts/Header'
 import Main from './Main'
 
@@ -13,3 +12,4 @@ function Home() {
 }
 
 export { Home }
+
