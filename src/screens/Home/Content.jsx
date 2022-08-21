@@ -5,9 +5,9 @@ import Reels from './Reels'
 
 function Content() {
   return (
-    <Box>
-      <Grid container spacing={0}>
-        <Grid item xs={7.5} sx={{ backgroundColor: 'yellow' }}>
+    <Container>
+      <Grid container gap={2}>
+        <Grid item xs={7.5} sx={{ backgroundColor: 'white' }}>
           <Stack spacing={2}>
             <Reels />
             <Affiliate />
@@ -18,7 +18,7 @@ function Content() {
           <Sidebar />
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   )
 }
 
