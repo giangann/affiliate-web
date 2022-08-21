@@ -1,16 +1,14 @@
-import React from 'react'
-import { Stack, Box, Typography, Link, Input, Button, styled, Grid } from '@mui/material'
+import { Box, Grid, Link, Stack, styled, Typography } from '@mui/material'
 
-import { SidebarList } from './SidebarList'
-import { Stars } from '~/components/Star'
 import { MyButton } from '~/components/Button'
+import { Stars } from '~/components/Star'
 
 import { listGifs } from '~/assets/fake-data/list-gifs'
-import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
+import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 
-import { blue, grey, red } from '~/styles/colors'
+import { blue, grey } from '~/styles/colors'
 
 const Sidebar = () => {
   return (
@@ -100,3 +98,4 @@ export const TextContent = styled(Typography)({
 })
 
 export { Sidebar }
+

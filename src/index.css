@@ -5,7 +5,37 @@
 
 .button-gray {
     background-color: #f1f5f8 !important;
-    color: #8795a1 !important;
+    color: hsl(208, 12%, 58%) !important;
+}
+
+.dropdown-basic-button button {
+    background-color: #dae1e7;
+    color: hsl(208, 12%, 58%);
+    font-weight: 600;
+    font-size: .75rem;
+    border: 0 solid #dae1e7;
+}
+
+.dropdown-basic-button button:hover {
+    background-color: #dae1e7;
+}
+
+.dropdown-basic-button a{
+  padding: 0.75rem 1rem 0.75rem 1rem;
+  text-transform: uppercase;
+  line-height: 1;
+  color: hsl(208, 12%, 58%);
+  font-size: .75rem;
+  font-weight: bold;
+}
+
+.dropdown-basic-button a:hover{
+   
+    color: #3d4852;
+  }
+
+.dropdown-basic-button button:focus {
+    box-shadow: none;
 }
 body {
     margin: 0;
