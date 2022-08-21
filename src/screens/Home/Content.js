@@ -1,6 +1,5 @@
 import { Container, Grid } from '@mui/material'
 import React from 'react'
-// import Reels from '~/Reels'
 import Reels from './Reels'
 
 function Content() {
