@@ -3,7 +3,7 @@ import { Home } from '~/screens/Home'
 
 function App() {
   return (
-    <ScopedCssBaseline>
+    <ScopedCssBaseline sx={{ margin: 0}}>
       <Home />
     </ScopedCssBaseline>
   )
