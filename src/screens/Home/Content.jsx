@@ -1,5 +1,5 @@
 import { Container, Grid, Stack } from '@mui/material'
-import React from 'react'
+import { Affiliate } from './Affiliate'
 import Reels from './Reels'
 
 function Content() {
@@ -9,7 +9,7 @@ function Content() {
         <Grid item xs={7.5} sx={{ backgroundColor: 'yellow' }}>
           <Stack spacing={2}>
             <Reels />
-            <div>huy</div>
+            <Affiliate />
           </Stack>
         </Grid>
 
