@@ -74,8 +74,19 @@ const Sidebar = () => {
         <Box sx={{ backgroundColor: blue['lightest'], p: '0.75rem' }}>
           <TextHeading varient="h3">Subscribe to Our Newsletter</TextHeading>
           <Box sx={{ display: 'flex' }}>
-            <input placeholder="enter your email address" />
-            <MyButton>Subcribe</MyButton>
+            <input
+              style={{
+                flex: 1,
+                outline: 'none',
+                border: 'none',
+                padding: '0.25rem 0.75rem',
+                fontSize: '0.75rem'
+              }}
+              placeholder="Enter your email address"
+            />
+            <MyButton variant="contained" type="button-red">
+              Subcribe
+            </MyButton>
           </Box>
         </Box>
 
