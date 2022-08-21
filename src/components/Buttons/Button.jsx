@@ -1,5 +1,5 @@
-import { Button as MUIButton, styled } from '@mui/material';
-import PropTypes from 'prop-types';
+import { Button as MUIButton, styled } from '@mui/material'
+import PropTypes from 'prop-types'
 
 const Button = (props) => {
   const { children, type, ...rest } = props
@@ -11,7 +11,7 @@ const Button = (props) => {
 }
 
 Button.propTypes = {
-  type: PropTypes.oneOf(['button-blue', 'button-gray', undefined])
+  type: PropTypes.oneOf(['button-blue', 'button-gray', 'button-red', undefined])
 }
 
 const StyledButton = styled(MUIButton)({
@@ -22,5 +22,4 @@ const StyledButton = styled(MUIButton)({
   padding: '0.25rem 0.5rem 0.25rem 0.5rem'
 })
 
-export { Button };
-
+export { Button }

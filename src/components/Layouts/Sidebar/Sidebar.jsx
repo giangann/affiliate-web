@@ -1,19 +1,33 @@
-import { Box, Grid, Link, Stack, styled, Typography } from '@mui/material'
+import React from 'react'
+import { Stack, Box, Typography, Link, styled, Grid } from '@mui/material'
 
-import { MyButton } from '~/components/Button'
+import {
+  FeaturedNetworkItem,
+  RecentReviewItem,
+  SidebarList,
+  Top10RatedNetworkItem
+} from '~/components/Layouts/Sidebar'
 import { Stars } from '~/components/Star'
+import { Button as MyButton } from '~/components/Buttons'
 
 import { listGifs } from '~/assets/fake-data/list-gifs'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 
-import { blue, grey } from '~/styles/colors'
+import Olmera from '~/assets/gifs/sidebar/Olmera.gif'
+import Giantmobi from '~/assets/gifs/sidebar/Giantmobi.gif'
+import CDD from '~/assets/gifs/sidebar/CDD.gif'
+import InfinityTelecom from '~/assets/gifs/sidebar/InfinityTelecom.gif'
+import DynulnMedia from '~/assets/gifs/sidebar/DynuInMedia.gif'
+import c3pa from '~/assets/gifs/sidebar/c3pa-300.gif'
+import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
+import { blue, grey, red } from '~/styles/colors'
 
 const Sidebar = () => {
   return (
     <Stack>
-      <Box sx={{ border: '3px solid #f60', backgroundColor: '#ffffff', mb: 1 }}>
+      <BoxContainer sx={{ border: '3px solid #f60' }}>
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -54,14 +68,25 @@ const Sidebar = () => {
             </TextContent>
           </Stack>
         </Stack>
-      </Box>
+      </BoxContainer>
 
-      <Box sx={{ backgroundColor: '#ffffff', mb: 1 }}>
+      <BoxContainer>
         <Box sx={{ backgroundColor: blue['lightest'], p: '0.75rem' }}>
           <TextHeading varient="h3">Subscribe to Our Newsletter</TextHeading>
           <Box sx={{ display: 'flex' }}>
-            <input placeholder="enter your email address" />
-            <MyButton>Subcribe</MyButton>
+            <input
+              style={{
+                flex: 1,
+                outline: 'none',
+                border: 'none',
+                padding: '0.25rem 0.75rem',
+                fontSize: '0.75rem'
+              }}
+              placeholder="Enter your email address"
+            />
+            <MyButton variant="contained" type="button-red">
+              Subcribe
+            </MyButton>
           </Box>
         </Box>
 
@@ -80,7 +105,75 @@ const Sidebar = () => {
             ))}
           </Grid>
         </Box>
-      </Box>
+      </BoxContainer>
+
+      <BoxContainer>
+        <SidebarList heading="Featured Networks" SidebarItem={FeaturedNetworkItem} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <Box component="img" src={Olmera} alt="gif" sx={{ width: '100%' }} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <Box component="img" src={Giantmobi} alt="gif" sx={{ width: '100%' }} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <SidebarList heading="Featured Networks" SidebarItem={FeaturedNetworkItem} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <Box component="img" src={CDD} alt="gif" sx={{ width: '100%' }} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <Box component="img" src={InfinityTelecom} alt="gif" sx={{ width: '100%' }} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <SidebarList heading="Featured Networks" SidebarItem={FeaturedNetworkItem} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <Box component="img" src={DynulnMedia} alt="gif" sx={{ width: '100%' }} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <Box component="img" src={c3pa} alt="gif" sx={{ width: '100%' }} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <SidebarList
+          heading="Recent Reviews"
+          SidebarItem={RecentReviewItem}
+          footer={() => (
+            <Box
+              sx={{
+                textAlign: 'center',
+                py: '0.5rem',
+                borderTop: '1px solid #dae1e7',
+                '&:hover': {
+                  backgroundColor: '#f8fafc',
+                  cursor: 'pointer'
+                }
+              }}
+            >
+              <Typography sx={{ fontSize: '.75rem', color: '#2779bd', fontWeight: '700' }}>
+                More Reviews
+              </Typography>
+            </Box>
+          )}
+        />
+      </BoxContainer>
+
+      <BoxContainer>
+        <Box component="img" src={lemonad_easy_peasy} alt="gif" sx={{ width: '100%' }} />
+      </BoxContainer>
+
+      <BoxContainer>
+        <SidebarList heading="Top 10 Rated Networks" SidebarItem={Top10RatedNetworkItem} />
+      </BoxContainer>
     </Stack>
   )
 }
@@ -97,5 +190,10 @@ export const TextContent = styled(Typography)({
   fontWeight: 'bold'
 })
 
-export { Sidebar }
+export const BoxContainer = styled(Box)({
+  border: '2px solid #fff',
+  backgroundColor: '#ffffff',
+  marginBottom: '1rem'
+})
 
+export { Sidebar }
