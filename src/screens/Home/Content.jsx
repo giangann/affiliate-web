@@ -1,4 +1,4 @@
-import { Container, Grid, Stack,Box } from '@mui/material'
+import { Container, Grid, Stack, Box } from '@mui/material'
 import { Sidebar } from '~/components/Layouts/Sidebar'
 import { Affiliate } from './Affiliate'
 import Reels from './Reels'
@@ -14,7 +14,7 @@ function Content() {
           </Stack>
         </Grid>
 
-        <Grid item xs={4} sx={{ backgroundColor: 'green' }}>
+        <Grid item xs={4}>
           <Sidebar />
         </Grid>
       </Grid>
