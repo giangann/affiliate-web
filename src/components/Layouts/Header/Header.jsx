@@ -1,16 +1,23 @@
-import { Box } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import React from 'react'
 
 function Header() {
   return (
-    <Box
-      sx={{
-        background: '#dfedfa url(https://www.affpaying.com/img/s_html.png) repeat-x'
-      }}
-    >
-      Some text to fill the Paper Component Some text to fill the Paper Component Some text to fill
-      the Paper Component Some text to fill the Paper Component Some text to fill the Paper
-      Component
+    <Box sx={{ height: '200px', position: 'relative' }}>
+      <Box
+        sx={{
+          background: 'url(https://www.affpaying.com/img/logobg.png) no-repeat',
+          width: '711px',
+          height: '355px',
+          position: 'absolute'
+        }}
+      >
+        <img
+          src="https://www.affpaying.com/img/logo.png"
+          style={{ width: '235px', height: '90px' }}
+          alt="logo"
+        />
+      </Box>
     </Box>
   )
 }
