@@ -11,9 +11,9 @@ import { Stars } from '~/components/Star'
 import { Button as MyButton } from '~/components/Buttons'
 
 import { listGifs } from '~/assets/fake-data/list-gifs'
-import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
+import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 
 import Olmera from '~/assets/gifs/sidebar/Olmera.gif'
 import Giantmobi from '~/assets/gifs/sidebar/Giantmobi.gif'

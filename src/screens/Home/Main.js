@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+import { Container } from "@mui/system";
 import React from "react";
 import Content from "./Content";
 
@@ -11,9 +12,9 @@ function Main() {
         height: "100vh",
       }}
     >
-        <Content>
-            
-        </Content>
+      <Container>
+        <Content/>
+      </Container>
     </Box>
   );
 }
