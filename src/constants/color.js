@@ -4,4 +4,6 @@ const blue = {
 
 const gray = { 100: '#f1f5f8' }
 
-export { blue, gray }
+const silver = { 100: '#606F7B', 500: '#B8C2CC' }
+
+export { blue, gray, silver }

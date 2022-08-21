@@ -2,6 +2,7 @@ import React from 'react'
 import { Box, Container, styled, Typography } from '@mui/material'
 import { Header } from '~/components/Layouts/Header'
 import Main from './Main'
+import Footer from '~/components/Layouts/Footer/Footer'
 
 function Home() {
   return (
@@ -14,6 +15,7 @@ function Home() {
       >
         <Header />
         <Main />
+        <Footer/>
       </Box>
     </React.Fragment>
   )
