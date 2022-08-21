@@ -1,7 +1,7 @@
-import React from "react";
-import { Box } from "@mui/material";
-import Header from "./Header";
-import Main from "./Main";
+import React from 'react'
+import { Box } from '@mui/material'
+import Header from './components/Layouts/Header/Header'
+import Main from './Main'
 
 function Home() {
   return (
@@ -9,7 +9,7 @@ function Home() {
       <Header />
       <Main />
     </React.Fragment>
-  );
+  )
 }
 
-export default Home;
+export default Home

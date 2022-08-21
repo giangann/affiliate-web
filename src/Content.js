@@ -1,6 +1,7 @@
-import { Container, Grid } from "@mui/material";
-import React from "react";
-import Reels from "./Reels";
+import { Container, Grid } from '@mui/material'
+import React from 'react'
+// import Reels from '~/Reels'
+import Reels from './Reels'
 
 function Content() {
   return (
@@ -12,7 +13,7 @@ function Content() {
         <Grid item xs={4}></Grid>
       </Grid>
     </Container>
-  );
+  )
 }
 
-export default Content;
+export default Content
