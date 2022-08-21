@@ -1,6 +1,7 @@
 import { Box, Container, Divider, Grid, Stack } from '@mui/material'
 import React from 'react'
 import ReviewsIcon from '@mui/icons-material/Reviews'
+import StorageIcon from '@mui/icons-material/Storage'
 import { AlibabaText } from '~/screens/Home'
 import { Button } from 'bootstrap'
 import SearchIcon from '@mui/icons-material/Search'
@@ -9,6 +10,9 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
 import StayCurrentPortraitOutlinedIcon from '@mui/icons-material/StayCurrentPortraitOutlined'
 import FlightTakeoffOutlinedIcon from '@mui/icons-material/FlightTakeoffOutlined'
+import FeedIcon from '@mui/icons-material/Feed'
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion'
+import ForumIcon from '@mui/icons-material/Forum'
 
 function Header() {
   const navBarItem = [
@@ -17,85 +21,96 @@ function Header() {
       icon: <ReviewsIcon />
     },
     {
-      name: 'Reviews',
-      icon: <ReviewsIcon />
+      name: 'Offers',
+      icon: <StorageIcon />
     },
     {
-      name: 'Reviews',
-      icon: <ReviewsIcon />
+      name: 'News',
+      icon: <FeedIcon />
     },
     {
-      name: 'Reviews',
-      icon: <ReviewsIcon />
+      name: 'Resources',
+      icon: <AutoAwesomeMotionIcon />
     },
     {
-      name: 'Reviews',
-      icon: <ReviewsIcon />
+      name: 'Blog',
+      icon: <ForumIcon />
     }
   ]
 
+  // {name, icon, amount }
   const categoriesItem = [
     {
       name: 'eCommerce',
       icon: <ShoppingCartOutlinedIcon />,
-      number: 254
+      amount: 254
     },
     {
       name: 'eCommerce',
       icon: <FlightTakeoffOutlinedIcon />,
-      number: 22
+      amount: 22
     },
     {
       name: 'eCommerce',
       icon: <StayCurrentPortraitOutlinedIcon />,
-      number: 7
+      amount: 7
     },
     {
       name: 'eCommerce',
       icon: <FavoriteBorderOutlinedIcon />,
-      number: 389
+      amount: 389
     },
     {
       name: 'eCommerce',
       icon: <ShoppingCartOutlinedIcon />,
-      number: 254
+      amount: 254
     },
     {
       name: 'eCommerce',
       icon: <FlightTakeoffOutlinedIcon />,
-      number: 22
+      amount: 22
     },
     {
       name: 'eCommerce',
       icon: <StayCurrentPortraitOutlinedIcon />,
-      number: 7
+      amount: 7
     },
     {
       name: 'eCommerce',
       icon: <FavoriteBorderOutlinedIcon />,
-      number: 389
+      amount: 389
     },
     {
       name: 'eCommerce',
       icon: <ShoppingCartOutlinedIcon />,
-      number: 254
+      amount: 254
     },
     {
       name: 'eCommerce',
       icon: <FlightTakeoffOutlinedIcon />,
-      number: 22
+      amount: 22
     },
     {
       name: 'eCommerce',
       icon: <StayCurrentPortraitOutlinedIcon />,
-      number: 7
+      amount: 7
     },
     {
       name: 'eCommerce',
       icon: <FavoriteBorderOutlinedIcon />,
-      number: 389
+      amount: 389
     }
   ]
+
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event) => {
+    // ;() => console.log('click')
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
   return (
     <Container sx={{ position: 'relative' }}>
       <Grid container rowGap={2}>
@@ -141,6 +156,7 @@ function Header() {
             spacing={2}
             justifyContent="space-between"
           >
+            {/* button */}
             <Stack
               direction="row"
               alignItems="flex-end"
@@ -152,7 +168,8 @@ function Header() {
                 padding: '5px 15px',
                 borderRadius: '4px',
                 position: 'relative',
-                top: '-3px'
+                top: '-3px',
+                onClick: { handleClick }
               }}
             >
               <MenuIcon sx={{ position: 'relative', top: '2px' }} />
