@@ -8,12 +8,7 @@ function Main() {
     <React.Fragment>
       <Box
         sx={{
-          background: 'url(https://apimg.net/2022/algo-newbg.jpg) center 0 no-repeat',
-          height: '100vh',
-          position: 'absolute',
-          width: '100vw',
           zIndex: 0
-          // backgroundAttachment:'fixed'
         }}
       />
       <Container sx={{ position: 'relative', zIndex: 1 }}>

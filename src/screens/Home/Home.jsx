@@ -5,15 +5,17 @@ import Main from './Main'
 
 function Home() {
   return (
-    <Box
-      sx={{
-        background: '#dfedfa url(https://www.affpaying.com/img/s_html.png) repeat-x',
-        height: '100vh'
-      }}
-    >
-      <Header />
-      <Main />
-    </Box>
+    <React.Fragment>
+      <Box
+        sx={{
+          background: '#dfedfa url(https://www.affpaying.com/img/s_html.png) repeat-x ',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <Header />
+        <Main />
+      </Box>
+    </React.Fragment>
   )
 }
 
@@ -24,4 +26,3 @@ export const AlibabaText = styled(Typography)({
 })
 
 export { Home }
-
