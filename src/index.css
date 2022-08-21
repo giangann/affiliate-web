@@ -3,6 +3,11 @@
     color: #ffffff !important;
 }
 
+.button-red {
+    background-color: #f60 !important;
+    color: #ffffff !important;
+}
+
 .button-gray {
     background-color: #f1f5f8 !important;
     color: hsl(208, 12%, 58%) !important;
