@@ -1,6 +1,5 @@
-import { Divider, Grid, Typography } from "@mui/material";
-import { Stack } from "@mui/system";
-import React, { useState } from "react";
+import { Divider, Grid, Typography, Stack } from "@mui/material";
+import { useState } from "react";
 
 function Reels() {
   const topWebsite = [

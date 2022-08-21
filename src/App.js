@@ -1,7 +1,12 @@
-import Home from './Home'
+import { ScopedCssBaseline } from '@mui/material'
+import { Home } from '~/screens/Home'
 
 function App() {
-  return <Home />
+  return (
+    <ScopedCssBaseline>
+      <Home />
+    </ScopedCssBaseline>
+  )
 }
 
 export default App

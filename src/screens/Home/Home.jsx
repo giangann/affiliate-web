@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box } from '@mui/material'
-import Header from './components/Layouts/Header/Header'
+import { Header } from '~/components/Layouts/Header'
 import Main from './Main'
 
 function Home() {
@@ -12,4 +12,4 @@ function Home() {
   )
 }
 
-export default Home
+export { Home }
