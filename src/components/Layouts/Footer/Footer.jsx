@@ -270,4 +270,4 @@ const AlibabaFooterNormalText = styled(Typography)({
   fontWeight: 600
 })
 
-export default Footer
+export { Footer }

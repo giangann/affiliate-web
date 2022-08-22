@@ -1,5 +1,6 @@
 export const blue = {
-  lightest: '#eff8ff'
+  lightest: '#eff8ff',
+  border: '#3490dc'
 }
 
 export const grey = {
