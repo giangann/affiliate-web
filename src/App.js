@@ -1,5 +1,6 @@
 import { createTheme, ScopedCssBaseline, ThemeProvider } from '@mui/material'
-import { Home } from '~/screens/Home'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Layout } from '~/components/Layouts'
 
 function App() {
   const theme = createTheme({
@@ -15,10 +16,13 @@ function App() {
       }
     }
   })
+
   return (
     <ThemeProvider theme={theme}>
       <ScopedCssBaseline sx={{ margin: 0 }}>
-        <Home />
+        <Router>
+          <Layout />
+        </Router>
       </ScopedCssBaseline>
     </ThemeProvider>
   )
