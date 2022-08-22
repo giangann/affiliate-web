@@ -1,1 +1,7 @@
 export * from './Affiliate'
+export * from './AffiliateNetworkItem'
+export * from './AffiliateNetwork'
+export * from './Filter'
+export * from './AffiliateOfferItem'
+export * from './AdvertisingNetworkItem'
+export * from './AffiliateProgramItem'

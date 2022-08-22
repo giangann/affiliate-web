@@ -4,11 +4,11 @@ import { Stack, Box, Typography, Link, styled, Grid } from '@mui/material'
 import {
   FeaturedNetworkItem,
   RecentReviewItem,
-  SidebarList,
   Top10RatedNetworkItem
 } from '~/components/Layouts/Sidebar'
 import { Stars } from '~/components/Star'
 import { Button as MyButton } from '~/components/Buttons'
+import { List } from '~/components/List'
 
 import { listGifs } from '~/assets/fake-data/list-gifs'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
@@ -108,7 +108,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <SidebarList heading="Featured Networks" SidebarItem={FeaturedNetworkItem} />
+        <List heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>
@@ -120,7 +120,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <SidebarList heading="Featured Networks" SidebarItem={FeaturedNetworkItem} />
+        <List heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>
@@ -132,7 +132,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <SidebarList heading="Featured Networks" SidebarItem={FeaturedNetworkItem} />
+        <List heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>
@@ -144,9 +144,9 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <SidebarList
+        <List
           heading="Recent Reviews"
-          SidebarItem={RecentReviewItem}
+          Item={RecentReviewItem}
           footer={() => (
             <Box
               sx={{
@@ -172,7 +172,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <SidebarList heading="Top 10 Rated Networks" SidebarItem={Top10RatedNetworkItem} />
+        <List heading="Top 10 Rated Networks" Item={Top10RatedNetworkItem} />
       </BoxContainer>
     </Stack>
   )
@@ -191,9 +191,8 @@ export const TextContent = styled(Typography)({
 })
 
 export const BoxContainer = styled(Box)({
-  border: '2px solid #fff',
   backgroundColor: '#ffffff',
-  marginBottom: '1rem', 
+  marginBottom: '1rem'
 })
 
 export { Sidebar }
