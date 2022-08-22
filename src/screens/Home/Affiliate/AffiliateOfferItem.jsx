@@ -1,7 +1,18 @@
 import React from 'react'
 import { Grid, Typography, Hidden } from '@mui/material'
-import { Button } from '~/components/Buttons'
+import { Button as MUIButton } from '~/components/Buttons'
+import { OfferDialog } from '~/components/Dialogs'
+
 export const AffiliateOfferItem = () => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+    console.log(open)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
   return (
     <Grid container sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
       <Grid
@@ -27,9 +38,12 @@ export const AffiliateOfferItem = () => {
       <Grid item xs={10.5} md={11}>
         <Grid container>
           <Grid item xs={10} md={8}>
-            <Typography sx={{ fontSize: '0.75rem', color: '#3d4852', fontWeight: 'bold' }}>
+            <MUIButton
+              onClick={handleClickOpen}
+              sx={{ fontSize: '0.75rem', color: '#3d4852', fontWeight: 'bold', textAlign: 'start' }}
+            >
               USA Cash Finder - US (US), [CPL], Business, Insurances, assurance, security, safe
-            </Typography>
+            </MUIButton>
             <Typography
               component="p"
               className="text-gray"
@@ -50,10 +64,11 @@ export const AffiliateOfferItem = () => {
             </Grid>
           </Hidden>
           <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-            <Button variant="outlined">Run Offer</Button>
+            <MUIButton variant="outlined">Run Offer</MUIButton>
           </Grid>
         </Grid>
       </Grid>
+      <OfferDialog open={open} title="offer" handleClose={handleClose} />
     </Grid>
   )
 }
