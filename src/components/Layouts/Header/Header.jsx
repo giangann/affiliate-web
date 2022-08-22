@@ -125,7 +125,7 @@ function Header() {
             src="https://www.affpaying.com/img/logo.png"
             style={{
               width: '90%',
-              height: '80%'
+              height: 'auto'
             }}
             alt="logo"
           />
@@ -135,7 +135,7 @@ function Header() {
           <img
             src="https://apimg.net/2020/Animated%20Banner_728x90_1_1.gif"
             alt="ads"
-            style={{ width: '100%', height: '90px' }}
+            style={{ width: '100%', height: 'auto' }}
           />
         </Grid>
         <Grid item xs={12} height="47px" mb={1}>
