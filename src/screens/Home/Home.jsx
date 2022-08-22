@@ -15,7 +15,7 @@ function Home() {
       >
         <Header />
         <Main />
-        <Footer/>
+        <Footer />
       </Box>
     </React.Fragment>
   )
@@ -24,7 +24,7 @@ function Home() {
 export const AlibabaText = styled(Typography)({
   fontFamily: 'alibaba-sans',
   fontWeight: 600,
-  fontSize: '14px'
+  fontSize: { xs: '10px', sm: '12px', md: '14px' }
 })
 
 export { Home }

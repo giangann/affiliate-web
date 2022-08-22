@@ -3,16 +3,15 @@ import FlightTakeoffOutlinedIcon from '@mui/icons-material/FlightTakeoffOutlined
 import MenuIcon from '@mui/icons-material/Menu'
 import ReviewsIcon from '@mui/icons-material/Reviews'
 import StorageIcon from '@mui/icons-material/Storage'
-import { AlibabaText } from '~/screens/Home'
-import { Button } from 'bootstrap'
 import SearchIcon from '@mui/icons-material/Search'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import StayCurrentPortraitOutlinedIcon from '@mui/icons-material/StayCurrentPortraitOutlined'
 import FeedIcon from '@mui/icons-material/Feed'
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion'
 import ForumIcon from '@mui/icons-material/Forum'
-import { Box, Container, Divider, Grid, Stack } from '@mui/material'
+import { Box, Container, Divider, Grid, Hidden, Stack } from '@mui/material'
 import React from 'react'
+import { AlibabaText } from '~/screens/Home'
 
 function Header() {
   const navBarItem = [
@@ -105,7 +104,6 @@ function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
-    // ;() => console.log('click')
     setAnchorEl(event.currentTarget)
   }
   const handleClose = () => {
@@ -114,22 +112,20 @@ function Header() {
   return (
     <Container sx={{ position: 'relative' }}>
       <Grid container rowGap={2}>
-        <Grid item xs={4}>
-          <Box
-            sx={{
-              background: 'url(https://www.affpaying.com/img/logobg.png) no-repeat',
-              width: '711px',
-              height: '355px',
-              position: 'absolute',
-              left: '-240px',
-              zIndex: -1
-            }}
-          />
+        <Grid
+          item
+          xs={4}
+          sx={{
+            display: 'flex',
+            alignItem: 'center',
+            justifyContent: { xs: 'center', md: 'flex-start' }
+          }}
+        >
           <img
             src="https://www.affpaying.com/img/logo.png"
             style={{
-              width: '235px',
-              height: '90px'
+              width: '90%',
+              height: '80%'
             }}
             alt="logo"
           />
@@ -180,7 +176,7 @@ function Header() {
                 type="text"
                 placeholder="Search affiliate network"
                 style={{
-                  width: '300px',
+                  width: '10vw',
                   padding: '4px 10px',
                   borderRadius: '4px',
                   fontSize: '12px'
@@ -200,15 +196,20 @@ function Header() {
               />
             </Box>
 
-            {navBarItem.map((item, index) => (
-              <React.Fragment>
-                <Stack direction="row" spacing={0.5} key={index} justifyContent="center">
-                  {item.icon}
-                  <AlibabaText>{item.name}</AlibabaText>
-                </Stack>
-                <Divider orientation="vertical" />
-              </React.Fragment>
-            ))}
+            <Hidden mdDown>
+              {navBarItem.map((item, index) => (
+                <React.Fragment>
+                  <Stack direction="row" spacing={0.5} key={index} justifyContent="center">
+                    {item.icon}
+                    <AlibabaText>{item.name}</AlibabaText>
+                  </Stack>
+                  <Divider orientation="vertical" />
+                </React.Fragment>
+              ))}
+            </Hidden>
+            <Hidden mdUp>
+              <MenuIcon />
+            </Hidden>
           </Stack>
         </Grid>
       </Grid>
