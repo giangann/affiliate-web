@@ -152,7 +152,7 @@ function Header() {
             // spacing={0}
             // justifyContent="space-between"
           >
-            <AlignItemGrid item xs={5} md={2}>
+            <AlignItemGrid item xs={5} iphone={4.5} samsung={4} sm={3} md={2}>
               <Stack
                 direction="row"
                 alignItems="flex-end"
@@ -186,8 +186,16 @@ function Header() {
                 </AlibabaText>
               </Stack>
             </AlignItemGrid>
-            <AlignItemGrid item xs={6} md={3.5} sx={{justifyContent:'center'}}>
-              <Box position="relative" width={{ xs: '100%', sm: '90%' }} alignSelf='center'>
+            <AlignItemGrid
+              item
+              xs={6}
+              iphone={6.5}
+              samsung={7}
+              sm={8}
+              md={3.5}
+              sx={{ justifyContent: 'center' }}
+            >
+              <Box position="relative" width={{ xs: '100%', sm: '90%' }} alignSelf="center">
                 <input
                   type="text"
                   placeholder="Search affiliate network"

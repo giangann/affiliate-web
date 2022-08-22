@@ -19,6 +19,7 @@ import { blue } from '~/styles'
 import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
+import { maxWidth } from '@mui/system'
 
 const data = [1, 2, 3, 4, 5]
 
@@ -52,18 +53,38 @@ const AffiliateNetwork = () => {
         <img class="block" src={AlgoAffiliatesImg} alt="Algo Affiliates"></img>
         <Stack paddingY={3}>
           {data.map((items, index) => (
-            <Grid container key={index} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
-              <Grid item xs={2}>
+            <Grid
+              container
+              columnSpacing={2}
+              key={index}
+              sx={{ borderBottom: '1px solid #ccc' }}
+              paddingY={3}
+            >
+              <Grid
+                item
+                xs={3}
+                md={2}
+                sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}
+              >
                 <img
-                  style={{ width: '95px', height: '80px' }}
+                  style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
                   className="bg-white shadow-lg rounded"
                   src="https://apimg.net/sponsors/index/af3d653df304f38cdc0985da44aa50c9.jpg"
                   alt="1"
                 />
+                <Hidden mdUp>
+                  <Button
+                    sx={{ maxWidth: '100% !important' }}
+                    variant="contained"
+                    type="button-blue"
+                  >
+                    Join
+                  </Button>
+                </Hidden>
               </Grid>
-              <Grid item xs={10}>
+              <Grid item xs={9} md={10}>
                 <Grid container>
-                  <Grid item xs={10}>
+                  <Grid item xs={8} md={10}>
                     <Typography
                       component="a"
                       className="no-underline"
@@ -94,7 +115,7 @@ const AffiliateNetwork = () => {
                       4.92
                     </Typography>
                   </Grid>
-                  <Grid item xs={2} className="d-flex justify-content-end">
+                  <Grid item xs={4} md={2} className="d-flex justify-content-end">
                     <Stars rating={2.5} />
                   </Grid>
                 </Grid>
@@ -105,18 +126,24 @@ const AffiliateNetwork = () => {
                       className="text-gray"
                       sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold' }}
                     >
-                      Affmine is an affiliate network mostly based on incentive space and offerwall
-                      solutions. We have large experience in affiliate mar...
+                      Affmine is an affiliate network mostly based on
+                      <Hidden mdDown>
+                        incentive space and offerwall solutions. We have large experience in
+                        affiliate mar
+                      </Hidden>
+                      ...
                     </Typography>
                     <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
                       52 Reviews / 821 Offers / In-house / Bi-Weekly, Weekly
                     </Typography>
                   </Grid>
-                  <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-                    <Button variant="contained" type="button-blue">
-                      Join
-                    </Button>
-                  </Grid>
+                  <Hidden mdDown>
+                    <Grid item xs={2} className="d-flex align-items-center justify-content-end">
+                      <Button variant="contained" type="button-blue">
+                        Join
+                      </Button>
+                    </Grid>
+                  </Hidden>
                 </Grid>
               </Grid>
             </Grid>
@@ -348,25 +375,37 @@ const AffiliateNetwork = () => {
                   <Stars rating={2.5} />
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={2}>
+              <Grid container spacing={2}>
+                <Grid
+                  item
+                  xs={3}
+                  md={2}
+                  sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}
+                >
                   <img
-                    style={{ width: '95px', height: '80px' }}
+                    style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
                     className="bg-white shadow-lg rounded"
                     src="https://apimg.net/sponsors/index/af3d653df304f38cdc0985da44aa50c9.jpg"
                     alt="1"
                   />
+                  <Hidden mdUp>
+                    <Button sx={{ maxWidth: '100% !important' }} variant="outlined">
+                      Join
+                    </Button>
+                  </Hidden>
                 </Grid>
-                <Grid item xs={10}>
+                <Grid item xs={9} md={10}>
                   <Grid container>
-                    <Grid item xs={10}>
+                    <Grid item xs={12} md={10}>
                       <Typography
                         component="p"
                         className="text-gray"
                         sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold' }}
                       >
                         Affmine is an affiliate network mostly based on incentive space and
-                        offerwall solutions. We have large experience in affiliate mar...
+                        offerwall solutions.{' '}
+                        <Hidden mdDown> We have large experience in affiliate mar</Hidden>
+                        ...
                       </Typography>
                       <Typography
                         sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}
@@ -374,9 +413,11 @@ const AffiliateNetwork = () => {
                         52 Reviews / 821 Offers / In-house / Bi-Weekly, Weekly
                       </Typography>
                     </Grid>
-                    <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-                      <Button variant="outlined">Join</Button>
-                    </Grid>
+                    <Hidden mdDown>
+                      <Grid item xs={2} className="d-flex align-items-center justify-content-end">
+                        <Button variant="outlined">Join</Button>
+                      </Grid>
+                    </Hidden>
                   </Grid>
                 </Grid>
               </Grid>
@@ -458,25 +499,36 @@ const AffiliateNetwork = () => {
                   <Stars rating={2.5} />
                 </Grid>
               </Grid>
-              <Grid container>
-                <Grid item xs={2}>
+              <Grid container spacing={2}>
+                <Grid
+                  item
+                  xs={3}
+                  md={2}
+                  sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}
+                >
                   <img
-                    style={{ width: '95px', height: '80px' }}
+                    style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
                     className="bg-white shadow-lg rounded"
                     src="https://apimg.net/sponsors/index/af3d653df304f38cdc0985da44aa50c9.jpg"
                     alt="1"
                   />
+                  <Hidden mdUp>
+                    <Button variant="outlined" sx={{ width: '100%' }}>
+                      Join
+                    </Button>
+                  </Hidden>
                 </Grid>
-                <Grid item xs={10}>
+                <Grid item xs={9} md={10}>
                   <Grid container>
-                    <Grid item xs={10}>
+                    <Grid item xs={12} md={10}>
                       <Typography
                         component="p"
                         className="text-gray"
                         sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold' }}
                       >
                         Affmine is an affiliate network mostly based on incentive space and
-                        offerwall solutions. We have large experience in affiliate mar...
+                        offerwall solutions.{' '}
+                        <Hidden mdDown>We have large experience in affiliate mar</Hidden> ...
                       </Typography>
                       <Typography
                         sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}
@@ -484,9 +536,11 @@ const AffiliateNetwork = () => {
                         52 Reviews / 821 Offers / In-house / Bi-Weekly, Weekly
                       </Typography>
                     </Grid>
-                    <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-                      <Button variant="outlined">Join</Button>
-                    </Grid>
+                    <Hidden mdDown>
+                      <Grid item xs={2} className="d-flex align-items-center justify-content-end">
+                        <Button variant="outlined">Join</Button>
+                      </Grid>
+                    </Hidden>
                   </Grid>
                 </Grid>
               </Grid>
