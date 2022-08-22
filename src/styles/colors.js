@@ -10,3 +10,8 @@ export const grey = {
 export const red = {
   orange: '#f60'
 }
+
+export const orange = {
+  900: '#de751f',
+  500: '#f60'
+}

@@ -19,7 +19,10 @@ const StyledButton = styled(MUIButton)({
   lineHeight: 1.25,
   fontWeight: 600,
   fontSize: '0.75rem',
-  padding: '0.25rem 0.5rem 0.25rem 0.5rem'
+  padding: '0.25rem 0.5rem 0.25rem 0.5rem',
+  '&:hover': {
+    opacity: 0.5,
+  }
 })
 
 export { Button }

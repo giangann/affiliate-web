@@ -1,11 +1,13 @@
-import { Button as MyButton } from '~/components/Buttons'
 import { Avatar, Box, Grid, Hidden, Link, Stack, Typography } from '@mui/material'
 import React from 'react'
-import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
-import { Button } from '~/components/Buttons'
-import { Filter } from './Filter'
+import { listGifs } from '~/assets/fake-data/list-gifs'
 import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
-import { Stars } from '~/components/Star'
+import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
+import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
+import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
+import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
+import { Button, Button as MyButton } from '~/components/Buttons'
+import { OfferDialog } from '~/components/Dialogs'
 import {
   BoxContainer,
   FeaturedNetworkItem,
@@ -14,16 +16,23 @@ import {
   TextContent,
   TextHeading
 } from '~/components/Layouts/Sidebar'
-import { listGifs } from '~/assets/fake-data/list-gifs'
+import { Stars } from '~/components/Star'
 import { blue } from '~/styles'
-import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
-import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
-import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
-import { maxWidth } from '@mui/system'
+import { Filter } from './Filter'
 
 const data = [1, 2, 3, 4, 5]
 
 const AffiliateNetwork = () => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+    console.log(open)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
+  
   return (
     <React.Fragment>
       <Stack paddingX={3} sx={{ backgroundColor: 'white' }}>
@@ -50,7 +59,7 @@ const AffiliateNetwork = () => {
           </Grid>
         </Grid>
         <Filter />
-        <img class="block" src={AlgoAffiliatesImg} alt="Algo Affiliates"></img>
+        <img className="block" src={AlgoAffiliatesImg} alt="Algo Affiliates"></img>
         <Stack paddingY={3}>
           {data.map((items, index) => (
             <Grid
@@ -294,7 +303,7 @@ const AffiliateNetwork = () => {
               >
                 <img
                   style={{ width: '24px', height: '24px' }}
-                  class="mt-1 bg-white rounded-full d-flex justify-content-center align-items-center shadow"
+                  className="mt-1 bg-white rounded-full d-flex justify-content-center align-items-center shadow"
                   src="https://apimg.net/networks/logo/18640-square.jpg?t=32224421"
                   alt="1"
                 />
@@ -309,10 +318,14 @@ const AffiliateNetwork = () => {
               <Grid item xs={10.5} md={11}>
                 <Grid container>
                   <Grid item xs={10} md={8}>
-                    <Typography sx={{ fontSize: '0.75rem', color: '#3d4852', fontWeight: 'bold' }}>
+                    <Button
+                      component="a"
+                      onClick={() => {handleClickOpen()}}
+                      sx={{ fontSize: '0.75rem', color: '#3d4852', fontWeight: 'bold' }}
+                    >
                       USA Cash Finder - US (US), [CPL], Business, Insurances, assurance, security,
                       safe
-                    </Typography>
+                    </Button>
                     <Typography
                       component="p"
                       className="text-gray"
@@ -580,8 +593,10 @@ const AffiliateNetwork = () => {
           </div>
         </Stack>
       </Stack>
+      <OfferDialog open={open} handleClose={handleClose} title="R2O Housing List - $1 Trial Sign Up | US"/>
     </React.Fragment>
   )
 }
 
 export { AffiliateNetwork }
+
