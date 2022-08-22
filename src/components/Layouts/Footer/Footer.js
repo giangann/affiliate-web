@@ -1,5 +1,5 @@
 import { Button as MyButton } from '~/components/Buttons'
-import { Box, Container, Divider, Grid, Stack, styled, Typography } from '@mui/material'
+import { Box, Container, Divider, Grid, Hidden, Stack, styled, Typography } from '@mui/material'
 import React from 'react'
 import { silver } from '~/constants/color'
 import { AlibabaText } from '~/screens/Home'
@@ -129,7 +129,7 @@ function Footer() {
     <Box sx={{ backgroundColor: '#12283A' }} py={2}>
       <Container>
         <Grid container spacing={2} justifyContent="space-between">
-          <Grid item xs={3.5}>
+          <Grid item xs={12} md={3.5}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <AlibabaTitleText variant="h6">SITE LINKS</AlibabaTitleText>
@@ -156,14 +156,16 @@ function Footer() {
               </Grid>
             </Grid>
           </Grid>
-          <Divider
-            style={{ width: '2px', height: '230px', backgroundColor: 'white' }}
-            orientation="vertical"
-            flexItem
-            variant="middle"
-          />
+          <Hidden mdDown>
+            <Divider
+              style={{ width: '2px', height: '230px', backgroundColor: 'white' }}
+              orientation="vertical"
+              flexItem
+              variant="middle"
+            />
+          </Hidden>
 
-          <Grid item xs={3.5}>
+          <Grid item xs={12} md={3.5}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <AlibabaTitleText variant="h6">INDUSTRY FRIENDS</AlibabaTitleText>
@@ -189,14 +191,16 @@ function Footer() {
               </Grid>
             </Grid>
           </Grid>
-          <Divider
-            style={{ width: '2px', height: '230px', backgroundColor: 'white' }}
-            orientation="vertical"
-            flexItem
-            variant="middle"
-          />
+          <Hidden mdDown>
+            <Divider
+              style={{ width: '2px', height: '230px', backgroundColor: 'white' }}
+              orientation="vertical"
+              flexItem
+              variant="middle"
+            />
+          </Hidden>
 
-          <Grid item xs={3.5}>
+          <Grid item xs={12} md={3.5}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <AlibabaTitleText variant="h6">CONNECT WITH US</AlibabaTitleText>
@@ -223,15 +227,15 @@ function Footer() {
             </Grid>
           </Grid>
 
-          <Grid item xs={6}>
-            <AlibabaFooterNormalText sx={{ opacity: 0.4}}>
+          <Grid item xs={12} md={6}>
+            <AlibabaFooterNormalText sx={{ opacity: 0.4 }}>
               Copyright © 2010-2022 Affpaying.com All rights reserved.
             </AlibabaFooterNormalText>
           </Grid>
-          <Grid item xs={6}>
-            <Stack direction="row" spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Stack direction="row" spacing={2} flexWrap={{ xs: 'wrap', md: 'unset' }}>
               {footerLinks.map((item, index) => (
-                <AlibabaFooterNormalText sx={{ opacity: 0.4}}>{item.name}</AlibabaFooterNormalText>
+                <AlibabaFooterNormalText sx={{ opacity: 0.4 }}>{item.name}</AlibabaFooterNormalText>
               ))}
             </Stack>
           </Grid>

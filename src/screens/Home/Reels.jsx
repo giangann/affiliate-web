@@ -15,26 +15,26 @@ function Reels() {
       rate: 5
     },
     {
-      name: 'MyBid',
-      avatar: 'https://apimg.net/sponsors/circle/c78a6d37510f1083975e7bfe0c89bb9d.jpg',
+      name: 'EvaDav',
+      avatar: 'https://apimg.net/sponsors/circle/ed3d74a40fa6819feeb63777b5e7886a.jpg',
       num_of_review: 14,
       rate: 5
     },
     {
-      name: 'MyBid',
-      avatar: 'https://apimg.net/sponsors/circle/c78a6d37510f1083975e7bfe0c89bb9d.jpg',
+      name: 'LosPollos',
+      avatar: 'https://apimg.net/sponsors/circle/8bd51c64d0efddbff360c1e899c2b3a8.jpg',
       num_of_review: 14,
       rate: 5
     },
     {
-      name: 'MyBid',
-      avatar: 'https://apimg.net/sponsors/circle/c78a6d37510f1083975e7bfe0c89bb9d.jpg',
+      name: 'Adverten',
+      avatar: 'https://apimg.net/sponsors/circle/277bd70928b8ba5f7a44c0ac6d70e8dd.jpg',
       num_of_review: 14,
       rate: 5
     },
     {
-      name: 'MyBid',
-      avatar: 'https://apimg.net/sponsors/circle/c78a6d37510f1083975e7bfe0c89bb9d.jpg',
+      name: 'Neogara',
+      avatar: 'https://apimg.net/sponsors/circle/9c16011d506ba267fea74ae8b3bcfa53.jpg',
       num_of_review: 14,
       rate: 5
     }
@@ -43,7 +43,7 @@ function Reels() {
   const [focusWebsite, setFocusWebsite] = useState(1)
   return (
     <Grid container>
-      <Grid item xs={4} sx={{ backgroundColor: 'white' }}>
+      <Grid item xs={12} md={4} sx={{ backgroundColor: 'white' }}>
         <Grid container gap={1}>
           <Grid item xs={5.5}>
             <Stack spacing={2}>
@@ -115,9 +115,9 @@ function Reels() {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={8}>
+      <Grid item xs={12} md={8}>
         <img
-          style={{ width: '420px', height: '180px' }}
+          style={{ width: '100%', height: '100%' }}
           src="https://apimg.net/slider/howto-setup-tracker-mylead-546x234.jpg"
           alt="website"
         />

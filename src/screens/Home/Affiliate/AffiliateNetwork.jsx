@@ -1,17 +1,31 @@
-import { Avatar, Grid, Stack, Typography } from '@mui/material'
+import { Button as MyButton } from '~/components/Buttons'
+import { Avatar, Box, Grid, Hidden, Link, Stack, Typography } from '@mui/material'
 import React from 'react'
 import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
 import { Button } from '~/components/Buttons'
 import { Filter } from './Filter'
 import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
 import { Stars } from '~/components/Star'
+import {
+  BoxContainer,
+  FeaturedNetworkItem,
+  RecentReviewItem,
+  SidebarList,
+  TextContent,
+  TextHeading
+} from '~/components/Layouts/Sidebar'
+import { listGifs } from '~/assets/fake-data/list-gifs'
+import { blue } from '~/styles'
+import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
+import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
+import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 
 const data = [1, 2, 3, 4, 5]
 
 const AffiliateNetwork = () => {
   return (
     <React.Fragment>
-      <Stack paddingX={3}>
+      <Stack paddingX={3} sx={{ backgroundColor: 'white' }}>
         <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
           <Grid item xs={6} sx={{ justifyContent: 'center' }}>
             <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
@@ -123,7 +137,89 @@ const AffiliateNetwork = () => {
         </Stack>
       </Stack>
 
-      <Stack paddingX={3}>
+      <Hidden mdUp>
+        <BoxContainer sx={{ border: '3px solid #f60' }}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{ backgroundColor: blue['lightest'], p: '0.75rem' }}
+          >
+            <TextHeading varient="h3">Network of The Month</TextHeading>
+            <Box
+              component="img"
+              sx={{
+                height: '1.25rem',
+                width: '1.25rem'
+              }}
+              alt="medal icon"
+              src={medal_icon}
+            />
+          </Stack>
+
+          <Stack sx={{ pt: 1.5, px: 1.5, pb: 1 }}>
+            <Link href="https://algo-affiliates.com/register/?algo-refer=69" target="_blank">
+              <Box
+                component="img"
+                src={algoImg}
+                alt="algo image"
+                sx={{ width: '100%', display: 'block' }}
+              />
+            </Link>
+            <Stack sx={{ pt: 1.5, pb: 0.25 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Stars rating={2.5} />
+                <Typography sx={{ fontSize: '0.75rem', color: '#3d4852', fontWeight: 'bold' }}>
+                  Pat
+                </Typography>
+              </Box>
+              <TextContent>
+                Algo Affiliates is the top cpa network for crypto offers. For those who have crypto
+                traffic, you have to join....
+              </TextContent>
+            </Stack>
+          </Stack>
+        </BoxContainer>
+
+        <BoxContainer>
+          <Box sx={{ backgroundColor: blue['lightest'], p: '0.75rem' }}>
+            <TextHeading varient="h3">Subscribe to Our Newsletter</TextHeading>
+            <Box sx={{ display: 'flex' }}>
+              <input
+                style={{
+                  flex: 1,
+                  outline: 'none',
+                  border: 'none',
+                  padding: '0.25rem 0.75rem',
+                  fontSize: '0.75rem'
+                }}
+                placeholder="Enter your email address"
+              />
+              <MyButton variant="contained" type="button-red">
+                Subcribe
+              </MyButton>
+            </Box>
+          </Box>
+
+          <Box sx={{ px: '0.75rem', py: 2 }}>
+            <Box
+              component="img"
+              src={clickdealerImg}
+              sx={{ display: 'block', width: '100%', mb: 2 }}
+            />
+
+            <Grid container gap={1} justifyContent="space-between">
+              {listGifs.map((item, index) => (
+                <Grid key={index} item xs={5.6}>
+                  <Box component="img" src={item} alt="gif" sx={{ width: '100%' }} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </BoxContainer>
+      </Hidden>
+
+      <Stack paddingX={3} sx={{ backgroundColor: 'white' }}>
         <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
           <Grid item xs={6} sx={{ justifyContent: 'center' }}>
             <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
@@ -211,7 +307,13 @@ const AffiliateNetwork = () => {
         </Stack>
       </Stack>
 
-      <Stack paddingX={3}>
+      <Hidden mdUp>
+        <BoxContainer>
+          <SidebarList heading="Featured Networks" SidebarItem={FeaturedNetworkItem} />
+        </BoxContainer>
+      </Hidden>
+
+      <Stack paddingX={3} sx={{ backgroundColor: 'white' }}>
         <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
           <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
             <Typography variant="h1" sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}>
@@ -295,7 +397,33 @@ const AffiliateNetwork = () => {
         </Stack>
       </Stack>
 
-      <Stack paddingX={3}>
+      <Hidden mdUp>
+        <BoxContainer>
+          <SidebarList
+            heading="Recent Reviews"
+            SidebarItem={RecentReviewItem}
+            footer={() => (
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  py: '0.5rem',
+                  borderTop: '1px solid #dae1e7',
+                  '&:hover': {
+                    backgroundColor: '#f8fafc',
+                    cursor: 'pointer'
+                  }
+                }}
+              >
+                <Typography sx={{ fontSize: '.75rem', color: '#2779bd', fontWeight: '700' }}>
+                  More Reviews
+                </Typography>
+              </Box>
+            )}
+          />
+        </BoxContainer>
+      </Hidden>
+
+      <Stack paddingX={3} sx={{ backgroundColor: 'white' }}>
         <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
           <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
             <Typography variant="h1" sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}>

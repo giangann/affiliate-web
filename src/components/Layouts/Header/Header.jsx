@@ -9,7 +9,7 @@ import StayCurrentPortraitOutlinedIcon from '@mui/icons-material/StayCurrentPort
 import FeedIcon from '@mui/icons-material/Feed'
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion'
 import ForumIcon from '@mui/icons-material/Forum'
-import { Box, Container, Divider, Grid, Hidden, Stack } from '@mui/material'
+import { Box, Container, Divider, Grid, Hidden, Stack, styled } from '@mui/material'
 import React from 'react'
 import { AlibabaText } from '~/screens/Home'
 
@@ -138,8 +138,107 @@ function Header() {
             style={{ width: '100%', height: '90px' }}
           />
         </Grid>
-        <Grid item xs={12}>
-          <Stack
+        <Grid item xs={12} height="47px" mb={1}>
+          <Grid
+            container
+            sx={{
+              background: 'url(https://www.affpaying.com/img/navbg.png) ',
+              color: 'white',
+              fontFamily: 'alibaba-sans',
+              height: '100%'
+            }}
+
+            // alignItems="center"
+            // spacing={0}
+            // justifyContent="space-between"
+          >
+            <AlignItemGrid item xs={5} md={2}>
+              <Stack
+                direction="row"
+                alignItems="flex-end"
+                spacing={1}
+                ml={{ xs: 1, md: 2 }}
+                justifyContent="space-around"
+                sx={{
+                  background: 'url(https://www.affpaying.com/img/catebg.png)',
+                  padding: '5px 10px',
+                  borderRadius: '4px',
+                  position: 'relative',
+                  top: '-3px',
+                  maxWidth: '175px'
+                }}
+              >
+                <MenuIcon
+                  sx={{
+                    position: 'relative',
+                    top: { md: '2px' },
+                    fontSize: { xs: 'small', md: 'medium' }
+                  }}
+                />
+                <AlibabaText
+                  sx={{
+                    position: 'relative',
+                    top: { xs: '2px', md: '2px' },
+                    fontSize: { xs: '12px', md: '14px' }
+                  }}
+                >
+                  All categories
+                </AlibabaText>
+              </Stack>
+            </AlignItemGrid>
+            <AlignItemGrid item xs={6} md={3.5} sx={{justifyContent:'center'}}>
+              <Box position="relative" width={{ xs: '100%', sm: '90%' }} alignSelf='center'>
+                <input
+                  type="text"
+                  placeholder="Search affiliate network"
+                  style={{
+                    width: '100%',
+                    padding: '4px 10px',
+                    borderRadius: '4px',
+                    fontSize: '12px',
+                    minWidth: '150px'
+                  }}
+                />
+                <SearchIcon
+                  sx={{
+                    position: 'absolute',
+                    right: '4px',
+                    top: '4px',
+                    color: '#3490DC',
+                    padding: '2px',
+                    '&:hover': {
+                      cursor: 'pointer'
+                    }
+                  }}
+                />
+              </Box>
+            </AlignItemGrid>
+
+            <AlignItemGrid item xs={1} md={6.5}>
+              <Hidden mdDown>
+                <Stack
+                  direction="row"
+                  height="100%"
+                  alignItems="center"
+                  spacing={{ md: 2, lg: 2.5 }}
+                >
+                  {navBarItem.map((item, index) => (
+                    <React.Fragment>
+                      <Stack direction="row" spacing={0.5} key={index} justifyContent="center">
+                        {item.icon}
+                        <AlibabaText>{item.name}</AlibabaText>
+                      </Stack>
+                      <Divider orientation="vertical" />
+                    </React.Fragment>
+                  ))}
+                </Stack>
+              </Hidden>
+              <Hidden mdUp>
+                <MenuIcon />
+              </Hidden>
+            </AlignItemGrid>
+          </Grid>
+          {/* <Stack
             direction="row"
             mb={1}
             sx={{
@@ -149,28 +248,42 @@ function Header() {
               fontFamily: 'alibaba-sans'
             }}
             alignItems="center"
-            spacing={2}
+            spacing={0}
             justifyContent="space-between"
           >
-            {/* button */}
             <Stack
               direction="row"
               alignItems="flex-end"
-              spacing={2}
+              spacing={1}
               ml={2}
               justifyContent="space-around"
               sx={{
                 background: 'url(https://www.affpaying.com/img/catebg.png)',
-                padding: '5px 15px',
+                padding: '5px 10px',
                 borderRadius: '4px',
                 position: 'relative',
                 top: '-3px',
-                onClick: { handleClick }
+                maxWidth: '175px'
               }}
             >
-              <MenuIcon sx={{ position: 'relative', top: '2px' }} />
-              <AlibabaText>All categories</AlibabaText>
+              <MenuIcon
+                sx={{
+                  position: 'relative',
+                  top: { md: '2px' },
+                  fontSize: { xs: 'small', md: 'medium' }
+                }}
+              />
+              <AlibabaText
+                sx={{
+                  position: 'relative',
+                  top: { xs: '2px', md: '2px' },
+                  fontSize: { xs: '12px', md: '14px' }
+                }}
+              >
+                All categories
+              </AlibabaText>
             </Stack>
+
             <Box position="relative">
               <input
                 type="text"
@@ -179,7 +292,8 @@ function Header() {
                   width: '10vw',
                   padding: '4px 10px',
                   borderRadius: '4px',
-                  fontSize: '12px'
+                  fontSize: '12px',
+                  minWidth: '150px'
                 }}
               />
               <SearchIcon
@@ -210,11 +324,16 @@ function Header() {
             <Hidden mdUp>
               <MenuIcon />
             </Hidden>
-          </Stack>
+          </Stack> */}
         </Grid>
       </Grid>
     </Container>
   )
 }
+
+const AlignItemGrid = styled(Grid)({
+  display: 'flex',
+  alignItems: 'center'
+})
 
 export { Header }

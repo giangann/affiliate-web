@@ -193,7 +193,7 @@ export const TextContent = styled(Typography)({
 export const BoxContainer = styled(Box)({
   border: '2px solid #fff',
   backgroundColor: '#ffffff',
-  marginBottom: '1rem'
+  marginBottom: '1rem', 
 })
 
 export { Sidebar }
