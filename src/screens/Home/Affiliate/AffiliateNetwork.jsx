@@ -11,8 +11,10 @@ import {
 import { List } from '~/components/List'
 import { Stars } from '~/components/Star'
 import {
-  AdvertisingNetworkItem, AffiliateNetworkItem,
-  AffiliateOfferItem, Filter
+  AdvertisingNetworkItem,
+  AffiliateNetworkItem,
+  AffiliateOfferItem,
+  Filter
 } from '~/screens/Home'
 
 import { blue } from '~/styles'
@@ -27,7 +29,6 @@ import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 const data = [1, 2, 3, 4, 5]
 
 const AffiliateNetwork = () => {
-  
   return (
     <React.Fragment>
       <Stack sx={{ backgroundColor: 'white' }}>
@@ -399,4 +400,3 @@ const AffiliateNetwork = () => {
 }
 
 export { AffiliateNetwork }
-

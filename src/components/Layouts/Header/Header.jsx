@@ -29,6 +29,7 @@ function Header() {
     },
     {
       name: 'Resources',
+      path: '/resources',
       icon: <AutoAwesomeMotionIcon />
     },
     {
