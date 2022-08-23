@@ -1,15 +1,6 @@
-import { Button as MyButton } from '~/components/Buttons'
 import { Avatar, Box, Grid, Hidden, Link, Stack, Typography } from '@mui/material'
 import React from 'react'
-import { Button } from '~/components/Buttons'
-import {
-  Filter,
-  AffiliateNetworkItem,
-  AffiliateOfferItem,
-  AdvertisingNetworkItem,
-  AffiliateProgramItem
-} from '~/screens/Home'
-import { Stars } from '~/components/Star'
+import { Button, Button as MyButton } from '~/components/Buttons'
 import {
   BoxContainer,
   FeaturedNetworkItem,
@@ -18,15 +9,22 @@ import {
   TextHeading
 } from '~/components/Layouts/Sidebar'
 import { List } from '~/components/List'
+import { Stars } from '~/components/Star'
+import {
+  AdvertisingNetworkItem,
+  AffiliateNetworkItem,
+  AffiliateOfferItem,
+  Filter
+} from '~/screens/Home'
 
 import { blue } from '~/styles'
 
 import { listGifs } from '~/assets/fake-data/list-gifs'
 import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
-import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
-import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
+import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
+import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 
 const data = [1, 2, 3, 4, 5]
 
@@ -301,37 +299,101 @@ const AffiliateNetwork = () => {
         </BoxContainer>
       </Hidden>
 
-      <Stack sx={{ backgroundColor: 'white' }}>
-        <List
-          sx={{ px: 3, pb: 2 }}
-          header={() => (
-            <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
-              <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                <Typography
-                  variant="h1"
-                  sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+      <Stack paddingX={3} sx={{ backgroundColor: 'white' }}>
+        <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
+          <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+            <Typography variant="h1" sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}>
+              Affiliate Programs
+            </Typography>
+          </Stack>
+        </Grid>
+        <Stack>
+          {data.map((item, index) => (
+            <Stack key={index} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
+              <Grid container>
+                <Grid item xs={10}>
+                  <Typography
+                    component="a"
+                    className="no-underline"
+                    href="/affmine"
+                    sx={{
+                      textDecoration: 'none',
+                      '&:hover': {
+                        color: '#f60'
+                      },
+                      color: '#2779bd',
+                      marginRight: 1,
+                      fontWeight: 'bold',
+                      fontSize: '0.9rem'
+                    }}
+                  >
+                    Mostbet Partners
+                  </Typography>
+                </Grid>
+                <Grid item xs={2} className="d-flex justify-content-end">
+                  <Stars rating={2.5} />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid
+                  item
+                  xs={3}
+                  md={2}
+                  sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}
                 >
-                  Affiliate Programs
-                </Typography>
-              </Stack>
-            </Grid>
-          )}
-          Item={AffiliateProgramItem}
-          footer={() => (
-            <div className="d-flex justify-content-center pt-3">
-              <Button
-                sx={{
-                  color: '#2779bd',
-                  fontSize: '0.75rem',
-                  fontWeight: 'bold'
-                }}
-                className="ml-3 rounded px-1"
-              >
-                See more offers on affplus
-              </Button>
-            </div>
-          )}
-        />
+                  <img
+                    style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
+                    className="bg-white shadow-lg rounded"
+                    src="https://apimg.net/sponsors/index/af3d653df304f38cdc0985da44aa50c9.jpg"
+                    alt="1"
+                  />
+                  <Hidden mdUp>
+                    <Button variant="outlined" sx={{ maxWidth: '100%', width: '95px' }}>
+                      Join
+                    </Button>
+                  </Hidden>
+                </Grid>
+                <Grid item xs={9} md={10}>
+                  <Grid container>
+                    <Grid item xs={12} md={10}>
+                      <Typography
+                        component="p"
+                        className="text-gray"
+                        sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold' }}
+                      >
+                        Affmine is an affiliate network mostly based on incentive space and
+                        offerwall solutions.{' '}
+                        <Hidden smDown>We have large experience in affiliate mar</Hidden> ...
+                      </Typography>
+                      <Typography
+                        sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}
+                      >
+                        52 Reviews / 821 Offers / In-house / Bi-Weekly, Weekly
+                      </Typography>
+                    </Grid>
+                    <Hidden mdDown>
+                      <Grid item xs={2} className="d-flex align-items-center justify-content-end">
+                        <Button variant="outlined">Join</Button>
+                      </Grid>
+                    </Hidden>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Stack>
+          ))}
+          <div className="d-flex justify-content-center pt-3">
+            <Button
+              sx={{
+                color: '#2779bd',
+                fontSize: '0.75rem',
+                fontWeight: 'bold'
+              }}
+              className="ml-3 rounded px-1"
+            >
+              See more offers on affplus
+            </Button>
+          </div>
+        </Stack>
       </Stack>
     </React.Fragment>
   )

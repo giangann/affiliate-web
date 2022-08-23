@@ -13,3 +13,8 @@ export const red = {
   orange: '#f60',
   text: '#ef5753'
 }
+
+export const orange = {
+  900: '#de751f',
+  500: '#f60'
+}
