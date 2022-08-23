@@ -24,5 +24,5 @@ export const Stars = (props) => {
 }
 
 const Star = ({ link }) => {
-  return <Box component="img" src={link} alt="star" />
+  return <Box component="img" src={link} alt="star" sx={{ mb: '3px' }} />
 }

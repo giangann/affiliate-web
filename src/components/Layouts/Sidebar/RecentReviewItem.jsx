@@ -37,7 +37,7 @@ export const RecentReviewItem = () => {
         </Box>
         <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <Stars rating={5} />
-          <TextContent sx={{ position: 'relative', top: '2px' }}>2 days ago</TextContent>
+          <TextContent>2 days ago</TextContent>
         </Box>
         <TextContent>Great network.. nice offers with high payout.. And they pay...</TextContent>
       </Stack>

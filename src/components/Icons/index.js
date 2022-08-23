@@ -1,0 +1,6 @@
+export * from './MdiPhoneClassic'
+export * from './IcOutlineMail'
+export * from './IcOutlineFacebook'
+export * from './Icon'
+export * from './LikeIcon'
+export * from './DislikeIcon'
