@@ -1,11 +1,13 @@
+import { Typography } from '@mui/material'
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { BoxWithPagination } from '~/components/Pagination'
 export const Detail = () => {
   const { slug } = useParams()
 
   return (
-    <div>
-      <h1>{slug}</h1>
-    </div>
+    <BoxWithPagination>
+      <Typography>{slug}</Typography>
+    </BoxWithPagination>
   )
 }
