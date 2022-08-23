@@ -17,6 +17,7 @@ import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { gray, silver } from '~/constants/color'
 import { orange } from '~/styles'
+import { TitleWithBorder } from '../Typographys'
 
 const affiliateOfferField = [
   {
@@ -175,20 +176,7 @@ const OfferDialog = (props) => {
           </Grid>
 
           <Box>
-            <Typography
-              component="h4"
-              sx={{
-                borderLeft: '4px solid #3490dc',
-                paddingX: 1,
-                lineHeight: 1,
-                fontSize: '0.825rem',
-                color: '#3d4852',
-                textTransform: 'uppercase',
-                fontWeight: 'bold'
-              }}
-            >
-              Description
-            </Typography>
+             <TitleWithBorder title="DESCRIPTION"/>
 
             <Typography
               component="p"
