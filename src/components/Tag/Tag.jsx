@@ -1,4 +1,4 @@
-export const Tag = ({ label }) => {
+export const Tag = ({ label, ...props }) => {
   return (
     <span
       style={{
@@ -8,7 +8,8 @@ export const Tag = ({ label }) => {
         fontSize: '0.75rem',
         marginRight: '0.5rem',
         padding: '2px 4px',
-        borderRadius: '0.25rem'
+        borderRadius: '0.25rem',
+        ...props?.sx
       }}
     >
       {label}
