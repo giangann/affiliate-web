@@ -14,9 +14,13 @@ const Resource = () => {
         <Box sx={{ py: 2 }}>
           <TitleWithBorder sx={{ borderColor: orange[500] }} title="Resources" />
         </Box>
-        <img className="block" src={AlgoAffiliatesImg} alt="Algo Affiliates"></img>
+        <Box sx={{ mx: -3, backgroundColor: '#f1f5f8' }}>
+          <Box sx={{ mx: 3 }}>
+            <img className="py-2 w-100" src={AlgoAffiliatesImg} alt="Algo Affiliates" />
+          </Box>
+        </Box>
+        <ResourceBlock withLabel={true} />
         <ResourceBlock />
-        <ResourceBlock withLabel={true}/>
       </Stack>
     </Stack>
   )
