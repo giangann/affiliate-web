@@ -1,18 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
+import { Button } from '~/components/Buttons'
+import { grey } from '~/styles/colors'
+import './style.css'
 
-const INITIAL_HEIGHT = 46
+const INITIAL_HEIGHT = 36
+const EXPAND_HEIGHT = 130
 
 export const BoxComment = ({ userName, ...props }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const [commentValue, setCommentValue] = useState('')
 
-  const outerHeight = useRef(INITIAL_HEIGHT)
   const textRef = useRef(null)
-  const containerRef = useRef(null)
-
-  //   const handleExpand = () => {
-  //     setIsExpanded(!isExpanded)
-  //   }
 
   const handleChange = (e) => {
     setCommentValue(e.target.value)
@@ -36,47 +34,60 @@ export const BoxComment = ({ userName, ...props }) => {
 
   const onExpand = () => {
     if (!isExpanded) {
-      outerHeight.current = containerRef.current.scrollHeight
       setIsExpanded(true)
     }
   }
 
-  console.log(outerHeight.current, isExpanded)
-
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit}
+    <div
+      className="box-comment"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: isExpanded ? EXPAND_HEIGHT : INITIAL_HEIGHT,
+        border: `1px solid ${isExpanded ? '#3490dc' : '#606f7b'}`
+      }}
+    >
+      <textarea
+        ref={textRef}
+        onClick={onExpand}
+        onFocus={onExpand}
         onKeyDown={handleKeyDown}
-        ref={containerRef}
-        //   className={cn('comment-box', {
-        //     expanded: isExpanded,
-        //     collapsed: !isExpanded,
-        //     modified: commentValue.length > 0
-        //   })}
+        onChange={handleChange}
+        placeholder={`@${userName}`}
+        value={commentValue}
+        className="comment-input"
+      />
+      <div
+        className={`actions ${!isExpanded ? 'hide' : 'show'}`}
         style={{
-          display: 'inline-block',
-          minHeight: isExpanded ? outerHeight.current : INITIAL_HEIGHT
+          display: 'flex',
+          width: '100%'
         }}
       >
-        <textarea
-          ref={textRef}
-          onClick={onExpand}
-          onFocus={onExpand}
-          onChange={handleChange}
-          placeholder={`@${userName}`}
-          value={commentValue}
-          style={{ height: '100%' }}
-        />
-        <div className="actions">
-          <button type="button" className="cancel" onClick={handleClose}>
-            Cancel
-          </button>
-          <button type="submit" disabled={commentValue.length < 1}>
-            Respond
-          </button>
+        <div style={{ flex: 2 }}>
+          <input type="text" placeholder="Name" className="action-input" />
+          <input type="text" placeholder="Email" className="action-input" />
         </div>
-      </form>
+        <div
+          style={{
+            flex: 1,
+            position: 'absolute',
+            right: '16px',
+            top: '50%',
+            transform: 'translateY(-50%)'
+          }}
+          className="action-button"
+        >
+          <Button type="button-grey" onClick={handleClose} sx={{ marginRight: '8px' }}>
+            CANCEL
+          </Button>
+
+          <Button type="button-blue" disabled={commentValue.length < 1}>
+            REPLY
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

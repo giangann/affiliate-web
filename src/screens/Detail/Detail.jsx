@@ -91,7 +91,15 @@ export const Detail = () => {
   }
   return (
     <>
-      <ReviewForm open={open} handleClose={handleClose} title={<Typography sx={{color: '#2779bd', fontSize: '1.5rem', fontWeight: 'bold',}}>Olavivo</Typography>} />
+      <ReviewForm
+        open={open}
+        handleClose={handleClose}
+        title={
+          <Typography sx={{ color: '#2779bd', fontSize: '1.5rem', fontWeight: 'bold' }}>
+            Olavivo
+          </Typography>
+        }
+      />
       <Stack>
         {/* Affiliate Network */}
         <Stack
@@ -176,15 +184,22 @@ export const Detail = () => {
                 </Stack>
               </Stack>
 
-              <Stack direction="row" py="0.75rem" mt="0.75rem" borderTop="1px dashed #dae1e7">
-                <button
+              <Stack
+                direction="row"
+                py="0.75rem"
+                mt="0.75rem"
+                gap="8px"
+                borderTop="1px dashed #dae1e7"
+              >
+                <Button
+                  type="button-blue"
                   onClick={() => {
                     handleClickOpen()
                   }}
                 >
                   Write a Review
-                </button>
-                <button>Join now</button>
+                </Button>
+                <Button type="button-red">Join now</Button>
               </Stack>
             </Grid>
             <Grid item xs={12} sm={4}>
@@ -378,9 +393,9 @@ export const Detail = () => {
                 borderBottom="1px solid #d6eaff"
               >
                 <FlexBoxAlignCenter gap="1.25rem">
-                  <button>All Reviews (22)</button>
-                  <button>Payment Proofs</button>
-                  <button>Questions</button>
+                  <Button type="button-blue"> All Reviews (22)</Button>
+                  <Button type="button-grey">Payment Proofs</Button>
+                  <Button type="button-grey">Questions</Button>
                 </FlexBoxAlignCenter>
                 <FlexBoxAlignCenter gap="8px">
                   <TextGrey>sort:</TextGrey>
