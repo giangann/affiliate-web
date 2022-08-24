@@ -17,6 +17,7 @@ import { AffiliateOfferItem } from '~/screens/Home'
 import { BoxWithPagination } from '~/components/Pagination'
 
 import { FlexBoxAlignCenterJustifyBetween, FlexBoxAlignCenter } from '~/styles'
+import { ReviewForm } from './ReviewForm'
 
 const desc =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facere adipisci, eiusquo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit amet consecteturadipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic,aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatem corporis accusamusanimi? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugitperspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facereadipisci, eius quo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit ametconsectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventoretempore, hic, aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatemcorporis accusamus animi?'
@@ -79,9 +80,18 @@ const arr = [0, 1, 2, 3]
 
 export const Detail = () => {
   const { slug } = useParams()
+  const [open, setOpen] = React.useState(false)
 
+  const handleClickOpen = () => {
+    setOpen(true)
+    console.log(open)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
   return (
     <>
+      <ReviewForm open={open} handleClose={handleClose} title={<Typography sx={{color: '#2779bd', fontSize: '1.5rem', fontWeight: 'bold',}}>Olavivo</Typography>} />
       <Stack>
         {/* Affiliate Network */}
         <Stack
@@ -167,7 +177,13 @@ export const Detail = () => {
               </Stack>
 
               <Stack direction="row" py="0.75rem" mt="0.75rem" borderTop="1px dashed #dae1e7">
-                <button>Write a Review</button>
+                <button
+                  onClick={() => {
+                    handleClickOpen()
+                  }}
+                >
+                  Write a Review
+                </button>
                 <button>Join now</button>
               </Stack>
             </Grid>

@@ -235,7 +235,9 @@ function Footer() {
           <Grid item xs={12} md={6}>
             <Stack direction="row" spacing={2} flexWrap={{ xs: 'wrap', md: 'unset' }}>
               {footerLinks.map((item, index) => (
-                <AlibabaFooterNormalText sx={{ opacity: 0.4 }}>{item.name}</AlibabaFooterNormalText>
+                <AlibabaFooterNormalText key={index} sx={{ opacity: 0.4 }}>
+                  {item.name}
+                </AlibabaFooterNormalText>
               ))}
             </Stack>
           </Grid>
