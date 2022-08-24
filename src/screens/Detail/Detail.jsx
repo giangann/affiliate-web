@@ -132,7 +132,7 @@ export const Detail = () => {
           </Box>
 
           <Grid container sx={{ py: '12px' }} justifyContent="space-between">
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <Stack sx={{ flex: 1 }}>
                 <Typography
                   variant="h1"
@@ -171,7 +171,7 @@ export const Detail = () => {
                 <button>Join now</button>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={4}>
               <Box component="img" src={detailImg} width="100%" />
             </Grid>
           </Grid>
@@ -182,7 +182,7 @@ export const Detail = () => {
 
         {/* Affiliate Network Details */}
         <Grid container px="1.25rem" mb="8px" backgroundColor="#fff">
-          <Grid item xs={9} py="16px" pr="0.5rem" borderRight="1px solid #f1f5f8">
+          <Grid item sm={9} xs={12} py="16px" pr="0.5rem" borderRight="1px solid #f1f5f8">
             <Stack>
               <TextHeading pb="12px">Affiliate Network Details</TextHeading>
 
@@ -198,18 +198,34 @@ export const Detail = () => {
               ))}
             </Stack>
           </Grid>
-          <Grid item xs={3} mt="20px">
+          <Grid item sm={3} xs={12} mt="20px">
             <Stack ml="20px" sx={{ textAlign: 'center' }}>
               <TextHeading pb="12px">Rating Distribution</TextHeading>
               <Box sx={{ width: '100%', textAlign: 'center', py: '0.75rem', position: 'relative' }}>
-                <Box component="img" src={Circel} sx={{ width: '60px', height: '60px' }} />
+                <Box
+                  component="img"
+                  src={Circel}
+                  sx={{
+                    width: {
+                      sm: '60px',
+                      xs: '90px'
+                    },
+                    height: {
+                      sm: '60px',
+                      xs: '90px'
+                    }
+                  }}
+                />
                 <TextGrey
                   sx={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    fontSize: '0.825rem'
+                    fontSize: {
+                      xs: '1rem',
+                      sm: '0.825rem'
+                    }
                   }}
                 >
                   5
@@ -335,7 +351,16 @@ export const Detail = () => {
           <List
             sx={{ px: 3, pb: 2 }}
             header={() => (
-              <FlexBoxAlignCenterJustifyBetween py="16px" borderBottom="1px solid #d6eaff">
+              <FlexBoxAlignCenterJustifyBetween
+                sx={{
+                  flexDirection: {
+                    xs: 'column',
+                    md: 'row'
+                  }
+                }}
+                py="16px"
+                borderBottom="1px solid #d6eaff"
+              >
                 <FlexBoxAlignCenter gap="1.25rem">
                   <button>All Reviews (22)</button>
                   <button>Payment Proofs</button>
@@ -353,10 +378,12 @@ export const Detail = () => {
             )}
             Item={CommentItem}
             footer={() => (
-              <BoxWithPagination>
-                This is footer
-                <Typography>{slug}</Typography>
-              </BoxWithPagination>
+              <>
+                <BoxWithPagination>
+                  <Typography>{slug}</Typography>
+                </BoxWithPagination>
+                <button>write a review</button>
+              </>
             )}
           />
         </Stack>

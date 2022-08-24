@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, Box } from '@mui/material'
+import { Stack, Box, Hidden } from '@mui/material'
 import { Stars, Icon, TagScore } from '~/components'
 import {
   FlexBoxAlignCenterJustifyBetween,
@@ -12,22 +12,29 @@ import messageImg from '~/assets/svgs/message.svg'
 import avatarImg from '~/assets/images/avatar3.webp'
 import shareImg from '~/assets/svgs/share.svg'
 import { LikeIcon, DislikeIcon } from '~/components/Icons'
+import { BoxComment } from './BoxComment'
+
 export const CommentItem = () => {
   return (
-    <Stack direction="row" py="32px" borderBottom="1px solid #d6eaff">
-      <Box mr="24px">
-        <Icon src={avatarImg} sx={{ width: '32px', height: '32px' }} />
-      </Box>
+    <Stack direction={{ xs: 'column', sm: 'row' }} py="32px" borderBottom="1px solid #d6eaff">
+      <Hidden smDown>
+        <Box mr="24px">
+          <Icon src={avatarImg} sx={{ width: '32px', height: '32px' }} />
+        </Box>
+      </Hidden>
       <Stack flex={1} gap="8px">
         <FlexBoxAlignCenterJustifyBetween>
           <FlexBoxAlignCenter gap="12px">
+            <Hidden smUp>
+              <Icon src={avatarImg} sx={{ width: '32px', height: '32px' }} />
+            </Hidden>
             <Stars rating={4.5} />
             <TextHeading>Name</TextHeading>
           </FlexBoxAlignCenter>
           <TextGrey>1 day ago</TextGrey>
         </FlexBoxAlignCenterJustifyBetween>
 
-        <FlexBoxAlignCenter gap="12px">
+        <FlexBoxAlignCenter gap="4px" flexWrap="wrap">
           <TagScore lable="offers" score={5} />
           <TagScore lable="PAYOUT" score={5} />
           <TagScore lable="TRACKING" score={5} />
@@ -38,6 +45,7 @@ export const CommentItem = () => {
           Yes i have worked with Neogara they have paid me on time thus far. It’s a pleasure to work
           with such a professional team!
         </TextComment>
+        {/* <BoxComment /> */}
 
         <FlexBoxAlignCenter gap="12px">
           <FlexBoxAlignCenter gap="4px">
