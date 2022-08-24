@@ -81,7 +81,7 @@ export const Detail = () => {
   const { slug } = useParams()
 
   return (
-    <>
+    <BoxWithPagination>
       <Stack>
         {/* Affiliate Network */}
         <Stack
@@ -352,17 +352,11 @@ export const Detail = () => {
               </FlexBoxAlignCenterJustifyBetween>
             )}
             Item={CommentItem}
-            footer={() => (
-              <BoxWithPagination>
-                This is footer
-                <Typography>{slug}</Typography>
-              </BoxWithPagination>
-            )}
           />
         </Stack>
         {/* End Affiliate Reviews */}
       </Stack>
-    </>
+    </BoxWithPagination>
   )
 }
 
