@@ -1,6 +1,7 @@
 import React from 'react'
 import { Stack, Box, Hidden } from '@mui/material'
 import { Stars, Icon, TagScore } from '~/components'
+import { TreeView } from '~/components/TreeView'
 import {
   FlexBoxAlignCenterJustifyBetween,
   FlexBoxAlignCenter,
@@ -15,6 +16,12 @@ import { LikeIcon, DislikeIcon } from '~/components/Icons'
 import { BoxComment } from './BoxComment'
 
 export const CommentItem = () => {
+  const [isReply, setIsReply] = React.useState(false)
+
+  const handleReply = () => {
+    setIsReply(!isReply)
+  }
+
   return (
     <Stack direction={{ xs: 'column', sm: 'row' }} py="32px" borderBottom="1px solid #d6eaff">
       <Hidden smDown>
@@ -45,29 +52,40 @@ export const CommentItem = () => {
           Yes i have worked with Neogara they have paid me on time thus far. It’s a pleasure to work
           with such a professional team!
         </TextComment>
-        {/* <BoxComment /> */}
 
         <FlexBoxAlignCenter gap="12px">
-          <FlexBoxAlignCenter gap="4px">
+          <FlexBoxAlignCenter
+            gap="4px"
+            onClick={handleReply}
+            sx={{
+              cursor: 'pointer'
+            }}
+          >
             <Icon src={messageImg} />
             <TextGrey>REPLY</TextGrey>
           </FlexBoxAlignCenter>
 
-          <FlexBoxAlignCenter gap="4px">
+          <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }}>
             <LikeIcon />
             <TextGrey>(0)</TextGrey>
           </FlexBoxAlignCenter>
 
-          <FlexBoxAlignCenter gap="4px">
+          <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }}>
             <DislikeIcon />
             <TextGrey>(0)</TextGrey>
           </FlexBoxAlignCenter>
 
-          <FlexBoxAlignCenter gap="4px">
+          <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }}>
             <Icon src={shareImg} />
             <TextGrey>SHARE</TextGrey>
           </FlexBoxAlignCenter>
         </FlexBoxAlignCenter>
+        {isReply && (
+          <Box>
+            <BoxComment userName="Bao" />
+            <TreeView />
+          </Box>
+        )}
       </Stack>
     </Stack>
   )
