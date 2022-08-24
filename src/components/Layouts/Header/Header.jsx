@@ -232,8 +232,8 @@ function Header() {
                   spacing={{ md: 2, lg: 2.5 }}
                 >
                   {navBarItem.map((item, index) => (
-                    <React.Fragment>
-                      <Stack direction="row" spacing={0.5} key={index} justifyContent="center">
+                    <React.Fragment key={index}>
+                      <Stack direction="row" spacing={0.5} justifyContent="center">
                         {item.icon}
                         <AlibabaText>{item.name}</AlibabaText>
                       </Stack>
