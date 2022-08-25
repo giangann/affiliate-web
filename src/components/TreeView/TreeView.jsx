@@ -43,6 +43,20 @@ const comments = [
     text: 'agreed, solid content here for sure!',
     author: 'jeff',
     children: null
+  },
+  {
+    id: 7,
+    parentId: 2,
+    text: 'Cha toi id la 2, ong toi id la 1 What r u talking about this article is terrible...',
+    author: 'Bao dzz123',
+    children: null
+  },
+  {
+    id: 8,
+    parentId: 7,
+    text: 'Cha toi id la 7, ong toi id la 2',
+    author: 'Bao 321',
+    children: null
   }
 ]
 
