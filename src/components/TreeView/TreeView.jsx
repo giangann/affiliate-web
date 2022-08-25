@@ -57,6 +57,20 @@ const comments = [
     text: 'Cha toi id la 7, ong toi id la 2',
     author: 'Bao 321',
     children: null
+  },
+  {
+    id: 9,
+    parentId: 8,
+    text: 'Cha toi id la 7, ong toi id la 2',
+    author: 'Bao 321',
+    children: null
+  },
+  {
+    id: 10,
+    parentId: 9,
+    text: 'Cha toi id la 7, ong toi id la 2',
+    author: 'Bao 321',
+    children: null
   }
 ]
 
