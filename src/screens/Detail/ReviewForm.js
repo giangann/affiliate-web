@@ -94,7 +94,8 @@ const StyledRating = styled(Rating)({
   }
 })
 
-const ReviewDetail = () => {
+const ReviewDetail = (props) => {
+  const { onChange, value } = props
   return (
     <Grid container>
       <Grid item xs={4}>
@@ -103,8 +104,8 @@ const ReviewDetail = () => {
       <Grid item xs={8}>
         <StyledRating
           name="simple-controlled"
-          value={2}
-          // onChange={onChange}
+          value={value}
+          onChange={onChange}
           icon={<SquareSharpIcon sx={{ fontSize: '15px' }} />}
           emptyIcon={<SquareSharpIcon sx={{ fontSize: '15px' }} />}
           size="small"
@@ -116,9 +117,19 @@ const ReviewDetail = () => {
 
 const ReviewForm = (props) => {
   const ref = React.useRef(null)
-  const { open, handleClose, children, title } = props
-
+  const { open, handleClose, title } = props
   const [rating, setRating] = React.useState(2)
+  const [image, setImage] = React.useState('')
+
+  const { handleSubmit, control } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+    defaultValues: {}
+  })
+
+  const previewImageURL = (file) => {
+    setImage(URL.createObjectURL(file))
+  }
 
   const statusRating = (rating) => {
     switch (rating) {
@@ -137,17 +148,10 @@ const ReviewForm = (props) => {
     }
   }
 
-  const { handleSubmit, control } = useForm({
-    mode: 'onSubmit',
-    reValidateMode: 'onChange',
-    defaultValues: {}
-  })
-
-  const onSubmit = (data) => {}
-
-  const onButtonClick = () => {
-    ref.current.click()
+  const onSubmit = (data) => {
+    console.log(data)
   }
+
   return (
     <React.Fragment>
       <BootstrapDialog
@@ -172,7 +176,7 @@ const ReviewForm = (props) => {
             <Stack direction="row">
               <Controller
                 control={control}
-                name="rating"
+                name="rating.overall"
                 defaultValue={2}
                 render={({ field: { onChange, value } }) => (
                   <Rating
@@ -206,7 +210,14 @@ const ReviewForm = (props) => {
             <Grid container>
               {reviewDetails.map((item, index) => (
                 <Grid item xs={6} key={index}>
-                  <ReviewDetail />
+                  <Controller
+                    control={control}
+                    name={`rating.${item.label.toLocaleLowerCase()}`}
+                    defaultValue={2}
+                    render={({ field: { onChange, value } }) => (
+                      <ReviewDetail onChange={onChange} value={value} />
+                    )}
+                  />
                 </Grid>
               ))}
             </Grid>
@@ -235,7 +246,7 @@ const ReviewForm = (props) => {
             </TitleReviewForm>
             <Button
               onClick={() => {
-                onButtonClick()
+                ref.current.click()
               }}
               variant="outlined"
               sx={{ gap: 1 }}
@@ -244,45 +255,76 @@ const ReviewForm = (props) => {
               <span style={{ fontWeight: 'bold' }}>UPLOAD IMAGE</span>
             </Button>
           </Box>
-          <input ref={ref} name="image" type="file" style={{ display: 'none' }} />
-
+          <Controller
+            control={control}
+            name="image"
+            render={({ field: { onChange, value } }) => (
+              <input
+                ref={ref}
+                name="image"
+                type="file"
+                onChange={(e) => {
+                  previewImageURL(e.target.files[0])
+                }}
+                value={value}
+                style={{ display: 'none' }}
+              />
+            )}
+          />
+          {image && <img src={image} alt="image1" />}
           <Box sx={{ my: 2 }}>
             <TitleReviewForm>
-              Your review <span style={{ color: 'red' }}>*</span>
+              Name <span style={{ color: 'red' }}>*</span>
             </TitleReviewForm>
-            <Input
-              disableUnderline={true}
-              placeholder="Name"
-              sx={{
-                paddingX: 2,
-                paddingY: 1,
-                fontWeight: 600,
-                fontSize: '0.825rem',
-                width: '50%',
-                backgroundColor: '#f8fafc',
-                border: '1px solid #dae1e7',
-                borderRadius: '0.25rem'
-              }}
+            <Controller
+              control={control}
+              name="name"
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  disableUnderline={true}
+                  placeholder="Name"
+                  onChange={onChange}
+                  value={value}
+                  sx={{
+                    paddingX: 2,
+                    paddingY: 1,
+                    fontWeight: 600,
+                    fontSize: '0.825rem',
+                    width: '50%',
+                    backgroundColor: '#f8fafc',
+                    border: '1px solid #dae1e7',
+                    borderRadius: '0.25rem'
+                  }}
+                />
+              )}
             />
           </Box>
 
           <Box sx={{ my: 2 }}>
             <TitleReviewForm>
-              Your review <span style={{ color: 'red' }}>*</span>
+              Email <span style={{ color: 'red' }}>*</span>
             </TitleReviewForm>
-            <Input
-              disableUnderline={true}
-              placeholder="Name"
-              sx={{
-                paddingX: 2,
-                paddingY: 1,
-                fontWeight: 600,
-                fontSize: '0.825rem',
-                width: '50%',
-                backgroundColor: '#f8fafc',
-                border: '1px solid #dae1e7',
-                borderRadius: '0.25rem'
-              }}
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, value } }) => (
+                <Input
+                  disableUnderline={true}
+                  placeholder="Email"
+                  onChange={onChange}
+                  value={value}
+                  sx={{
+                    paddingX: 2,
+                    paddingY: 1,
+                    fontWeight: 600,
+                    fontSize: '0.825rem',
+                    width: '50%',
+                    backgroundColor: '#f8fafc',
+                    border: '1px solid #dae1e7',
+                    borderRadius: '0.25rem'
+                  }}
+                />
+              )}
             />
           </Box>
           <Button
