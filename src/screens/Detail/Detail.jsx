@@ -17,6 +17,7 @@ import { AffiliateOfferItem } from '~/screens/Home'
 import { BoxWithPagination } from '~/components/Pagination'
 
 import { FlexBoxAlignCenterJustifyBetween, FlexBoxAlignCenter } from '~/styles'
+import { ReviewForm } from './ReviewForm'
 
 const desc =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facere adipisci, eiusquo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit amet consecteturadipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic,aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatem corporis accusamusanimi? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugitperspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facereadipisci, eius quo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit ametconsectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventoretempore, hic, aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatemcorporis accusamus animi?'
@@ -79,9 +80,26 @@ const arr = [0, 1, 2, 3]
 
 export const Detail = () => {
   const { slug } = useParams()
+  const [open, setOpen] = React.useState(false)
 
+  const handleClickOpen = () => {
+    setOpen(true)
+    console.log(open)
+  }
+  const handleClose = () => {
+    setOpen(false)
+  }
   return (
     <BoxWithPagination>
+      <ReviewForm
+        open={open}
+        handleClose={handleClose}
+        title={
+          <Typography sx={{ color: '#2779bd', fontSize: '1.5rem', fontWeight: 'bold' }}>
+            Olavivo
+          </Typography>
+        }
+      />
       <Stack>
         {/* Affiliate Network */}
         <Stack
@@ -132,7 +150,7 @@ export const Detail = () => {
           </Box>
 
           <Grid container sx={{ py: '12px' }} justifyContent="space-between">
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} sm={6}>
               <Stack sx={{ flex: 1 }}>
                 <Typography
                   variant="h1"
@@ -166,12 +184,25 @@ export const Detail = () => {
                 </Stack>
               </Stack>
 
-              <Stack direction="row" py="0.75rem" mt="0.75rem" borderTop="1px dashed #dae1e7">
-                <button>Write a Review</button>
-                <button>Join now</button>
+              <Stack
+                direction="row"
+                py="0.75rem"
+                mt="0.75rem"
+                gap="8px"
+                borderTop="1px dashed #dae1e7"
+              >
+                <Button
+                  type="button-blue"
+                  onClick={() => {
+                    handleClickOpen()
+                  }}
+                >
+                  Write a Review
+                </Button>
+                <Button type="button-red">Join now</Button>
               </Stack>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} sm={4}>
               <Box component="img" src={detailImg} width="100%" />
             </Grid>
           </Grid>
@@ -182,7 +213,7 @@ export const Detail = () => {
 
         {/* Affiliate Network Details */}
         <Grid container px="1.25rem" mb="8px" backgroundColor="#fff">
-          <Grid item xs={9} py="16px" pr="0.5rem" borderRight="1px solid #f1f5f8">
+          <Grid item sm={9} xs={12} py="16px" pr="0.5rem" borderRight="1px solid #f1f5f8">
             <Stack>
               <TextHeading pb="12px">Affiliate Network Details</TextHeading>
 
@@ -198,18 +229,34 @@ export const Detail = () => {
               ))}
             </Stack>
           </Grid>
-          <Grid item xs={3} mt="20px">
+          <Grid item sm={3} xs={12} mt="20px">
             <Stack ml="20px" sx={{ textAlign: 'center' }}>
               <TextHeading pb="12px">Rating Distribution</TextHeading>
               <Box sx={{ width: '100%', textAlign: 'center', py: '0.75rem', position: 'relative' }}>
-                <Box component="img" src={Circel} sx={{ width: '60px', height: '60px' }} />
+                <Box
+                  component="img"
+                  src={Circel}
+                  sx={{
+                    width: {
+                      sm: '60px',
+                      xs: '90px'
+                    },
+                    height: {
+                      sm: '60px',
+                      xs: '90px'
+                    }
+                  }}
+                />
                 <TextGrey
                   sx={{
                     position: 'absolute',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    fontSize: '0.825rem'
+                    fontSize: {
+                      xs: '1rem',
+                      sm: '0.825rem'
+                    }
                   }}
                 >
                   5
@@ -335,11 +382,20 @@ export const Detail = () => {
           <List
             sx={{ px: 3, pb: 2 }}
             header={() => (
-              <FlexBoxAlignCenterJustifyBetween py="16px" borderBottom="1px solid #d6eaff">
+              <FlexBoxAlignCenterJustifyBetween
+                sx={{
+                  flexDirection: {
+                    xs: 'column',
+                    md: 'row'
+                  }
+                }}
+                py="16px"
+                borderBottom="1px solid #d6eaff"
+              >
                 <FlexBoxAlignCenter gap="1.25rem">
-                  <button>All Reviews (22)</button>
-                  <button>Payment Proofs</button>
-                  <button>Questions</button>
+                  <Button type="button-blue"> All Reviews (22)</Button>
+                  <Button type="button-grey">Payment Proofs</Button>
+                  <Button type="button-grey">Questions</Button>
                 </FlexBoxAlignCenter>
                 <FlexBoxAlignCenter gap="8px">
                   <TextGrey>sort:</TextGrey>
@@ -352,6 +408,14 @@ export const Detail = () => {
               </FlexBoxAlignCenterJustifyBetween>
             )}
             Item={CommentItem}
+            footer={() => (
+              <>
+                <BoxWithPagination>
+                  <Typography>{slug}</Typography>
+                </BoxWithPagination>
+                <button>write a review</button>
+              </>
+            )}
           />
         </Stack>
         {/* End Affiliate Reviews */}
