@@ -2,8 +2,11 @@ import React from 'react'
 import { Grid, Hidden, Typography } from '@mui/material'
 import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
+import { Link } from 'react-router-dom'
 
-export const AffiliateNetworkItem = () => {
+export const AffiliateNetworkItem = ({ item }) => {
+  console.log(item)
+
   return (
     <Grid container columnSpacing={2} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
       <Grid
@@ -15,7 +18,7 @@ export const AffiliateNetworkItem = () => {
         <img
           style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
           className="bg-white shadow-lg rounded"
-          src="https://apimg.net/sponsors/index/af3d653df304f38cdc0985da44aa50c9.jpg"
+          src={item.link_banner}
           alt="1"
         />
         <Hidden mdUp>
@@ -31,23 +34,25 @@ export const AffiliateNetworkItem = () => {
       <Grid item xs={9} md={10}>
         <Grid container>
           <Grid item xs={8} md={10}>
-            <Typography
-              component="a"
-              className="no-underline"
-              href="/affmine"
-              sx={{
-                textDecoration: 'none',
-                '&:hover': {
-                  color: '#f60'
-                },
-                color: '#2779bd',
-                marginRight: 1,
-                fontWeight: 'bold',
-                fontSize: '0.9rem'
-              }}
-            >
-              Affmine
-            </Typography>
+            <Link to={`/${item.name}`}>
+              <Typography
+                component="a"
+                className="no-underline"
+                sx={{
+                  textDecoration: 'none',
+                  '&:hover': {
+                    color: '#f60'
+                  },
+                  color: '#2779bd',
+                  marginRight: 1,
+                  fontWeight: 'bold',
+                  fontSize: '0.9rem'
+                }}
+              >
+                {item.name}
+              </Typography>
+            </Link>
+
             <Typography
               component="span"
               sx={{
@@ -58,7 +63,7 @@ export const AffiliateNetworkItem = () => {
               }}
               className="scale-sm ml-3 rounded px-1"
             >
-              4.92
+              4.92 chua co data
             </Typography>
           </Grid>
           <Grid item xs={4} md={2} className="d-flex justify-content-end">
@@ -79,7 +84,7 @@ export const AffiliateNetworkItem = () => {
               ...
             </Typography>
             <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
-              52 Reviews / 821 Offers / In-house / Bi-Weekly, Weekly
+              {item.reviews.length} Reviews / 821 Offers / In-house / Bi-Weekly, Weekly
             </Typography>
           </Grid>
           <Hidden mdDown>
