@@ -1,5 +1,5 @@
 import React from 'react'
-import { Stack, Box, Typography, Link, styled, Grid } from '@mui/material'
+import { Stack, Box, Typography, Link, styled, Grid, Paper } from '@mui/material'
 
 import {
   FeaturedNetworkItem,
@@ -190,9 +190,10 @@ export const TextContent = styled(Typography)({
   fontWeight: 'bold'
 })
 
-export const BoxContainer = styled(Box)({
+export const BoxContainer = styled(Paper)({
   backgroundColor: '#ffffff',
-  marginBottom: '1rem'
+  marginBottom: '1rem',
+  borderRadius:'0'
 })
 
 export { Sidebar }
