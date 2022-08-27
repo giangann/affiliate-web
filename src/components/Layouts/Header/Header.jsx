@@ -9,9 +9,24 @@ import StayCurrentPortraitOutlinedIcon from '@mui/icons-material/StayCurrentPort
 import FeedIcon from '@mui/icons-material/Feed'
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion'
 import ForumIcon from '@mui/icons-material/Forum'
-import { Box, Container, Divider, Grid, Hidden, Stack, styled } from '@mui/material'
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Hidden,
+  Menu,
+  MenuItem,
+  Paper,
+  Stack,
+  styled
+} from '@mui/material'
 import React from 'react'
 import { AlibabaText } from '~/screens/Home'
+import { Navbar } from 'react-bootstrap'
+
+import { orange } from '@mui/material/colors'
 
 function Header() {
   const navBarItem = [
@@ -42,73 +57,102 @@ function Header() {
   const categoriesItem = [
     {
       name: 'eCommerce',
-      icon: <ShoppingCartOutlinedIcon />,
+      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 254
     },
     {
       name: 'eCommerce',
-      icon: <FlightTakeoffOutlinedIcon />,
+      icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 22
     },
     {
       name: 'eCommerce',
-      icon: <StayCurrentPortraitOutlinedIcon />,
+      icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 7
     },
     {
       name: 'eCommerce',
-      icon: <FavoriteBorderOutlinedIcon />,
+      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 389
     },
     {
       name: 'eCommerce',
-      icon: <ShoppingCartOutlinedIcon />,
+      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 254
     },
     {
       name: 'eCommerce',
-      icon: <FlightTakeoffOutlinedIcon />,
+      icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 22
     },
     {
       name: 'eCommerce',
-      icon: <StayCurrentPortraitOutlinedIcon />,
+      icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 7
     },
     {
       name: 'eCommerce',
-      icon: <FavoriteBorderOutlinedIcon />,
+      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 389
     },
     {
       name: 'eCommerce',
-      icon: <ShoppingCartOutlinedIcon />,
+      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 254
     },
     {
       name: 'eCommerce',
-      icon: <FlightTakeoffOutlinedIcon />,
+      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
+      amount: 389
+    },
+    {
+      name: 'eCommerce',
+      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
+      amount: 254
+    },
+    {
+      name: 'eCommerce',
+      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
+      amount: 389
+    },
+    {
+      name: 'eCommerce',
+      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
+      amount: 254
+    },
+    {
+      name: 'eCommerce',
+      icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 22
     },
     {
       name: 'eCommerce',
-      icon: <StayCurrentPortraitOutlinedIcon />,
+      icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 7
     },
     {
       name: 'eCommerce',
-      icon: <FavoriteBorderOutlinedIcon />,
+      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
       amount: 389
     }
   ]
 
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorElNav, setAnchorElNav] = React.useState(null)
+
   const open = Boolean(anchorEl)
+  const openNav = Boolean(anchorElNav)
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
+
+  const handleClickNav = (event) => {
+    setAnchorElNav(event.currentTarget)
+  }
   const handleClose = () => {
     setAnchorEl(null)
+    setAnchorElNav(null)
   }
   return (
     <Container sx={{ position: 'relative' }}>
@@ -139,98 +183,95 @@ function Header() {
             style={{ width: '100%', height: 'auto' }}
           />
         </Grid>
-        <Grid item xs={12} height="47px" mb={1}>
-          <Grid
-            container
-            sx={{
-              background: 'url(https://www.affpaying.com/img/navbg.png) ',
-              color: 'white',
-              fontFamily: 'alibaba-sans',
-              height: '100%'
-            }}
 
-            // alignItems="center"
-            // spacing={0}
-            // justifyContent="space-between"
-          >
-            <AlignItemGrid item xs={5} iphone={4.5} samsung={4} sm={3} md={2}>
-              <Stack
-                direction="row"
-                alignItems="flex-end"
-                spacing={1}
-                ml={{ xs: 1, md: 2 }}
-                justifyContent="space-around"
-                sx={{
-                  background: 'url(https://www.affpaying.com/img/catebg.png)',
-                  padding: '5px 10px',
-                  borderRadius: '4px',
-                  position: 'relative',
-                  top: '-3px',
-                  maxWidth: '175px'
-                }}
-              >
-                <MenuIcon
-                  sx={{
-                    position: 'relative',
-                    top: { md: '2px' },
-                    fontSize: { xs: 'small', md: 'medium' }
-                  }}
-                />
-                <AlibabaText
-                  sx={{
-                    position: 'relative',
-                    top: { xs: '2px', md: '2px' },
-                    fontSize: { xs: '12px', md: '14px' }
-                  }}
+        {/* navbar */}
+        <Grid
+          component={Paper}
+          elevation={2}
+          item
+          xs={12}
+          height="47px"
+          mb={2}
+          sx={{
+            backgroundColor: '#3779B0',
+            color: 'white',
+            borderRadius: '0px',
+            position: 'relative'
+          }}
+        >
+          <Navbar bg="green">
+            <Grid container>
+              <AlignItemGrid item xs={5} sm={3} md={2}>
+                <BootstrapButton
+                  startIcon={<MenuIcon />}
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  onClick={handleClick}
                 >
-                  All categories
-                </AlibabaText>
-              </Stack>
-            </AlignItemGrid>
-            <AlignItemGrid
-              item
-              xs={6}
-              iphone={6.5}
-              samsung={7}
-              sm={8}
-              md={3.5}
-              sx={{ justifyContent: 'center' }}
-            >
-              <Box position="relative" width={{ xs: '100%', sm: '90%' }} alignSelf="center">
-                <input
-                  type="text"
-                  placeholder="Search affiliate network"
-                  style={{
-                    width: '100%',
-                    padding: '4px 10px',
-                    borderRadius: '4px',
-                    fontSize: '12px',
-                    minWidth: '150px'
+                  <AlibabaText
+                    sx={{
+                      fontSize: { xs: '12px', sm: '16px' },
+                      whiteSpace: 'nowrap',
+                      fontFamily: 'Open Sans !important'
+                    }}
+                  >
+                    All categories
+                  </AlibabaText>
+                </BootstrapButton>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button'
                   }}
-                />
-                <SearchIcon
                   sx={{
-                    position: 'absolute',
-                    right: '4px',
-                    top: '4px',
-                    color: '#3490DC',
-                    padding: '2px',
-                    '&:hover': {
-                      cursor: 'pointer'
+                    '& .css-6hp17o-MuiList-root-MuiMenu-list': {
+                      padding: 0
                     }
                   }}
-                />
-              </Box>
-            </AlignItemGrid>
-
-            <AlignItemGrid item xs={1} md={6.5}>
-              <Hidden mdDown>
-                <Stack
-                  direction="row"
-                  height="100%"
-                  alignItems="center"
-                  spacing={{ md: 2, lg: 2.5 }}
                 >
+                  {categoriesItem.map((item, index) => (
+                    <CategoryMenuItem key={index} onClick={handleClose} alignItem="center" gap={2}>
+                      {item.icon}
+                      <AlibabaText fontWeight={600} ml={2}>
+                        {item.name} ({item.amount})
+                      </AlibabaText>
+                    </CategoryMenuItem>
+                  ))}
+                </Menu>
+              </AlignItemGrid>
+
+              <AlignItemGrid item xs={6} sm={8} md={3.5} sx={{ justifyContent: 'center' }}>
+                <Box position="relative" width={{ xs: '100%', sm: '90%' }} alignSelf="center">
+                  <input
+                    type="text"
+                    placeholder="Search affiliate network"
+                    style={{
+                      width: '100%',
+                      padding: '4px 10px',
+                      borderRadius: '4px',
+                      fontSize: '12px',
+                      minWidth: '150px'
+                    }}
+                  />
+                  <SearchIcon
+                    sx={{
+                      position: 'absolute',
+                      right: '4px',
+                      top: '4px',
+                      color: '#3490DC',
+                      padding: '2px',
+                      '&:hover': {
+                        cursor: 'pointer'
+                      }
+                    }}
+                  />
+                </Box>
+              </AlignItemGrid>
+
+              <AlignItemGrid item xs={1} md={6.5} justifyContent="space-around">
+                <Hidden mdDown>
                   {navBarItem.map((item, index) => (
                     <React.Fragment key={index}>
                       <Stack direction="row" spacing={0.5} justifyContent="center">
@@ -240,100 +281,46 @@ function Header() {
                       <Divider orientation="vertical" />
                     </React.Fragment>
                   ))}
-                </Stack>
-              </Hidden>
-              <Hidden mdUp>
-                <MenuIcon />
-              </Hidden>
-            </AlignItemGrid>
-          </Grid>
-          {/* <Stack
-            direction="row"
-            mb={1}
-            sx={{
-              background: 'url(https://www.affpaying.com/img/navbg.png) ',
-              height: '47px',
-              color: 'white',
-              fontFamily: 'alibaba-sans'
-            }}
-            alignItems="center"
-            spacing={0}
-            justifyContent="space-between"
-          >
-            <Stack
-              direction="row"
-              alignItems="flex-end"
-              spacing={1}
-              ml={2}
-              justifyContent="space-around"
-              sx={{
-                background: 'url(https://www.affpaying.com/img/catebg.png)',
-                padding: '5px 10px',
-                borderRadius: '4px',
-                position: 'relative',
-                top: '-3px',
-                maxWidth: '175px'
-              }}
-            >
-              <MenuIcon
-                sx={{
-                  position: 'relative',
-                  top: { md: '2px' },
-                  fontSize: { xs: 'small', md: 'medium' }
-                }}
-              />
-              <AlibabaText
-                sx={{
-                  position: 'relative',
-                  top: { xs: '2px', md: '2px' },
-                  fontSize: { xs: '12px', md: '14px' }
-                }}
-              >
-                All categories
-              </AlibabaText>
-            </Stack>
-
-            <Box position="relative">
-              <input
-                type="text"
-                placeholder="Search affiliate network"
-                style={{
-                  width: '10vw',
-                  padding: '4px 10px',
-                  borderRadius: '4px',
-                  fontSize: '12px',
-                  minWidth: '150px'
-                }}
-              />
-              <SearchIcon
-                sx={{
-                  position: 'absolute',
-                  right: '10px',
-                  top: '4px',
-                  color: '#3490DC',
-                  padding: '2px',
-                  '&:hover': {
-                    cursor: 'pointer'
-                  }
-                }}
-              />
-            </Box>
-
-            <Hidden mdDown>
-              {navBarItem.map((item, index) => (
-                <React.Fragment>
-                  <Stack direction="row" spacing={0.5} key={index} justifyContent="center">
-                    {item.icon}
-                    <AlibabaText>{item.name}</AlibabaText>
-                  </Stack>
-                  <Divider orientation="vertical" />
-                </React.Fragment>
-              ))}
-            </Hidden>
-            <Hidden mdUp>
-              <MenuIcon />
-            </Hidden>
-          </Stack> */}
+                </Hidden>
+                <Hidden mdUp>
+                  <MenuIcon
+                    anchorEl={anchorElNav}
+                    onClose={handleClose}
+                    onClick={handleClickNav}
+                    aria-controls={open ? 'basic-menu-2' : undefined}
+                  />
+                  <Menu
+                    id="basic-menu-2"
+                    anchorEl={anchorElNav}
+                    open={openNav}
+                    onClose={handleClose}
+                    MenuListProps={{
+                      'aria-labelledby': 'basic-button'
+                    }}
+                    sx={{
+                      '& .css-6hp17o-MuiList-root-MuiMenu-list': {
+                        padding: 0
+                      }
+                    }}
+                  >
+                    {navBarItem.map((item, index) => (
+                      <CategoryMenuItem
+                        key={index}
+                        onClick={handleClose}
+                        alignItem="center"
+                        gap={2}
+                      >
+                        {item.icon}
+                        <AlibabaText fontWeight={600} ml={2}>
+                          {item.name}
+                        </AlibabaText>
+                      </CategoryMenuItem>
+                    ))}
+                  </Menu>
+                </Hidden>
+              </AlignItemGrid>
+            </Grid>
+          </Navbar>
         </Grid>
       </Grid>
     </Container>
@@ -344,5 +331,50 @@ const AlignItemGrid = styled(Grid)({
   display: 'flex',
   alignItems: 'center'
 })
+
+const BootstrapButton = styled(Button)(({ theme }) => ({
+  width: '90%',
+  marginLeft: '16px',
+  color: 'white',
+  boxShadow: 'none',
+  textTransform: 'none',
+  fontSize: 16,
+  padding: { xs: '2px 4px', md: '6px 12px' },
+  border: '1px solid',
+  lineHeight: 0.5,
+  backgroundColor: '#FE6330',
+  maxHeight: '28px',
+  borderColor: orange['A400'],
+  '&:hover': {
+    backgroundColor: orange[700],
+    borderColor: orange[700],
+    boxShadow: 'none'
+  },
+  '&:active': {
+    boxShadow: 'none',
+    backgroundColor: orange[700],
+    borderColor: orange['A700']
+  },
+  '&:focus': {
+    boxShadow: '0 0 0 0.2rem rgba(239,108,0,.5)'
+  },
+
+  [theme.breakpoints.down('sm')]: {
+    marginLeft: '8px'
+  }
+}))
+
+const CategoryMenuItem = styled(MenuItem)(({ theme }) => ({
+  borderBottom: 'dashed 1px grey',
+  opacity: 0.5,
+  '&:hover': {
+    opacity: 1
+  },
+
+  padding: '12px 16px',
+  [theme.breakpoints.down('sm')]: {
+    padding: '8px 16px'
+  }
+}))
 
 export { Header }

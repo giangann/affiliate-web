@@ -17,8 +17,8 @@ const Filter = () => {
       <Grid container gap={3.6}>
         <Grid item xs={3.5}>
           <DropdownButton
-            id="dropdown-basic-button"
             title="Tracking Software"
+            id="dropdown-basic-button"
             className="dropdown-basic-button"
             style={{ backgroundColor: 'unset' }}
           >
