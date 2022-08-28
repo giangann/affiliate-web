@@ -58,7 +58,7 @@ export const AffiliateProgramItem = () => {
                 sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold' }}
               >
                 Affmine is an affiliate network mostly based on incentive space and offerwall
-                solutions. <Hidden smDown>We have large experience in affiliate mar</Hidden> ...
+                solutions. We have large experience in affiliate mars in the moon and ...
               </Typography>
               <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
                 52 Reviews / 821 Offers / In-house / Bi-Weekly, Weekly

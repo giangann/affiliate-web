@@ -47,6 +47,7 @@ const StackWithPadding = styled(Stack)(({ theme }) => ({
     paddingBottom: '0',
     paddingLeft: '24px',
     paddingRight: '24px',
+    width:'100%',
   
     [theme.breakpoints.down('sm')]: {
       paddingLeft: '16px',

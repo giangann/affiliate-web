@@ -71,7 +71,7 @@ const AffiliateNetwork = () => {
             <Filter />
             <img
               className="block"
-              style={{ maxWidth: '100%' }}
+              style={{ width: '100%' }}
               src={AlgoAffiliatesImg}
               alt="Algo Affiliates"
             ></img>
@@ -180,7 +180,7 @@ const AffiliateNetwork = () => {
 
       <BoxWithHeader
         title={() => (
-          <Grid container sx={{ borderBottom: { xs: 'none', md: '1px solid #ccc' } }} mb={2}>
+          <Grid container mb={{ xs: 2, sm: 0 }}>
             <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
               <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
                 <Typography
@@ -245,7 +245,7 @@ const AffiliateNetwork = () => {
 
       <BoxWithHeader
         title={() => (
-          <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
+          <Grid container>
             <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
               <Typography variant="h1" sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}>
                 Advertising Networks
