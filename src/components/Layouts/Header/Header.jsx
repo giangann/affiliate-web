@@ -1,10 +1,11 @@
 import { Container, Grid, Paper } from '@mui/material'
 import React from 'react'
+import { ResponsiveContainer } from '..'
 import { Navbar } from './Navbar'
 
 function Header() {
   return (
-    <Container sx={{ position: 'relative' }}>
+    <ResponsiveContainer sx={{ position: 'relative' }}>
       <Grid container rowGap={2}>
         <Grid
           item
@@ -54,7 +55,7 @@ function Header() {
           <Navbar />
         </Grid>
       </Grid>
-    </Container>
+    </ResponsiveContainer>
   )
 }
 
