@@ -56,7 +56,7 @@ function Reels() {
 
   const [focusWebsite, setFocusWebsite] = useState(1)
   return (
-    <Grid container component={Paper}>
+    <Grid container component={Paper} elevation={4}>
       <Grid item xs={12} sm={4} sx={{ backgroundColor: 'white' }}>
         <Grid container sx={{ height: '100%' }}>
           <Grid item xs={6} sx={{ height: '100%' }}>

@@ -4,7 +4,7 @@ import React from 'react'
 
 function BoxWithHeader({ elevation, children, ...props }) {
   return (
-    <Paper elevation={elevation} sx={{ ...props?.sx, borderRadius: '0' }}>
+    <Paper elevation={4} sx={{ ...props?.sx, borderRadius: '0' }}>
       <Grid container>
         <GridWithPadding
           item
