@@ -1,18 +1,21 @@
 import React from 'react'
 import { Stack, Box, Typography, styled } from '@mui/material'
 
-import { blue, grey, red } from '~/styles/colors'
+import { baseColor, blue, grey, red } from '~/styles/colors'
 import Flag from '~/assets/svgs/sidebar/flag.svg'
 
-export const List = ({ data, heading, Item, ...props }) => {
-  // console.log('list', data)
-
+export const List = ({ heading, data, mainColor, Item, ...props }) => {
   return (
-    <Stack sx={{ borderTop: `3px solid ${blue['border']}`, ...props?.sx }}>
+    <Stack
+      sx={{
+        border: mainColor ? `3px solid ${mainColor}` : `3px solid ${blue['border']}`,
+        ...props?.sx
+      }}
+    >
       {heading && (
         <Box
           sx={{
-            backgroundColor: blue['lightest'],
+            backgroundColor: mainColor ?? blue['lightest'],
             display: 'flex',
             gap: 1,
             alignItems: 'center',
@@ -37,8 +40,8 @@ export const List = ({ data, heading, Item, ...props }) => {
       )}
       {props.header && props.header()}
       {data
-        ? data.map((item) => <Item key={item.id} item={item} />)
-        : [0, 1, 2, 4, 5, 6, 7, 8].map((item) => <Item key={item} />)}
+        ? data.map((item) => <Item key={item.id} mainColor={mainColor} item={item} />)
+        : [0, 1, 2, 4, 5, 6, 7, 8].map((item) => <Item key={item} mainColor={mainColor} />)}
 
       {props.footer && props.footer()}
     </Stack>
@@ -46,8 +49,8 @@ export const List = ({ data, heading, Item, ...props }) => {
 }
 
 export const TextHeading = styled(Typography)({
-  fontSize: '0.825rem',
-  color: grey['darkest'],
+  fontSize: '0.8125rem',
+  color: 'white',
   fontWeight: 'bold'
 })
 

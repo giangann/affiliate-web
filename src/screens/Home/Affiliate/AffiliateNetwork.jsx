@@ -20,7 +20,7 @@ import {
   Filter
 } from '~/screens/Home'
 
-import { blue } from '~/styles'
+import { baseColor, blue } from '~/styles'
 
 import { listGifs } from '~/assets/fake-data/list-gifs'
 import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
@@ -46,6 +46,7 @@ const AffiliateNetwork = () => {
       ) : (
         <>
           <BoxWithHeader
+            mainColor={baseColor.blue}
             data={allWebsites}
             title={() => (
               <Grid container>
@@ -106,7 +107,7 @@ const AffiliateNetwork = () => {
               </div>
             )}
           >
-            <AffiliateNetworkItem />
+            <AffiliateNetworkItem mainColor={baseColor.blue} />
           </BoxWithHeader>
 
           <Hidden mdUp>

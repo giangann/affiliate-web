@@ -4,12 +4,28 @@ import React, { cloneElement } from 'react'
 
 function BoxWithHeader({ elevation, children, ...props }) {
   return (
-    <Paper elevation={4} sx={{ ...props?.sx, borderRadius: '0' }}>
+    <Paper
+      elevation={4}
+      sx={{
+        ...props?.sx,
+        borderRadius: '0',
+
+        border: props.mainColor ? `3px solid ${props.mainColor}` : ``
+      }}
+    >
       <Grid container>
         <GridWithPadding
           item
           xs={12}
-          sx={{ borderBottom: `3px solid ${blue['border']}`, ...props?.sx, paddingBottom: '0px' }}
+          sx={{
+            borderBottom: props.mainColor
+              ? `3px solid ${props.mainColor}`
+              : `3px solid ${blue['border']}`,
+            ...props?.sx,
+            paddingBottom: '0px',
+            color: props.mainColor ? `white` : 'unset',
+            backgroundColor: props.mainColor
+          }}
         >
           {props.title && props.title()}
         </GridWithPadding>
@@ -42,7 +58,6 @@ const GridWithPadding = styled(Grid)(({ theme }) => ({
   paddingBottom: '16px',
   paddingLeft: '24px',
   paddingRight: '24px',
-
   [theme.breakpoints.down('sm')]: {
     paddingLeft: '16px',
     paddingRight: '16px'

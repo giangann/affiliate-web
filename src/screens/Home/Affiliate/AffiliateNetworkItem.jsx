@@ -11,7 +11,7 @@ const webkitBox = {
   overflow: 'hidden'
 }
 
-export const AffiliateNetworkItem = ({ data }) => {
+export const AffiliateNetworkItem = ({ data, ...props }) => {
   const { data_api } = data
 
   // console.log(data)
