@@ -46,7 +46,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
       <Grid item xs={9} md={10}>
         <Grid container>
           <Grid item xs={8} md={10}>
-            <Link to={`/websites/${data?.id}`} style={{ textDecoration: 'none' }}>
+            <Link to={`/websites/show/${data.id}`} style={{ textDecoration: 'none' }}>
               <Typography
                 component="a"
                 className="no-underline"
@@ -79,8 +79,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
             </Typography>
           </Grid>
           <Grid item xs={4} md={2} className="d-flex justify-content-end">
-            <Stars rating={2.5} />
-            fake
+            <Stars rating={data_api.rating} />
           </Grid>
         </Grid>
         <Grid container>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Stack, Box, Hidden } from '@mui/material'
 import { Stars, Icon, TagScore } from '~/components'
 import { TreeView } from '~/components/TreeView'
@@ -14,12 +14,49 @@ import avatarImg from '~/assets/images/avatar3.webp'
 import shareImg from '~/assets/svgs/share.svg'
 import { LikeIcon, DislikeIcon } from '~/components/Icons'
 import { BoxComment } from './BoxComment'
+import { formatTimeDiff } from '~/libs/utils'
 
-export const CommentItem = () => {
-  const [isReply, setIsReply] = React.useState(false)
+export const CommentItem = ({ item }) => {
+  // console.log('CommentItem', item)
+  const [isReply, setIsReply] = useState(false)
+
+  const [likeActive, setLikeActive] = useState(false)
+  const [dislikeActive, setDisLikeActive] = useState(false)
+  const [like, setLike] = useState(item.totalLike)
+  const [dislike, setDislike] = useState(item.totalDislike)
 
   const handleReply = () => {
     setIsReply(!isReply)
+  }
+
+  const handleLike = () => {
+    if (dislikeActive) {
+      setDislike(dislike - 1)
+      setDisLikeActive(false)
+    }
+
+    if (!likeActive) {
+      setLike(like + 1)
+      setLikeActive(true)
+    } else {
+      setLike(like - 1)
+      setLikeActive(false)
+    }
+  }
+
+  const handleDislike = () => {
+    if (likeActive) {
+      setLike(like - 1)
+      setLikeActive(false)
+    }
+
+    if (!dislikeActive) {
+      setDislike(dislike + 1)
+      setDisLikeActive(true)
+    } else {
+      setDislike(dislike - 1)
+      setDisLikeActive(false)
+    }
   }
 
   return (
@@ -35,23 +72,23 @@ export const CommentItem = () => {
             <Hidden smUp>
               <Icon src={avatarImg} sx={{ width: '32px', height: '32px' }} />
             </Hidden>
-            <Stars rating={4.5} />
-            <TextHeading>Name</TextHeading>
+            <Stars rating={item?.score} />
+            <TextHeading>{item?.user_name}</TextHeading>
           </FlexBoxAlignCenter>
-          <TextGrey>1 day ago</TextGrey>
+          <TextGrey>{formatTimeDiff(item.created_at)}</TextGrey>
         </FlexBoxAlignCenterJustifyBetween>
 
         <FlexBoxAlignCenter gap="4px" flexWrap="wrap">
-          <TagScore lable="offers" score={5} />
-          <TagScore lable="PAYOUT" score={5} />
-          <TagScore lable="TRACKING" score={5} />
-          <TagScore lable="SUPPORT" score={5} />
+          {Object.entries(item?.rating).map(([label, score]) => (
+            <TagScore label={label} score={score} />
+          ))}
+          {/* <TagScore label="offers" score={5} />
+          <TagScore label="PAYOUT" score={5} />
+          <TagScore label="TRACKING" score={5} />
+          <TagScore label="SUPPORT" score={5} /> */}
         </FlexBoxAlignCenter>
 
-        <TextComment width="85%">
-          Yes i have worked with Neogara they have paid me on time thus far. It’s a pleasure to work
-          with such a professional team!
-        </TextComment>
+        <TextComment width="85%">{item?.content}</TextComment>
 
         <FlexBoxAlignCenter gap="12px">
           <FlexBoxAlignCenter
@@ -65,14 +102,14 @@ export const CommentItem = () => {
             <TextGrey>REPLY</TextGrey>
           </FlexBoxAlignCenter>
 
-          <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }}>
-            <LikeIcon />
-            <TextGrey>(0)</TextGrey>
+          <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }} onClick={handleLike}>
+            <LikeIcon color={likeActive ? '#3490dc' : 'unset'} />
+            <TextGrey>({like})</TextGrey>
           </FlexBoxAlignCenter>
 
-          <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }}>
-            <DislikeIcon />
-            <TextGrey>(0)</TextGrey>
+          <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }} onClick={handleDislike}>
+            <DislikeIcon color={dislikeActive ? '#3490dc' : 'unset'} />
+            <TextGrey>({dislike})</TextGrey>
           </FlexBoxAlignCenter>
 
           <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }}>
@@ -82,8 +119,8 @@ export const CommentItem = () => {
         </FlexBoxAlignCenter>
         {isReply && (
           <Box>
-            <BoxComment userName="Bao" />
-            <TreeView />
+            <BoxComment userName={item?.user_name} />
+            {/* <TreeView /> */}
           </Box>
         )}
       </Stack>

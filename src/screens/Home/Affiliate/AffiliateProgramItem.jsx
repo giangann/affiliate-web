@@ -18,7 +18,7 @@ export const AffiliateProgramItem = ({ data, ...props }) => {
     <Stack sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
       <Grid container>
         <Grid item xs={10} zIndex="10">
-          <Link to={`/websites/${data.id}`} style={{ textDecoration: 'none' }}>
+          <Link to={`/websites/show/${data.id}`} style={{ textDecoration: 'none' }}>
             <Typography
               component="a"
               className="no-underline"
@@ -38,7 +38,7 @@ export const AffiliateProgramItem = ({ data, ...props }) => {
           </Link>
         </Grid>
         <Grid item xs={2} className="d-flex justify-content-end">
-          <Stars rating={2.5} /> fake
+          <Stars rating={data_api.rating} />
         </Grid>
       </Grid>
       <Grid container spacing={2}>
