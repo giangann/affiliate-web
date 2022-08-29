@@ -1,6 +1,6 @@
 import { Grid, Paper, Stack, styled } from '@mui/material'
 import { blue } from '~/styles/colors'
-import React from 'react'
+import React, { cloneElement } from 'react'
 
 function BoxWithHeader({ elevation, children, ...props }) {
   return (
@@ -34,9 +34,15 @@ function BoxWithHeader({ elevation, children, ...props }) {
           {props.restOfHeader && props.restOfHeader()}
         </GridWithPadding>
         <StackWithPadding>
-          {[0, 1, 2, 4, 5, 6, 7, 8].map((item) => (
-            <React.Fragment key={item}>{children}</React.Fragment>
-          ))}
+          {props.data
+            ? props.data.map((item) => (
+                <React.Fragment key={item.id}>
+                  {cloneElement(children, { data: item })}
+                </React.Fragment>
+              ))
+            : [0, 1, 2, 4, 5, 6, 7, 8].map((item) => (
+                <React.Fragment key={item}>{children}</React.Fragment>
+              ))}
         </StackWithPadding>
         <GridWithPadding item xs={12}>
           {props.footer && props.footer()}

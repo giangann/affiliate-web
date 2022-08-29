@@ -1,6 +1,9 @@
 import { createTheme, ScopedCssBaseline, ThemeProvider } from '@mui/material'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Layout } from '~/components/Layouts'
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+
+const queryClient = new QueryClient()
 
 function App() {
   const theme = createTheme({
@@ -19,11 +22,13 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <ScopedCssBaseline sx={{ margin: 0 }}>
-        <Router>
-          <Layout />
-        </Router>
-      </ScopedCssBaseline>
+      <QueryClientProvider client={queryClient}>
+        <ScopedCssBaseline sx={{ margin: 0 }}>
+          <Router>
+            <Layout />
+          </Router>
+        </ScopedCssBaseline>
+      </QueryClientProvider>
     </ThemeProvider>
   )
 }
