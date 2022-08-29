@@ -16,7 +16,7 @@ import { List } from '~/components/List'
 import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { useQuery } from 'react-query'
-
+import { ListSkeleton } from '~/components/Skeleton'
 function Reels() {
   const topWebsite = [
     {
@@ -63,70 +63,74 @@ function Reels() {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
-        <BoxWithHeader
-          mainColor={baseColor.blue}
-          data={allWebsites}
-          title={() => (
-            <Grid container>
-              <Grid item xs={6} sx={{ justifyContent: 'center' }}>
-                <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                  <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
-                    <DiamondIcon />
-                  </Avatar>
-                  <Typography
-                    variant="h1"
-                    sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+        {isLoading ? (
+          <ListSkeleton />
+        ) : (
+          <BoxWithHeader
+            mainColor={baseColor.blue}
+            data={allWebsites}
+            title={() => (
+              <Grid container>
+                <Grid item xs={6} sx={{ justifyContent: 'center' }}>
+                  <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+                    <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
+                      <DiamondIcon />
+                    </Avatar>
+                    <Typography
+                      variant="h1"
+                      sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+                    >
+                      Premiun Networks
+                    </Typography>
+                  </Stack>
+                </Grid>
+                <Grid item xs={6}>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    className="h-100"
                   >
-                    Premiun Networks
-                  </Typography>
-                </Stack>
+                    <Button variant="contained" type="button-blue">
+                      Top Rated
+                    </Button>
+                    <Button variant="contained" type="button-gray">
+                      Newest
+                    </Button>
+                  </Stack>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <Stack
-                  direction="row"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                  className="h-100"
+            )}
+            restOfHeader={() => (
+              <>
+                <Filter />
+                <img
+                  className="block"
+                  style={{ width: '100%' }}
+                  src={AlgoAffiliatesImg}
+                  alt="Algo Affiliates"
+                ></img>
+              </>
+            )}
+            footer={() => (
+              <div className="d-flex justify-content-center pt-3">
+                <Button
+                  sx={{
+                    color: '#f60',
+                    border: '1px solid #f60',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold'
+                  }}
+                  className="scale-sm ml-3 rounded px-1"
                 >
-                  <Button variant="contained" type="button-blue">
-                    Top Rated
-                  </Button>
-                  <Button variant="contained" type="button-gray">
-                    Newest
-                  </Button>
-                </Stack>
-              </Grid>
-            </Grid>
-          )}
-          restOfHeader={() => (
-            <>
-              <Filter />
-              <img
-                className="block"
-                style={{ width: '100%' }}
-                src={AlgoAffiliatesImg}
-                alt="Algo Affiliates"
-              ></img>
-            </>
-          )}
-          footer={() => (
-            <div className="d-flex justify-content-center pt-3">
-              <Button
-                sx={{
-                  color: '#f60',
-                  border: '1px solid #f60',
-                  fontSize: '0.75rem',
-                  fontWeight: 'bold'
-                }}
-                className="scale-sm ml-3 rounded px-1"
-              >
-                See more affiliate networks
-              </Button>
-            </div>
-          )}
-        >
-          <AffiliateNetworkItem mainColor={baseColor.blue} />
-        </BoxWithHeader>
+                  See more affiliate networks
+                </Button>
+              </div>
+            )}
+          >
+            <AffiliateNetworkItem mainColor={baseColor.blue} />
+          </BoxWithHeader>
+        )}
       </Grid>
       <Grid item xs={12} sm={6}>
         <BoxContainer sx={{ border: `3px solid ${baseColor.orange}` }}>
