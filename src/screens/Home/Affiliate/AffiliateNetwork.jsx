@@ -258,6 +258,7 @@ const AffiliateNetwork = () => {
           </Hidden>
 
           <BoxWithHeader
+            data={allWebsites}
             title={() => (
               <Grid container>
                 <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
@@ -315,6 +316,7 @@ const AffiliateNetwork = () => {
           </Hidden>
 
           <BoxWithHeader
+            data={allWebsites}
             title={() => (
               <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
                 <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
