@@ -12,7 +12,7 @@ const webkitBox = {
 }
 
 export const AffiliateNetworkItem = ({ data, ...props }) => {
-  const { data_api } = data
+  const { data_api } = data ?? {}
 
   // console.log(data)
   // console.log({ data_api })
@@ -28,7 +28,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
         <img
           style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
           className="bg-white shadow-lg rounded"
-          src={data_api.profile_banner}
+          src={data_api?.profile_banner}
           alt="1"
         />
         <Hidden mdUp>
@@ -36,7 +36,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
             sx={{ maxWidth: '100% !important', width: '95px' }}
             variant="contained"
             type="button-blue"
-            href={data.link}
+            href={data?.link}
             target="_blank"
           >
             Join
@@ -61,7 +61,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
                   fontSize: '0.9rem'
                 }}
               >
-                {data.name}
+                {data?.name}
               </Typography>
             </Link>
 
@@ -75,7 +75,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
               }}
               className="scale-sm ml-3 rounded px-1"
             >
-              {data.data_api.rating}
+              {data?.data_api?.rating}
             </Typography>
           </Grid>
           <Grid item xs={4} md={2} className="d-flex justify-content-end">
@@ -89,16 +89,16 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
               className="text-gray"
               sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold', ...webkitBox }}
             >
-              {<div dangerouslySetInnerHTML={{ __html: data_api.description }} />}
+              {<div dangerouslySetInnerHTML={{ __html: data_api?.description }} />}
             </Typography>
             <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
-              {data.reviews.length} Reviews / {data.data_api.offer_count} Offers /{' '}
-              {data_api.platform} / {data_api.payment_freq}
+              {data?.reviews?.length} Reviews / {data?.data_api?.offer_count} Offers /{' '}
+              {data_api?.platform} / {data_api?.payment_freq}
             </Typography>
           </Grid>
           <Hidden mdDown>
             <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-              <Button variant="contained" type="button-blue" href={data.link} target="_blank">
+              <Button variant="contained" type="button-blue" href={data?.link} target="_blank">
                 Join
               </Button>
             </Grid>

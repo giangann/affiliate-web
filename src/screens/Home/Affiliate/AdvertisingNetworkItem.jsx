@@ -80,7 +80,7 @@ export const AdvertisingNetworkItem = ({ data, ...props }) => {
                 {<div dangerouslySetInnerHTML={{ __html: data_api.description }} />}
               </Typography>
               <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
-                {data.reviews.length} Reviews / {data.data_api.offer_count} Offers /{' '}
+                {data?.reviews?.length} Reviews / {data.data_api.offer_count} Offers /{' '}
                 {data_api.platform} / {data_api.payment_freq}
               </Typography>
             </Grid>

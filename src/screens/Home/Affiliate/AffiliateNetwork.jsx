@@ -194,6 +194,7 @@ const AffiliateNetwork = () => {
           </Hidden>
 
           <BoxWithHeader
+            mainColor={baseColor.blue}
             title={() => (
               <Grid container mb={{ xs: 2, sm: 0 }}>
                 <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
@@ -259,6 +260,7 @@ const AffiliateNetwork = () => {
           </Hidden>
 
           <BoxWithHeader
+            mainColor={baseColor.yellow}
             data={allWebsites}
             title={() => (
               <Grid container>
@@ -317,6 +319,7 @@ const AffiliateNetwork = () => {
           </Hidden>
 
           <BoxWithHeader
+            mainColor={baseColor.yellow}
             data={allWebsites}
             title={() => (
               <Grid container sx={{ borderBottom: '1px solid #ccc' }}>

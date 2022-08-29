@@ -1,32 +1,21 @@
-import {
-  Divider,
-  Grid,
-  Typography,
-  Stack,
-  Box,
-  Paper,
-  Menu,
-  MenuItem,
-  ListItem,
-  Link
-} from '@mui/material'
-import { useState } from 'react'
+import { Grid, Typography, Stack, Box, Avatar, Link } from '@mui/material'
+import { Filter, AffiliateNetworkItem } from '~/screens/Home'
+import { useEffect, useState } from 'react'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
-import { listGifs } from '~/assets/fake-data/list-gifs'
-import { AlibabaText } from '.'
+import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
+
 import { baseColor, red, blue } from '~/styles/colors'
-import Circel from '~/assets/svgs/circle.svg'
 import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
 import { Button } from '~/components/Buttons'
-import { grey } from '@mui/material/colors'
-import ReelCard from './Reels/ReelCard'
+import { getAllWebsites } from '~/apis'
 import { BoxContainer, FeaturedNetworkItem } from '~/components/Layouts/Sidebar'
 import { TextContent, TextHeading } from '~/styles'
-import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import { Stars } from '~/components'
-import { Button as MyButton } from '~/components/Buttons'
 import { List } from '~/components/List'
+import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
+import BoxWithHeader from '~/components/Box/BoxWithHeader'
+import { useQuery } from 'react-query'
 
 function Reels() {
   const topWebsite = [
@@ -62,11 +51,83 @@ function Reels() {
     }
   ]
 
+  const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
+
+  useEffect(() => {
+    console.log('callback useEffect', allWebsites, isLoading, error)
+  }, [allWebsites, isLoading, error])
+
   const [open, setOpen] = useState(true)
 
   const [focusWebsite, setFocusWebsite] = useState(1)
   return (
     <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <BoxWithHeader
+          mainColor={baseColor.blue}
+          data={allWebsites}
+          title={() => (
+            <Grid container>
+              <Grid item xs={6} sx={{ justifyContent: 'center' }}>
+                <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+                  <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
+                    <DiamondIcon />
+                  </Avatar>
+                  <Typography
+                    variant="h1"
+                    sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+                  >
+                    Premiun Networks
+                  </Typography>
+                </Stack>
+              </Grid>
+              <Grid item xs={6}>
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  justifyContent="flex-end"
+                  className="h-100"
+                >
+                  <Button variant="contained" type="button-blue">
+                    Top Rated
+                  </Button>
+                  <Button variant="contained" type="button-gray">
+                    Newest
+                  </Button>
+                </Stack>
+              </Grid>
+            </Grid>
+          )}
+          restOfHeader={() => (
+            <>
+              <Filter />
+              <img
+                className="block"
+                style={{ width: '100%' }}
+                src={AlgoAffiliatesImg}
+                alt="Algo Affiliates"
+              ></img>
+            </>
+          )}
+          footer={() => (
+            <div className="d-flex justify-content-center pt-3">
+              <Button
+                sx={{
+                  color: '#f60',
+                  border: '1px solid #f60',
+                  fontSize: '0.75rem',
+                  fontWeight: 'bold'
+                }}
+                className="scale-sm ml-3 rounded px-1"
+              >
+                See more affiliate networks
+              </Button>
+            </div>
+          )}
+        >
+          <AffiliateNetworkItem mainColor={baseColor.blue} />
+        </BoxWithHeader>
+      </Grid>
       <Grid item xs={12} sm={6}>
         <BoxContainer sx={{ border: `3px solid ${baseColor.orange}` }}>
           <Stack
@@ -133,7 +194,7 @@ function Reels() {
             </Box>
           </Box>
         </BoxContainer> */}
-        <BoxContainer sx={{border:`3px solid ${baseColor.orange}`}}>
+        <BoxContainer sx={{ border: `3px solid ${baseColor.orange}` }}>
           <Box component="img" src={lemonad_easy_peasy} alt="gif" sx={{ width: '100%' }} />
         </BoxContainer>
       </Grid>
