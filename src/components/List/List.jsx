@@ -4,7 +4,7 @@ import { Stack, Box, Typography, styled } from '@mui/material'
 import { baseColor, blue, grey, red } from '~/styles/colors'
 import Flag from '~/assets/svgs/sidebar/flag.svg'
 
-export const List = ({ heading, mainColor, Item, ...props }) => {
+export const List = ({ heading, data, mainColor, Item, ...props }) => {
   return (
     <Stack
       sx={{
@@ -38,12 +38,10 @@ export const List = ({ heading, mainColor, Item, ...props }) => {
           <TextHeading>{heading}</TextHeading>
         </Box>
       )}
-
       {props.header && props.header()}
-
-      {[0, 1, 2, 4, 5, 6, 7, 8].map((item) => (
-        <Item mainColor={mainColor} key={item} />
-      ))}
+      {data
+        ? data.map((item) => <Item key={item.id} mainColor={mainColor} item={item} />)
+        : [0, 1, 2, 4, 5, 6, 7, 8].map((item) => <Item key={item} mainColor={mainColor} />)}
 
       {props.footer && props.footer()}
     </Stack>
