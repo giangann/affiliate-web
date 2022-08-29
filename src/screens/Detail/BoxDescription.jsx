@@ -8,7 +8,7 @@ const webkitBox = {
   overflow: 'hidden'
 }
 
-export const BoxDescription = ({ desc }) => {
+export const BoxDescription = ({ desc, isStringToHtml }) => {
   const [isExpanded, setIsExpanded] = useState(false)
   const handleExpand = () => {
     setIsExpanded(!isExpanded)
@@ -16,8 +16,8 @@ export const BoxDescription = ({ desc }) => {
 
   return (
     <Box px="1.25rem" py="0.75rem" backgroundColor={grey['bg']} position="relative">
-      <TextContent sx={{ WebkitLineClamp: isExpanded ? 'unset' : '2', ...webkitBox }}>
-        {desc}
+      <TextContent sx={{ WebkitLineClamp: isExpanded ? 'unset' : '3', ...webkitBox }}>
+        {isStringToHtml ? <div dangerouslySetInnerHTML={{ __html: desc }} /> : desc}
       </TextContent>
 
       <span

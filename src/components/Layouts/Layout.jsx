@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Hidden, Container } from '@mui/material'
+import { Box, Grid, Hidden, Container, styled } from '@mui/material'
 import { Header } from '~/components/Layouts/Header'
 import { Footer } from '~/components/Layouts/Footer'
 import { Router } from '~/routers/Router'
@@ -9,13 +9,12 @@ export const Layout = () => {
   return (
     <Box
       sx={{
-        background: '#dfedfa url(https://www.affpaying.com/img/s_html.png) repeat-x ',
-        backgroundAttachment: 'fixed'
+        backgroundColor: '#EEEEEE'
       }}
     >
       <Header />
 
-      <Container sx={{ position: 'relative', zIndex: 1 }}>
+      <ResponsiveContainer sx={{ position: 'relative', zIndex: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={8}>
             <Router />
@@ -27,9 +26,16 @@ export const Layout = () => {
             </Grid>
           </Hidden>
         </Grid>
-      </Container>
+      </ResponsiveContainer>
 
       <Footer />
     </Box>
   )
 }
+
+export const ResponsiveContainer = styled(Container)(({ theme }) => ({
+  [theme.breakpoints.down('sm')]: {
+    paddingLeft: '0',
+    paddingRight: '0'
+  }
+}))

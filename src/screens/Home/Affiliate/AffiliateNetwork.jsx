@@ -9,12 +9,13 @@ import {
   TextContent,
   TextHeading
 } from '~/components/Layouts/Sidebar'
-import { getApiResource } from '~/apis'
+import { getAllWebsites } from '~/apis'
 import { List } from '~/components/List'
 import { Stars } from '~/components/Star'
 import {
   AdvertisingNetworkItem,
   AffiliateNetworkItem,
+  AffiliateProgramItem,
   AffiliateOfferItem,
   Filter
 } from '~/screens/Home'
@@ -27,15 +28,12 @@ import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
+import BoxWithHeader from '~/components/Box/BoxWithHeader'
 
 const data_array = [1, 2, 3, 4, 5]
 
 const AffiliateNetwork = () => {
-  const {
-    isLoading,
-    error,
-    data: allWebsites
-  } = useQuery('allWebsites', () => getApiResource('websites'))
+  const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
 
   useEffect(() => {
     console.log('callback useEffect', allWebsites, isLoading, error)
@@ -44,70 +42,72 @@ const AffiliateNetwork = () => {
   return (
     <React.Fragment>
       {isLoading ? (
-        <h1>
-          Loading
-          {console.log('loading')}
-        </h1>
+        <h1>Loading</h1>
       ) : (
         <>
-          <Stack sx={{ backgroundColor: 'white' }}>
-            <List
-              sx={{ px: 3, pb: 2 }}
-              data={allWebsites}
-              header={() => (
-                <>
-                  <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
-                    <Grid item xs={6} sx={{ justifyContent: 'center' }}>
-                      <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                        <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
-                          <DiamondIcon />
-                        </Avatar>
-                        <Typography
-                          variant="h1"
-                          sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                        >
-                          Premiun Networks
-                        </Typography>
-                      </Stack>
-                    </Grid>
-                    <Grid item xs={6}>
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="flex-end"
-                        className="h-100"
-                      >
-                        <Button variant="contained" type="button-blue">
-                          Top Rated
-                        </Button>
-                        <Button variant="contained" type="button-gray">
-                          Newest
-                        </Button>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-                  <Filter />
-                  <img className="block" src={AlgoAffiliatesImg} alt="Algo Affiliates"></img>
-                </>
-              )}
-              Item={AffiliateNetworkItem}
-              footer={() => (
-                <div className="d-flex justify-content-center pt-3">
-                  <Button
-                    sx={{
-                      color: '#f60',
-                      border: '1px solid #f60',
-                      fontSize: '0.75rem',
-                      fontWeight: 'bold'
-                    }}
-                    className="scale-sm ml-3 rounded px-1"
+          <BoxWithHeader
+            data={allWebsites}
+            title={() => (
+              <Grid container>
+                <Grid item xs={6} sx={{ justifyContent: 'center' }}>
+                  <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+                    <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
+                      <DiamondIcon />
+                    </Avatar>
+                    <Typography
+                      variant="h1"
+                      sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+                    >
+                      Premiun Networks
+                    </Typography>
+                  </Stack>
+                </Grid>
+                <Grid item xs={6}>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    className="h-100"
                   >
-                    See more affiliate networks
-                  </Button>
-                </div>
-              )}
-            />
-          </Stack>
+                    <Button variant="contained" type="button-blue">
+                      Top Rated
+                    </Button>
+                    <Button variant="contained" type="button-gray">
+                      Newest
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
+            )}
+            restOfHeader={() => (
+              <>
+                <Filter />
+                <img
+                  className="block"
+                  style={{ width: '100%' }}
+                  src={AlgoAffiliatesImg}
+                  alt="Algo Affiliates"
+                ></img>
+              </>
+            )}
+            footer={() => (
+              <div className="d-flex justify-content-center pt-3">
+                <Button
+                  sx={{
+                    color: '#f60',
+                    border: '1px solid #f60',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold'
+                  }}
+                  className="scale-sm ml-3 rounded px-1"
+                >
+                  See more affiliate networks
+                </Button>
+              </div>
+            )}
+          >
+            <AffiliateNetworkItem />
+          </BoxWithHeader>
 
           <Hidden mdUp>
             <BoxContainer sx={{ border: '3px solid #f60' }}>
@@ -191,68 +191,64 @@ const AffiliateNetwork = () => {
             </BoxContainer>
           </Hidden>
 
-          {/* <Stack sx={{ backgroundColor: 'white' }}>
-            <List
-              sx={{ px: 3, pb: 2 }}
-              header={() => (
-                <>
-                  <Grid container sx={{ borderBottom: { xs: 'none', md: '1px solid #ccc' } }}>
-                    <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
-                      <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                        <Typography
-                          variant="h1"
-                          sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                        >
-                          Affiliate Offers
-                        </Typography>
-                        <Typography
-                          sx={{
-                            fontStyle: 'italic',
-                            color: '#b8c2cc',
-                            fontSize: '.75rem',
-                            fontWeight: 'bold'
-                          }}
-                        >
-                          Data Provided by Affplus.com
-                        </Typography>
-                      </Stack>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Stack
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="flex-end"
-                        className="h-100"
-                        spacing={2}
-                      >
-                        <Button variant="contained" type="button-blue">
-                          Top Converting
-                        </Button>
-                        <Button variant="contained" type="button-gray">
-                          Lastest
-                        </Button>
-                      </Stack>
-                    </Grid>
-                  </Grid>
-                </>
-              )}
-              Item={AffiliateOfferItem}
-              footer={() => (
-                <div className="d-flex justify-content-center pt-3">
-                  <Button
-                    sx={{
-                      color: '#2779bd',
-                      fontSize: '0.75rem',
-                      fontWeight: 'bold'
-                    }}
-                    className="ml-3 rounded px-1"
+          <BoxWithHeader
+            title={() => (
+              <Grid container mb={{ xs: 2, sm: 0 }}>
+                <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
+                  <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+                    <Typography
+                      variant="h1"
+                      sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+                    >
+                      Affiliate Offers
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontStyle: 'italic',
+                        color: '#b8c2cc',
+                        fontSize: '.75rem',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      Data Provided by Affplus.com
+                    </Typography>
+                  </Stack>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="flex-end"
+                    className="h-100"
+                    spacing={2}
                   >
-                    See more offers on affplus
-                  </Button>
-                </div>
-              )}
-            />
-          </Stack> */}
+                    <Button variant="contained" type="button-blue">
+                      Top Converting
+                    </Button>
+                    <Button variant="contained" type="button-gray">
+                      Lastest
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
+            )}
+            footer={() => (
+              <div className="d-flex justify-content-center pt-3">
+                <Button
+                  sx={{
+                    color: '#2779bd',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold'
+                  }}
+                  className="ml-3 rounded px-1"
+                >
+                  See more offers on affplus
+                </Button>
+              </div>
+            )}
+          >
+            <AffiliateOfferItem />
+          </BoxWithHeader>
 
           <Hidden mdUp>
             <BoxContainer>
@@ -260,38 +256,36 @@ const AffiliateNetwork = () => {
             </BoxContainer>
           </Hidden>
 
-          {/* <Stack sx={{ backgroundColor: 'white' }}>
-            <List
-              sx={{ px: 3, pb: 2 }}
-              header={() => (
-                <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
-                  <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                    <Typography
-                      variant="h1"
-                      sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                    >
-                      Advertising Networks
-                    </Typography>
-                  </Stack>
-                </Grid>
-              )}
-              Item={AdvertisingNetworkItem}
-              footer={() => (
-                <div className="d-flex justify-content-center pt-3">
-                  <Button
-                    sx={{
-                      color: '#2779bd',
-                      fontSize: '0.75rem',
-                      fontWeight: 'bold'
-                    }}
-                    className="ml-3 rounded px-1"
+          <BoxWithHeader
+            title={() => (
+              <Grid container>
+                <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+                  <Typography
+                    variant="h1"
+                    sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
                   >
-                    See more offers on affplus
-                  </Button>
-                </div>
-              )}
-            />
-          </Stack> */}
+                    Advertising Networks
+                  </Typography>
+                </Stack>
+              </Grid>
+            )}
+            footer={() => (
+              <div className="d-flex justify-content-center pt-3">
+                <Button
+                  sx={{
+                    color: '#2779bd',
+                    fontSize: '0.75rem',
+                    fontWeight: 'bold'
+                  }}
+                  className="ml-3 rounded px-1"
+                >
+                  See more offers on affplus
+                </Button>
+              </div>
+            )}
+          >
+            <AdvertisingNetworkItem />
+          </BoxWithHeader>
 
           <Hidden mdUp>
             <BoxContainer>
@@ -319,99 +313,20 @@ const AffiliateNetwork = () => {
             </BoxContainer>
           </Hidden>
 
-          {/* <Stack paddingX={3} sx={{ backgroundColor: 'white' }}>
-            <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
-              <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                <Typography
-                  variant="h1"
-                  sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                >
-                  Affiliate Programs
-                </Typography>
-              </Stack>
-            </Grid>
-            <Stack>
-              {data_array.map((item, index) => (
-                <Stack key={index} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
-                  <Grid container>
-                    <Grid item xs={10}>
-                      <Typography
-                        component="a"
-                        className="no-underline"
-                        href="/affmine"
-                        sx={{
-                          textDecoration: 'none',
-                          '&:hover': {
-                            color: '#f60'
-                          },
-                          color: '#2779bd',
-                          marginRight: 1,
-                          fontWeight: 'bold',
-                          fontSize: '0.9rem'
-                        }}
-                      >
-                        Mostbet Partners
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={2} className="d-flex justify-content-end">
-                      <Stars rating={2.5} />
-                    </Grid>
-                  </Grid>
-                  <Grid container spacing={2}>
-                    <Grid
-                      item
-                      xs={3}
-                      md={2}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-around'
-                      }}
-                    >
-                      <img
-                        style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
-                        className="bg-white shadow-lg rounded"
-                        src="https://apimg.net/sponsors/index/af3d653df304f38cdc0985da44aa50c9.jpg"
-                        alt="1"
-                      />
-                      <Hidden mdUp>
-                        <Button variant="outlined" sx={{ maxWidth: '100%', width: '95px' }}>
-                          Join
-                        </Button>
-                      </Hidden>
-                    </Grid>
-                    <Grid item xs={9} md={10}>
-                      <Grid container>
-                        <Grid item xs={12} md={10}>
-                          <Typography
-                            component="p"
-                            className="text-gray"
-                            sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold' }}
-                          >
-                            Affmine is an affiliate network mostly based on incentive space and
-                            offerwall solutions.{' '}
-                            <Hidden smDown>We have large experience in affiliate mar</Hidden> ...
-                          </Typography>
-                          <Typography
-                            sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}
-                          >
-                            52 Reviews / 821 Offers / In-house / Bi-Weekly, Weekly
-                          </Typography>
-                        </Grid>
-                        <Hidden mdDown>
-                          <Grid
-                            item
-                            xs={2}
-                            className="d-flex align-items-center justify-content-end"
-                          >
-                            <Button variant="outlined">Join</Button>
-                          </Grid>
-                        </Hidden>
-                      </Grid>
-                    </Grid>
-                  </Grid>
+          <BoxWithHeader
+            title={() => (
+              <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
+                <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+                  <Typography
+                    variant="h1"
+                    sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+                  >
+                    Affiliate Programs
+                  </Typography>
                 </Stack>
-              ))}
+              </Grid>
+            )}
+            footer={() => (
               <div className="d-flex justify-content-center pt-3">
                 <Button
                   sx={{
@@ -424,8 +339,10 @@ const AffiliateNetwork = () => {
                   See more offers on affplus
                 </Button>
               </div>
-            </Stack>
-          </Stack> */}
+            )}
+          >
+            <AffiliateProgramItem />
+          </BoxWithHeader>
         </>
       )}
     </React.Fragment>

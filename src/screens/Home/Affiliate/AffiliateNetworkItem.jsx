@@ -4,8 +4,18 @@ import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { Link } from 'react-router-dom'
 
-export const AffiliateNetworkItem = ({ item }) => {
-  console.log(item)
+const webkitBox = {
+  WebkitBoxOrient: 'vertical',
+  display: '-webkit-box',
+  WebkitLineClamp: '2',
+  overflow: 'hidden'
+}
+
+export const AffiliateNetworkItem = ({ data }) => {
+  const { data_api } = data
+
+  // console.log(data)
+  // console.log({ data_api })
 
   return (
     <Grid container columnSpacing={2} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
@@ -18,7 +28,7 @@ export const AffiliateNetworkItem = ({ item }) => {
         <img
           style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
           className="bg-white shadow-lg rounded"
-          src={item.link_banner}
+          src={data_api.profile_banner}
           alt="1"
         />
         <Hidden mdUp>
@@ -26,6 +36,8 @@ export const AffiliateNetworkItem = ({ item }) => {
             sx={{ maxWidth: '100% !important', width: '95px' }}
             variant="contained"
             type="button-blue"
+            href={data.link}
+            target="_blank"
           >
             Join
           </Button>
@@ -34,7 +46,7 @@ export const AffiliateNetworkItem = ({ item }) => {
       <Grid item xs={9} md={10}>
         <Grid container>
           <Grid item xs={8} md={10}>
-            <Link to={`/${item.name}`}>
+            <Link to={`/websites/${data.id}`} style={{ textDecoration: 'none' }}>
               <Typography
                 component="a"
                 className="no-underline"
@@ -49,7 +61,7 @@ export const AffiliateNetworkItem = ({ item }) => {
                   fontSize: '0.9rem'
                 }}
               >
-                {item.name}
+                {data.name}
               </Typography>
             </Link>
 
@@ -63,11 +75,12 @@ export const AffiliateNetworkItem = ({ item }) => {
               }}
               className="scale-sm ml-3 rounded px-1"
             >
-              4.92 chua co data
+              {data.data_api.rating}
             </Typography>
           </Grid>
           <Grid item xs={4} md={2} className="d-flex justify-content-end">
             <Stars rating={2.5} />
+            fake
           </Grid>
         </Grid>
         <Grid container>
@@ -75,21 +88,18 @@ export const AffiliateNetworkItem = ({ item }) => {
             <Typography
               component="p"
               className="text-gray"
-              sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold' }}
+              sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold', ...webkitBox }}
             >
-              Affmine is an affiliate network mostly based on
-              <Hidden smDown>
-                incentive space and offerwall solutions. We have large experience in affiliate mar
-              </Hidden>
-              ...
+              {<div dangerouslySetInnerHTML={{ __html: data_api.description }} />}
             </Typography>
             <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
-              {item.reviews.length} Reviews / 821 Offers / In-house / Bi-Weekly, Weekly
+              {data.reviews.length} Reviews / {data.data_api.offer_count} Offers /{' '}
+              {data_api.platform} / {data_api.payment_freq}
             </Typography>
           </Grid>
           <Hidden mdDown>
             <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-              <Button variant="contained" type="button-blue">
+              <Button variant="contained" type="button-blue" href={data.link} target="_blank">
                 Join
               </Button>
             </Grid>

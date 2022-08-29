@@ -13,9 +13,9 @@ function Home() {
 }
 
 export const AlibabaText = styled(Typography)({
-  fontFamily: 'alibaba-sans',
-  fontWeight: 600,
-  fontSize: { xs: '10px', sm: '12px', md: '14px' }
+  fontFamily: 'open sans',
+  fontWeight: 500,
+  fontSize: { xs: '10px', sm: '12px', md: '16px' }
 })
 
 export { Home }
