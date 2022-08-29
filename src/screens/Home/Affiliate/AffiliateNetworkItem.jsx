@@ -3,7 +3,7 @@ import { Grid, Hidden, Typography } from '@mui/material'
 import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 
-export const AffiliateNetworkItem = () => {
+export const AffiliateNetworkItem = ({...props}) => {
   return (
     <Grid container columnSpacing={2} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
       <Grid

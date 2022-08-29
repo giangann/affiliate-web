@@ -12,10 +12,21 @@ import ForumIcon from '@mui/icons-material/Forum'
 import { Box, Button, Divider, Grid, Hidden, Menu, MenuItem, Stack, styled } from '@mui/material'
 import React from 'react'
 import { AlibabaText } from '~/screens/Home'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import Avatar from '@mui/material/Avatar'
+import Tooltip from '@mui/material/Tooltip'
+import AdbIcon from '@mui/icons-material/Adb'
 
 import { orange } from '@mui/material/colors'
+import { baseColor } from '~/styles'
 
 export const Navbar = () => {
+  const pages = ['Products', 'Pricing', 'Blog']
+  const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
   const navBarItem = [
     {
       name: 'Reviews',
@@ -123,139 +134,279 @@ export const Navbar = () => {
       amount: 389
     }
   ]
-  const [anchorEl, setAnchorEl] = React.useState(null)
+  // const [anchorEl, setAnchorEl] = React.useState(null)
+  // const [anchorElNav, setAnchorElNav] = React.useState(null)
+
+  // const open = Boolean(anchorEl)
+  // const openNav = Boolean(anchorElNav)
+
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget)
+  // }
+
+  // const handleClickNav = (event) => {
+  //   setAnchorElNav(event.currentTarget)
+  // }
+  // const handleClose = () => {
+  //   setAnchorEl(null)
+  //   setAnchorElNav(null)
+  // }
+
   const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElUser, setAnchorElUser] = React.useState(null)
 
-  const open = Boolean(anchorEl)
-  const openNav = Boolean(anchorElNav)
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClickNav = (event) => {
+  const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
-  const handleClose = () => {
-    setAnchorEl(null)
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget)
+  }
+
+  const handleCloseNavMenu = () => {
     setAnchorElNav(null)
   }
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null)
+  }
   return (
-    <Grid container alignItem="center">
-      <AlignItemGrid item xs={5} sm={3} md={2}>
-        <BootstrapButton
-          startIcon={<MenuIcon />}
-          aria-controls={open ? 'basic-menu' : undefined}
-          onClick={handleClick}
-        >
-          <AlibabaText
+    // <Grid container alignItem="center">
+    //   <AlignItemGrid item xs={5} sm={3} md={2}>
+    //     <BootstrapButton
+    //       startIcon={<MenuIcon />}
+    //       aria-controls={open ? 'basic-menu' : undefined}
+    //       onClick={handleClick}
+    //     >
+    //       <AlibabaText
+    //         sx={{
+    //           fontSize: { xs: '12px', sm: '16px' },
+    //           whiteSpace: 'nowrap',
+    //           fontFamily: 'Open Sans !important'
+    //         }}
+    //       >
+    //         All categories
+    //       </AlibabaText>
+    //     </BootstrapButton>
+    //     <Menu
+    //       id="basic-menu"
+    //       anchorEl={anchorEl}
+    //       open={open}
+    //       onClose={handleClose}
+    //       MenuListProps={{
+    //         'aria-labelledby': 'basic-button'
+    //       }}
+    //       sx={{
+    //         '& .css-6hp17o-MuiList-root-MuiMenu-list': {
+    //           padding: 0
+    //         }
+    //       }}
+    //     >
+    //       {categoriesItem.map((item, index) => (
+    //         <CategoryMenuItem key={index} onClick={handleClose} alignItem="center" gap={2}>
+    //           {item.icon}
+    //           <AlibabaText fontWeight={600} ml={2}>
+    //             {item.name} ({item.amount})
+    //           </AlibabaText>
+    //         </CategoryMenuItem>
+    //       ))}
+    //     </Menu>
+    //   </AlignItemGrid>
+
+    //   <AlignItemGrid item xs={6} sm={8} md={3.5} sx={{ justifyContent: 'center' }}>
+    //     <Box position="relative" width={{ xs: '100%', sm: '90%' }} alignSelf="center">
+    //       <input
+    //         type="text"
+    //         placeholder="Search affiliate network"
+    //         style={{
+    //           width: '100%',
+    //           padding: '4px 10px',
+    //           borderRadius: '4px',
+    //           fontSize: '12px',
+    //           minWidth: '150px'
+    //         }}
+    //       />
+    //       <SearchIcon
+    //         sx={{
+    //           position: 'absolute',
+    //           right: '4px',
+    //           top: '4px',
+    //           color: '#3490DC',
+    //           padding: '2px',
+    //           '&:hover': {
+    //             cursor: 'pointer'
+    //           }
+    //         }}
+    //       />
+    //     </Box>
+    //   </AlignItemGrid>
+
+    // <AlignItemGrid item xs={1} md={6.5} justifyContent="space-around">
+    //   <Hidden mdDown>
+    //     {navBarItem.map((item, index) => (
+    //       <React.Fragment key={index}>
+    //         <Stack direction="row" spacing={0.5} justifyContent="center">
+    //           {item.icon}
+    //           <AlibabaText>{item.name}</AlibabaText>
+    //         </Stack>
+    //         <Divider orientation="vertical" />
+    //       </React.Fragment>
+    //     ))}
+    //   </Hidden>
+    //   <Hidden mdUp>
+    //     <MenuIcon
+    //       anchorEl={anchorElNav}
+    //       onClose={handleClose}
+    //       onClick={handleClickNav}
+    //       aria-controls={open ? 'basic-menu-2' : undefined}
+    //     />
+    //     <Menu
+    //       id="basic-menu-2"
+    //       anchorEl={anchorElNav}
+    //       open={openNav}
+    //       onClose={handleClose}
+    //       MenuListProps={{
+    //         'aria-labelledby': 'basic-button'
+    //       }}
+    //       sx={{
+    //         '& .css-6hp17o-MuiList-root-MuiMenu-list': {
+    //           padding: 0
+    //         }
+    //       }}
+    //     >
+    //       {navBarItem.map((item, index) => (
+    //         <CategoryMenuItem key={index} onClick={handleClose} alignItem="center" gap={2}>
+    //           {item.icon}
+    //           <AlibabaText fontWeight={600} ml={2}>
+    //             {item.name}
+    //           </AlibabaText>
+    //         </CategoryMenuItem>
+    //       ))}
+    //     </Menu>
+    //   </Hidden>
+    // </AlignItemGrid>
+    // </Grid>
+
+    <AppBar sx={{ backgroundColor: baseColor.blue }} position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
             sx={{
-              fontSize: { xs: '12px', sm: '16px' },
-              whiteSpace: 'nowrap',
-              fontFamily: 'Open Sans !important'
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none'
             }}
           >
-            All categories
-          </AlibabaText>
-        </BootstrapButton>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button'
-          }}
-          sx={{
-            '& .css-6hp17o-MuiList-root-MuiMenu-list': {
-              padding: 0
-            }
-          }}
-        >
-          {categoriesItem.map((item, index) => (
-            <CategoryMenuItem key={index} onClick={handleClose} alignItem="center" gap={2}>
-              {item.icon}
-              <AlibabaText fontWeight={600} ml={2}>
-                {item.name} ({item.amount})
-              </AlibabaText>
-            </CategoryMenuItem>
-          ))}
-        </Menu>
-      </AlignItemGrid>
+            LOGO
+          </Typography>
 
-      <AlignItemGrid item xs={6} sm={8} md={3.5} sx={{ justifyContent: 'center' }}>
-        <Box position="relative" width={{ xs: '100%', sm: '90%' }} alignSelf="center">
-          <input
-            type="text"
-            placeholder="Search affiliate network"
-            style={{
-              width: '100%',
-              padding: '4px 10px',
-              borderRadius: '4px',
-              fontSize: '12px',
-              minWidth: '150px'
-            }}
-          />
-          <SearchIcon
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left'
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left'
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' }
+              }}
+            >
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
             sx={{
-              position: 'absolute',
-              right: '4px',
-              top: '4px',
-              color: '#3490DC',
-              padding: '2px',
-              '&:hover': {
-                cursor: 'pointer'
-              }
-            }}
-          />
-        </Box>
-      </AlignItemGrid>
-
-      <AlignItemGrid item xs={1} md={6.5} justifyContent="space-around">
-        <Hidden mdDown>
-          {navBarItem.map((item, index) => (
-            <React.Fragment key={index}>
-              <Stack direction="row" spacing={0.5} justifyContent="center">
-                {item.icon}
-                <AlibabaText>{item.name}</AlibabaText>
-              </Stack>
-              <Divider orientation="vertical" />
-            </React.Fragment>
-          ))}
-        </Hidden>
-        <Hidden mdUp>
-          <MenuIcon
-            anchorEl={anchorElNav}
-            onClose={handleClose}
-            onClick={handleClickNav}
-            aria-controls={open ? 'basic-menu-2' : undefined}
-          />
-          <Menu
-            id="basic-menu-2"
-            anchorEl={anchorElNav}
-            open={openNav}
-            onClose={handleClose}
-            MenuListProps={{
-              'aria-labelledby': 'basic-button'
-            }}
-            sx={{
-              '& .css-6hp17o-MuiList-root-MuiMenu-list': {
-                padding: 0
-              }
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none'
             }}
           >
-            {navBarItem.map((item, index) => (
-              <CategoryMenuItem key={index} onClick={handleClose} alignItem="center" gap={2}>
-                {item.icon}
-                <AlibabaText fontWeight={600} ml={2}>
-                  {item.name}
-                </AlibabaText>
-              </CategoryMenuItem>
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {navBarItem.map((item) => (
+              <Button
+                key={item}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                {item.name}
+              </Button>
             ))}
-          </Menu>
-        </Hidden>
-      </AlignItemGrid>
-    </Grid>
+          </Box>
+
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right'
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar>
   )
 }
 const AlignItemGrid = styled(Grid)({
@@ -273,18 +424,19 @@ const BootstrapButton = styled(Button)(({ theme }) => ({
   padding: { xs: '2px 4px', md: '6px 12px' },
   border: '1px solid',
   lineHeight: 0.5,
-  backgroundColor: '#FE6330',
+  backgroundColor: baseColor.orangeBtn,
   maxHeight: '28px',
-  borderColor: orange['A400'],
+  borderRadius: '2px',
+  borderColor: baseColor.orangeBtn,
   '&:hover': {
-    backgroundColor: orange[700],
-    borderColor: orange[700],
+    backgroundColor: baseColor.lightOrangeBtn,
+    borderColor: baseColor.lightOrangeBtn,
     boxShadow: 'none'
   },
   '&:active': {
     boxShadow: 'none',
-    backgroundColor: orange[700],
-    borderColor: orange['A700']
+    backgroundColor: baseColor.orangeBtn,
+    borderColor: baseColor.orangeBtn
   },
   '&:focus': {
     boxShadow: '0 0 0 0.2rem rgba(239,108,0,.5)'

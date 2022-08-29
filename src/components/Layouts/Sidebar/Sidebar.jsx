@@ -22,19 +22,21 @@ import InfinityTelecom from '~/assets/gifs/sidebar/InfinityTelecom.gif'
 import DynulnMedia from '~/assets/gifs/sidebar/DynuInMedia.gif'
 import c3pa from '~/assets/gifs/sidebar/c3pa-300.gif'
 import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
-import { blue, grey, red } from '~/styles/colors'
+import { baseColor, blue, grey, red } from '~/styles/colors'
 
 const Sidebar = () => {
   return (
     <Stack>
-      <BoxContainer sx={{ border: '3px solid #f60' }}>
+      <BoxContainer sx={{ border: `3px solid ${baseColor.orange}` }}>
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
-          sx={{ backgroundColor: blue['lightest'], p: '0.75rem' }}
+          sx={{ backgroundColor: baseColor.orange, p: '0.75rem' }}
         >
-          <TextHeading varient="h3">Network of The Month</TextHeading>
+          <TextHeading sx={{ color: 'white' }} varient="h3">
+            Network of The Month
+          </TextHeading>
           <Box
             component="img"
             sx={{
@@ -70,9 +72,11 @@ const Sidebar = () => {
         </Stack>
       </BoxContainer>
 
-      <BoxContainer>
-        <Box sx={{ backgroundColor: blue['lightest'], p: '0.75rem' }}>
-          <TextHeading varient="h3">Subscribe to Our Newsletter</TextHeading>
+      <BoxContainer sx={{ border: `3px solid ${baseColor.blue}` }}>
+        <Box sx={{ backgroundColor: baseColor.blue, p: '0.75rem' }}>
+          <TextHeading sx={{ color: 'white' }} varient="h3">
+            Subscribe to Our Newsletter
+          </TextHeading>
           <Box sx={{ display: 'flex' }}>
             <input
               style={{
@@ -108,7 +112,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <List mainColor={baseColor.blue} heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>
@@ -120,7 +124,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <List mainColor={baseColor.yellow} heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>
@@ -132,7 +136,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <List mainColor={baseColor.orange} heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>
@@ -146,6 +150,7 @@ const Sidebar = () => {
       <BoxContainer>
         <List
           heading="Recent Reviews"
+          mainColor={baseColor.yellow}
           Item={RecentReviewItem}
           footer={() => (
             <Box
@@ -172,7 +177,11 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List heading="Top 10 Rated Networks" Item={Top10RatedNetworkItem} />
+        <List
+          mainColor={baseColor.blue}
+          heading="Top 10 Rated Networks"
+          Item={Top10RatedNetworkItem}
+        />
       </BoxContainer>
     </Stack>
   )
@@ -193,7 +202,7 @@ export const TextContent = styled(Typography)({
 export const BoxContainer = styled(Paper)({
   backgroundColor: '#ffffff',
   marginBottom: '1rem',
-  borderRadius:'0'
+  borderRadius: '0'
 })
 
 export { Sidebar }

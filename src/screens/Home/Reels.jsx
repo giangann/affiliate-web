@@ -7,16 +7,26 @@ import {
   Paper,
   Menu,
   MenuItem,
-  List,
-  ListItem
+  ListItem,
+  Link
 } from '@mui/material'
 import { useState } from 'react'
+import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
+import { listGifs } from '~/assets/fake-data/list-gifs'
 import { AlibabaText } from '.'
-import { red } from '~/styles/colors'
+import { baseColor, red, blue } from '~/styles/colors'
 import Circel from '~/assets/svgs/circle.svg'
-
+import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
 import { Button } from '~/components/Buttons'
 import { grey } from '@mui/material/colors'
+import ReelCard from './Reels/ReelCard'
+import { BoxContainer, FeaturedNetworkItem } from '~/components/Layouts/Sidebar'
+import { TextContent, TextHeading } from '~/styles'
+import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
+import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
+import { Stars } from '~/components'
+import { Button as MyButton } from '~/components/Buttons'
+import { List } from '~/components/List'
 
 function Reels() {
   const topWebsite = [
@@ -56,100 +66,90 @@ function Reels() {
 
   const [focusWebsite, setFocusWebsite] = useState(1)
   return (
-    <Grid container component={Paper} elevation={4}>
-      <Grid item xs={12} sm={4} sx={{ backgroundColor: 'white' }}>
-        <Grid container sx={{ height: '100%' }}>
-          <Grid item xs={6} sx={{ height: '100%' }}>
-            <List disablePadding sx={{ borderRight: `1px solid ${grey[200]}`, height: '100%' }}>
-              {topWebsite.map((item, index) => (
-                <ListItem
-                  divider={index !== topWebsite.length - 1}
-                  key={index}
-                  sx={{
-                    height: `${100 / topWebsite.length}%`,
-                    borderBottom: index !== topWebsite.length - 1 ? `1px solid ${grey[100]}` : '',
-                    alignItem: 'center',
-                    backgroundColor: index === focusWebsite ? grey[100] : '',
+    <Grid container spacing={1}>
+      <Grid item xs={12} sm={6}>
+        <BoxContainer sx={{ border: `3px solid ${baseColor.orange}` }}>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{ backgroundColor: baseColor.orange, p: '0.75rem' }}
+          >
+            <TextHeading sx={{ color: 'white' }} varient="h3">
+              Network of The Month
+            </TextHeading>
+            <Box
+              component="img"
+              sx={{
+                height: '1.25rem',
+                width: '1.25rem'
+              }}
+              alt="medal icon"
+              src={medal_icon}
+            />
+          </Stack>
 
-                    '&:hover': {
-                      backgroundColor: grey[100],
-                      cursor: 'pointer'
-                    }
-                  }}
-                  onClick={() => setFocusWebsite(index)}
-                >
-                  <Box component={Stack} direction="row" ml={{ xs: 2, sm: 0 }}>
-                    <img
-                      style={{ width: '18px', height: '18px' }}
-                      src={item.avatar}
-                      alt="website"
-                    />
-                    <AlibabaText
-                      sx={{
-                        marginLeft: { xs: '16px', md: '8px' },
-                        opacity: index === focusWebsite ? 1 : 0.4,
-                        '&:hover': {
-                          opacity: 1
-                        }
-                      }}
-                    >
-                      {item.name}
-                    </AlibabaText>
-                  </Box>
-                </ListItem>
-              ))}
-            </List>
-          </Grid>
-
-          <Grid item xs={6}>
-            <Stack py={2}>
-              <Stack direction="row" spacing={1} justifyContent="center" alignItems="center">
-                <img
-                  style={{ width: '28px', height: '28px' }}
-                  src={topWebsite[focusWebsite].avatar}
-                  alt="website"
-                />
-                <Typography
-                  sx={{
-                    fontWeight: 600,
-                    opacity: 0.4,
-                    fontSize: '14px',
-                    fontFamily: 'alibaba-sans, sans-serif'
-                  }}
-                >
-                  {topWebsite[focusWebsite].name}
-                </Typography>
-              </Stack>
-              <Box sx={{ width: '100%', textAlign: 'center', py: '0.75rem', position: 'relative' }}>
-                <Box component="img" src={Circel} sx={{ width: '50px', height: '50px' }} />
-                <Typography
-                  sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    fontSize: '0.6rem'
-                  }}
-                >
-                  5
+          <Stack sx={{ pt: 1.5, px: 1.5, pb: 1 }}>
+            <Link href="https://algo-affiliates.com/register/?algo-refer=69" target="_blank">
+              <Box
+                component="img"
+                src={algoImg}
+                alt="algo image"
+                sx={{ width: '100%', display: 'block' }}
+              />
+            </Link>
+            <Stack sx={{ pt: 1.5, pb: 0.25 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Stars rating={2.5} />
+                <Typography sx={{ fontSize: '0.75rem', color: '#3d4852', fontWeight: 'bold' }}>
+                  Pat
                 </Typography>
               </Box>
-              <Box sx={{ fontSize: '12px', textAlign: 'center', fontWeight: '600', py: '0.75rem' }}>
-                <span style={{ fontWeight: '600' }}>4 Reviews</span>
-                <span> / </span>
-                <span style={{ color: red['orange'] }}>5</span>
-              </Box>
-              <Button>Details</Button>
+              <TextContent>
+                Algo Affiliates is the top cpa network for crypto offers. For those who have crypto
+                traffic, you have to join....
+              </TextContent>
             </Stack>
-          </Grid>
-        </Grid>
+          </Stack>
+        </BoxContainer>
+
+        {/* <BoxContainer>
+          <Box sx={{ backgroundColor: blue['lightest'], p: '0.75rem' }}>
+            <TextHeading varient="h3">Subscribe to Our Newsletter</TextHeading>
+            <Box sx={{ display: 'flex' }}>
+              <input
+                style={{
+                  flex: 1,
+                  outline: 'none',
+                  border: 'none',
+                  padding: '0.25rem 0.75rem',
+                  fontSize: '0.75rem'
+                }}
+                placeholder="Enter your email address"
+              />
+              <MyButton variant="contained" type="button-red">
+                Subcribe
+              </MyButton>
+            </Box>
+          </Box>
+        </BoxContainer> */}
+        <BoxContainer sx={{border:`3px solid ${baseColor.orange}`}}>
+          <Box component="img" src={lemonad_easy_peasy} alt="gif" sx={{ width: '100%' }} />
+        </BoxContainer>
       </Grid>
-      <Grid item xs={12} sm={8}>
-        <img
+      <Grid item xs={12} sm={6}>
+        <BoxContainer>
+          <List
+            mainColor={baseColor.orange}
+            heading="Featured Networks"
+            Item={FeaturedNetworkItem}
+          />
+        </BoxContainer>
+        {/* <img
           style={{ width: '100%', height: 'auto' }}
           src="https://apimg.net/slider/howto-setup-tracker-mylead-546x234.jpg"
           alt="website"
-        />
+        /> */}
       </Grid>
     </Grid>
   )

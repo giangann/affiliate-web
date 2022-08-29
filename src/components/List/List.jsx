@@ -1,16 +1,21 @@
 import React from 'react'
 import { Stack, Box, Typography, styled } from '@mui/material'
 
-import { blue, grey, red } from '~/styles/colors'
+import { baseColor, blue, grey, red } from '~/styles/colors'
 import Flag from '~/assets/svgs/sidebar/flag.svg'
 
-export const List = ({ heading, Item, ...props }) => {
+export const List = ({ heading, mainColor, Item, ...props }) => {
   return (
-    <Stack sx={{ borderTop: `3px solid ${blue['border']}`, ...props?.sx }}>
+    <Stack
+      sx={{
+        border: mainColor ? `3px solid ${mainColor}` : `3px solid ${blue['border']}`,
+        ...props?.sx
+      }}
+    >
       {heading && (
         <Box
           sx={{
-            backgroundColor: blue['lightest'],
+            backgroundColor: mainColor ?? blue['lightest'],
             display: 'flex',
             gap: 1,
             alignItems: 'center',
@@ -37,7 +42,7 @@ export const List = ({ heading, Item, ...props }) => {
       {props.header && props.header()}
 
       {[0, 1, 2, 4, 5, 6, 7, 8].map((item) => (
-        <Item key={item} />
+        <Item mainColor={mainColor} key={item} />
       ))}
 
       {props.footer && props.footer()}
@@ -46,8 +51,8 @@ export const List = ({ heading, Item, ...props }) => {
 }
 
 export const TextHeading = styled(Typography)({
-  fontSize: '0.825rem',
-  color: grey['darkest'],
+  fontSize: '0.8125rem',
+  color: 'white',
   fontWeight: 'bold'
 })
 
