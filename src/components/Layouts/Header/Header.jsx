@@ -1,6 +1,4 @@
-import { Box, Container, Grid, Paper } from '@mui/material'
 import React from 'react'
-import { baseColor } from '~/styles'
 import { ResponsiveContainer } from '..'
 import CarouselItem from './CarouselItem'
 import { Navbar } from './Navbar'
