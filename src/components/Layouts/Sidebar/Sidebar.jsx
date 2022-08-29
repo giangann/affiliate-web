@@ -27,6 +27,46 @@ import { baseColor, blue, grey, red } from '~/styles/colors'
 const Sidebar = () => {
   return (
     <Stack>
+      <BoxContainer sx={{ border: `3px solid ${baseColor.blue}` }}>
+        <Box sx={{ backgroundColor: baseColor.blue, p: '0.75rem' }}>
+          <TextHeading sx={{ color: 'white' }} varient="h3">
+            Subscribe to Our Newsletter
+          </TextHeading>
+          <Box sx={{ display: 'flex' }}>
+            <input
+              style={{
+                flex: 1,
+                outline: 'none',
+                border: 'none',
+                padding: '0.25rem 0.75rem',
+                fontSize: '0.75rem'
+              }}
+              placeholder="Enter your email address"
+            />
+            <MyButton variant="contained" type="button-red">
+              Subcribe
+            </MyButton>
+          </Box>
+        </Box>
+
+        <Box sx={{ px: '0.75rem', py: 2 }}>
+          <Box
+            component="img"
+            src={clickdealerImg}
+            sx={{ display: 'block', width: '100%', mb: 2 }}
+          />
+
+          <Grid container gap={1} justifyContent="space-between">
+            {listGifs.map((item, index) =>
+              index > 5 ? null : (
+                <Grid key={index} item xs={5.85}>
+                  <Box component="img" src={item} alt="gif" sx={{ width: '100%' }} />
+                </Grid>
+              )
+            )}
+          </Grid>
+        </Box>
+      </BoxContainer>
       <BoxContainer sx={{ border: `3px solid ${baseColor.orange}` }}>
         <Stack
           direction="row"
@@ -70,45 +110,6 @@ const Sidebar = () => {
             </TextContent>
           </Stack>
         </Stack>
-      </BoxContainer>
-
-      <BoxContainer sx={{ border: `3px solid ${baseColor.blue}` }}>
-        <Box sx={{ backgroundColor: baseColor.blue, p: '0.75rem' }}>
-          <TextHeading sx={{ color: 'white' }} varient="h3">
-            Subscribe to Our Newsletter
-          </TextHeading>
-          <Box sx={{ display: 'flex' }}>
-            <input
-              style={{
-                flex: 1,
-                outline: 'none',
-                border: 'none',
-                padding: '0.25rem 0.75rem',
-                fontSize: '0.75rem'
-              }}
-              placeholder="Enter your email address"
-            />
-            <MyButton variant="contained" type="button-red">
-              Subcribe
-            </MyButton>
-          </Box>
-        </Box>
-
-        <Box sx={{ px: '0.75rem', py: 2 }}>
-          <Box
-            component="img"
-            src={clickdealerImg}
-            sx={{ display: 'block', width: '100%', mb: 2 }}
-          />
-
-          <Grid container gap={1} justifyContent="space-between">
-            {listGifs.map((item, index) => (
-              <Grid key={index} item xs={5.85}>
-                <Box component="img" src={item} alt="gif" sx={{ width: '100%' }} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
       </BoxContainer>
 
       <BoxContainer>

@@ -172,7 +172,7 @@ export const Navbar = () => {
     setAnchorElUser(null)
   }
   return (
-    <AppBar sx={{ backgroundColor: baseColor.blue }} position="static">
+    <AppBar sx={{ backgroundColor: baseColor.blue, marginBottom: '16px' }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Hidden mdDown>
