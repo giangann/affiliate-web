@@ -62,6 +62,10 @@ export const Detail = () => {
     setOpen(false)
   }
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const affiliateProgramDetails = useMemo(
     () => [
       {
