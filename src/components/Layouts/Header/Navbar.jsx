@@ -20,9 +20,11 @@ import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import AdbIcon from '@mui/icons-material/Adb'
-
 import { orange } from '@mui/material/colors'
 import { baseColor } from '~/styles'
+import logo from '~/assets/images/affiliate/logo.png'
+import logo2 from '~/assets/images/affiliate/logo2.png'
+import logo4 from '~/assets/images/affiliate/logo4.svg'
 
 export const Navbar = () => {
   const pages = ['Products', 'Pricing', 'Blog']
@@ -170,144 +172,21 @@ export const Navbar = () => {
     setAnchorElUser(null)
   }
   return (
-    // <Grid container alignItem="center">
-    //   <AlignItemGrid item xs={5} sm={3} md={2}>
-    //     <BootstrapButton
-    //       startIcon={<MenuIcon />}
-    //       aria-controls={open ? 'basic-menu' : undefined}
-    //       onClick={handleClick}
-    //     >
-    //       <AlibabaText
-    //         sx={{
-    //           fontSize: { xs: '12px', sm: '16px' },
-    //           whiteSpace: 'nowrap',
-    //           fontFamily: 'Open Sans !important'
-    //         }}
-    //       >
-    //         All categories
-    //       </AlibabaText>
-    //     </BootstrapButton>
-    //     <Menu
-    //       id="basic-menu"
-    //       anchorEl={anchorEl}
-    //       open={open}
-    //       onClose={handleClose}
-    //       MenuListProps={{
-    //         'aria-labelledby': 'basic-button'
-    //       }}
-    //       sx={{
-    //         '& .css-6hp17o-MuiList-root-MuiMenu-list': {
-    //           padding: 0
-    //         }
-    //       }}
-    //     >
-    //       {categoriesItem.map((item, index) => (
-    //         <CategoryMenuItem key={index} onClick={handleClose} alignItem="center" gap={2}>
-    //           {item.icon}
-    //           <AlibabaText fontWeight={600} ml={2}>
-    //             {item.name} ({item.amount})
-    //           </AlibabaText>
-    //         </CategoryMenuItem>
-    //       ))}
-    //     </Menu>
-    //   </AlignItemGrid>
-
-    //   <AlignItemGrid item xs={6} sm={8} md={3.5} sx={{ justifyContent: 'center' }}>
-    //     <Box position="relative" width={{ xs: '100%', sm: '90%' }} alignSelf="center">
-    //       <input
-    //         type="text"
-    //         placeholder="Search affiliate network"
-    //         style={{
-    //           width: '100%',
-    //           padding: '4px 10px',
-    //           borderRadius: '4px',
-    //           fontSize: '12px',
-    //           minWidth: '150px'
-    //         }}
-    //       />
-    //       <SearchIcon
-    //         sx={{
-    //           position: 'absolute',
-    //           right: '4px',
-    //           top: '4px',
-    //           color: '#3490DC',
-    //           padding: '2px',
-    //           '&:hover': {
-    //             cursor: 'pointer'
-    //           }
-    //         }}
-    //       />
-    //     </Box>
-    //   </AlignItemGrid>
-
-    // <AlignItemGrid item xs={1} md={6.5} justifyContent="space-around">
-    //   <Hidden mdDown>
-    //     {navBarItem.map((item, index) => (
-    //       <React.Fragment key={index}>
-    //         <Stack direction="row" spacing={0.5} justifyContent="center">
-    //           {item.icon}
-    //           <AlibabaText>{item.name}</AlibabaText>
-    //         </Stack>
-    //         <Divider orientation="vertical" />
-    //       </React.Fragment>
-    //     ))}
-    //   </Hidden>
-    //   <Hidden mdUp>
-    //     <MenuIcon
-    //       anchorEl={anchorElNav}
-    //       onClose={handleClose}
-    //       onClick={handleClickNav}
-    //       aria-controls={open ? 'basic-menu-2' : undefined}
-    //     />
-    //     <Menu
-    //       id="basic-menu-2"
-    //       anchorEl={anchorElNav}
-    //       open={openNav}
-    //       onClose={handleClose}
-    //       MenuListProps={{
-    //         'aria-labelledby': 'basic-button'
-    //       }}
-    //       sx={{
-    //         '& .css-6hp17o-MuiList-root-MuiMenu-list': {
-    //           padding: 0
-    //         }
-    //       }}
-    //     >
-    //       {navBarItem.map((item, index) => (
-    //         <CategoryMenuItem key={index} onClick={handleClose} alignItem="center" gap={2}>
-    //           {item.icon}
-    //           <AlibabaText fontWeight={600} ml={2}>
-    //             {item.name}
-    //           </AlibabaText>
-    //         </CategoryMenuItem>
-    //       ))}
-    //     </Menu>
-    //   </Hidden>
-    // </AlignItemGrid>
-    // </Grid>
-
     <AppBar sx={{ backgroundColor: baseColor.blue }} position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none'
-            }}
-          >
-            LOGO
-          </Typography>
-
+          <Hidden mdDown>
+            <Box
+              component="img"
+              src={logo4}
+              sx={{
+                color: 'white',
+                height: '80px',
+                width: 'auto',
+                display: { xs: 'none', md: 'flex' }
+              }}
+            />
+          </Hidden>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -344,31 +223,22 @@ export const Navbar = () => {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
+          <Box
+            component="img"
+            src={logo4}
             sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none'
+              color: 'white',
+              height: '80px',
+              width: 'auto',
+              display: { xs: 'flex', md: 'none' }
             }}
-          >
-            LOGO
-          </Typography>
+          />
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {navBarItem.map((item) => (
               <Button
                 key={item}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', fontWeight: 900 }}
               >
                 {item.name}
               </Button>

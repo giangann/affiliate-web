@@ -6,27 +6,8 @@ import { Navbar } from './Navbar'
 
 function Header() {
   return (
-    <ResponsiveContainer sx={{ position: 'relative' }}>
-      <Grid container rowGap={2}>
-        {/* navbar */}
-        <Grid
-          // component={Paper}
-          // elevation={2}
-          item
-          xs={12}
-          mb={2}
-          sx={{
-            color: 'white',
-            borderRadius: '0px',
-            display: 'flex',
-            alignItem: 'center',
-            position: 'sticky',
-            top: 0
-          }}
-        >
-          <Navbar />
-        </Grid>
-      </Grid>
+    <ResponsiveContainer sx={{ position: 'relative', marginBottom:'16px' }}>
+      <Navbar />
     </ResponsiveContainer>
   )
 }
