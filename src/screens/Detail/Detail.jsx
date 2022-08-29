@@ -19,6 +19,7 @@ import { getDataDetail, getWebsite } from '~/apis'
 import { FlexBoxAlignCenterJustifyBetween, FlexBoxAlignCenter } from '~/styles'
 import { ReviewForm } from './ReviewForm'
 import { useQuery } from 'react-query'
+import { ListSkeleton } from '~/components/Skeleton'
 
 const desc =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facere adipisci, eiusquo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit amet consecteturadipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic,aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatem corporis accusamusanimi? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugitperspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facereadipisci, eius quo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit ametconsectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventoretempore, hic, aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatemcorporis accusamus animi?'
@@ -105,7 +106,7 @@ export const Detail = () => {
   return (
     <>
       {isLoading ? (
-        <h1>Loading ...</h1>
+        <ListSkeleton />
       ) : error ? (
         <h1>Error ...</h1>
       ) : (
@@ -218,7 +219,9 @@ export const Detail = () => {
                     >
                       Write a Review
                     </Button>
-                    <Button type="button-red">Join now</Button>
+                    <Button type="button-red" href={dataDetail.link} targer="_blank">
+                      Join now
+                    </Button>
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={4}>

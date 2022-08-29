@@ -19,6 +19,7 @@ import {
   AffiliateOfferItem,
   Filter
 } from '~/screens/Home'
+import { ListSkeleton } from '~/components/Skeleton'
 
 import { baseColor, blue } from '~/styles'
 
@@ -42,7 +43,7 @@ const AffiliateNetwork = () => {
   return (
     <React.Fragment>
       {isLoading ? (
-        <h1>Loading</h1>
+        <ListSkeleton />
       ) : (
         <>
           <BoxWithHeader
