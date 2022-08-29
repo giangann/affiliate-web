@@ -50,6 +50,15 @@
   width: 30%;
 }
 
+.__active{
+  margin-right: 10px !important;
+}
+
+/* .__target{
+  padding-right: 10px !important;
+
+} */
+
 @media screen and (max-width: 600px) {
   .actions .action-input {
     margin-top: 4px;
