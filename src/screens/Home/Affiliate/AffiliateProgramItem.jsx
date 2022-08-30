@@ -12,13 +12,13 @@ const webkitBox = {
 }
 
 export const AffiliateProgramItem = ({ data, ...props }) => {
-  const { data_api } = data
+  const { data_api } = data ?? {}
 
   return (
     <Stack sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
       <Grid container>
         <Grid item xs={10} zIndex="10">
-          <Link to={`/websites/show/${data.id}`} style={{ textDecoration: 'none' }}>
+          <Link to={`/websites/show/${data?.id}`} style={{ textDecoration: 'none' }}>
             <Typography
               component="a"
               className="no-underline"
@@ -33,7 +33,7 @@ export const AffiliateProgramItem = ({ data, ...props }) => {
                 fontSize: '0.9rem'
               }}
             >
-              {data.name}
+              {data?.name}
             </Typography>
           </Link>
         </Grid>
@@ -51,14 +51,14 @@ export const AffiliateProgramItem = ({ data, ...props }) => {
           <img
             style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
             className="bg-white shadow-lg rounded"
-            src={data_api.profile_banner}
+            src={data_api?.profile_banner}
             alt="1"
           />
           <Hidden mdUp>
             <Button
               variant="outlined"
               sx={{ maxWidth: '100%', width: '95px' }}
-              href={data.link}
+              href={data?.link}
               target="_blank"
             >
               Join
@@ -73,16 +73,16 @@ export const AffiliateProgramItem = ({ data, ...props }) => {
                 className="text-gray"
                 sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold', ...webkitBox }}
               >
-                {<div dangerouslySetInnerHTML={{ __html: data_api.description }} />}
+                {<div dangerouslySetInnerHTML={{ __html: data_api?.description }} />}
               </Typography>
               <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
-                {data?.reviews?.length} Reviews / {data.data_api.offer_count} Offers /{' '}
-                {data_api.platform} / {data_api.payment_freq}
+                {data?.reviews?.length} Reviews / {data?.data_api?.offer_count} Offers /{' '}
+                {data_api?.platform} / {data_api?.payment_freq}
               </Typography>
             </Grid>
             <Hidden mdDown>
               <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-                <Button variant="outlined" href={data.link} target="_blank">
+                <Button variant="outlined" href={data?.link} target="_blank">
                   Join
                 </Button>
               </Grid>

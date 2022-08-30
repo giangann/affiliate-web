@@ -3,6 +3,7 @@ import { Grid, Hidden, Typography } from '@mui/material'
 import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { Link } from 'react-router-dom'
+import { BootstrapButton } from '~/components/Layouts/Header/Navbar'
 
 const webkitBox = {
   WebkitBoxOrient: 'vertical',
@@ -11,10 +12,14 @@ const webkitBox = {
   overflow: 'hidden'
 }
 
-export const AffiliateNetworkItem = ({ data, ...props }) => {
+export const NetworkItem = ({ data, ...props }) => {
   const { data_api } = data ?? {}
 
-  console.log(data)
+  const handleDelete = (id)=>{
+    console.log('delete in id',id)
+  }
+
+  // console.log(data)
   // console.log({ data_api })
 
   return (
@@ -32,15 +37,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
           alt="1"
         />
         <Hidden mdUp>
-          <Button
-            sx={{ maxWidth: '100% !important', width: '95px' }}
-            variant="contained"
-            type="button-blue"
-            href={data?.link}
-            target="_blank"
-          >
-            Join
-          </Button>
+          <BootstrapButton>Delete</BootstrapButton>
         </Hidden>
       </Grid>
       <Grid item xs={9} md={10}>
@@ -84,13 +81,6 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
         </Grid>
         <Grid container>
           <Grid item xs={10}>
-            <Typography
-              component="p"
-              className="text-gray"
-              sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold', ...webkitBox }}
-            >
-              {<div dangerouslySetInnerHTML={{ __html: data_api?.description }} />}
-            </Typography>
             <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
               {data?.reviews?.length} Reviews / {data?.data_api?.offer_count} Offers /{' '}
               {data_api?.platform} / {data_api?.payment_freq}
@@ -98,9 +88,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
           </Grid>
           <Hidden mdDown>
             <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-              <Button variant="contained" type="button-blue" href={data?.link} target="_blank">
-                Join
-              </Button>
+              <BootstrapButton onClick={handleDelete}>Delete</BootstrapButton>
             </Grid>
           </Hidden>
         </Grid>

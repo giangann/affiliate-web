@@ -51,9 +51,9 @@ export const Detail = () => {
 
   useEffect(() => {}, [dataDetail, isLoading, error])
 
-  useEffect(() => {
-    console.log('dataComment', dataComment)
-  }, [dataComment])
+  // useEffect(() => {
+  //   console.log('dataComment', dataComment)
+  // }, [dataComment])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -65,6 +65,8 @@ export const Detail = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
+  const [refetchBoxComment, setRefetchBoxComment] = React.useState(false)
 
   const affiliateProgramDetails = useMemo(
     () => [
@@ -114,6 +116,7 @@ export const Detail = () => {
             open={open}
             handleClose={handleClose}
             refetchComment={refetchComment}
+            handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
             title={
               <Typography sx={{ color: '#2779bd', fontSize: '1.5rem', fontWeight: 'bold' }}>
                 {dataDetail?.name}
@@ -350,78 +353,82 @@ export const Detail = () => {
             {/* End Affiliate Network Details */}
 
             {/* Affiliate Offers */}
-            <BoxWithPagination pageSize={12}>
-              <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
-                <List
-                  sx={{ px: 3, pb: 2 }}
-                  header={() => (
-                    <>
-                      <Grid container sx={{ borderBottom: { xs: 'none', md: '1px solid #ccc' } }}>
-                        <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
-                          <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                            <Typography
-                              variant="h1"
-                              sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                            >
-                              Affiliate Offers
-                            </Typography>
-                            <Typography
-                              sx={{
-                                fontStyle: 'italic',
-                                color: '#b8c2cc',
-                                fontSize: '.75rem',
-                                fontWeight: 'bold'
-                              }}
-                            >
-                              Data Provided by Affplus.com
-                            </Typography>
-                          </Stack>
-                        </Grid>
-                        <Grid item xs={12} md={6}>
-                          <Stack
-                            direction="row"
-                            alignItems="center"
-                            justifyContent="flex-end"
-                            className="h-100"
-                            spacing={2}
+            {/* <BoxWithPagination pageSize={12}> */}
+            <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
+              <List
+                sx={{ px: 3, pb: 2 }}
+                header={() => (
+                  <>
+                    <Grid container sx={{ borderBottom: { xs: 'none', md: '1px solid #ccc' } }}>
+                      <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
+                        <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+                          <Typography
+                            variant="h1"
+                            sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
                           >
-                            <Button variant="contained" type="button-blue">
-                              Top Converting
-                            </Button>
-                            <Button variant="contained" type="button-gray">
-                              Lastest
-                            </Button>
-                          </Stack>
-                        </Grid>
+                            Affiliate Offers
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontStyle: 'italic',
+                              color: '#b8c2cc',
+                              fontSize: '.75rem',
+                              fontWeight: 'bold'
+                            }}
+                          >
+                            Data Provided by Affplus.com
+                          </Typography>
+                        </Stack>
                       </Grid>
-                    </>
-                  )}
-                  Item={AffiliateOfferItem}
-                  footer={() => (
-                    <div className="d-flex justify-content-center pt-3">
-                      <Button
-                        sx={{
-                          color: '#2779bd',
-                          fontSize: '0.75rem',
-                          fontWeight: 'bold'
-                        }}
-                        className="ml-3 rounded px-1"
-                      >
-                        See more offers on affplus
-                      </Button>
-                    </div>
-                  )}
-                />
-              </Stack>
-            </BoxWithPagination>
+                      <Grid item xs={12} md={6}>
+                        <Stack
+                          direction="row"
+                          alignItems="center"
+                          justifyContent="flex-end"
+                          className="h-100"
+                          spacing={2}
+                        >
+                          <Button variant="contained" type="button-blue">
+                            Top Converting
+                          </Button>
+                          <Button variant="contained" type="button-gray">
+                            Lastest
+                          </Button>
+                        </Stack>
+                      </Grid>
+                    </Grid>
+                  </>
+                )}
+                Item={AffiliateOfferItem}
+                footer={() => (
+                  <div className="d-flex justify-content-center pt-3">
+                    <Button
+                      sx={{
+                        color: '#2779bd',
+                        fontSize: '0.75rem',
+                        fontWeight: 'bold'
+                      }}
+                      className="ml-3 rounded px-1"
+                    >
+                      See more offers on affplus
+                    </Button>
+                  </div>
+                )}
+              />
+            </Stack>
+            {/* </BoxWithPagination> */}
             {/* End Affiliate Offers */}
 
             {/* Affiliate Reviews */}
-            <BoxWithPagination pageSize={12}>
-              <Stack sx={{ backgroundColor: 'white' }}>
+            <Stack sx={{ backgroundColor: 'white' }}>
+              <BoxWithPagination
+                api={getListComments}
+                id={Number(id)}
+                refetchBoxComment={refetchBoxComment}
+              >
                 <List
                   sx={{ px: 3, pb: 2 }}
-                  data={dataComment}
+                  // data={dataComment?.data}
                   header={() => (
                     <FlexBoxAlignCenterJustifyBetween
                       sx={{
@@ -434,7 +441,7 @@ export const Detail = () => {
                       borderBottom="1px solid #d6eaff"
                     >
                       <FlexBoxAlignCenter gap="1.25rem">
-                        <Button type="button-blue"> All Reviews (22)</Button>
+                        <Button type="button-blue"> All Reviews ({dataComment.length})</Button>
                         <Button type="button-grey">Payment Proofs</Button>
                         <Button type="button-grey">Questions</Button>
                       </FlexBoxAlignCenter>
@@ -449,9 +456,10 @@ export const Detail = () => {
                     </FlexBoxAlignCenterJustifyBetween>
                   )}
                   Item={CommentItem}
+                  footer={() => <>{/* <button>write a review</button> */}</>}
                 />
-              </Stack>
-            </BoxWithPagination>
+              </BoxWithPagination>
+            </Stack>
             {/* End Affiliate Reviews */}
           </Stack>
         </>
