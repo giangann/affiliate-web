@@ -21,11 +21,12 @@ import { Controller, useForm } from 'react-hook-form'
 import { Button } from '~/components/Buttons'
 import { gray, silver } from '~/constants/color'
 import { TextGrey } from '.'
+import axios from 'axios'
 
 const reviewDetails = [
   {
-    label: 'OFFERS',
-    value: 'OFFERS'
+    label: 'OFFER',
+    value: 'OFFER'
   },
   {
     label: 'PAYOUT',
@@ -95,11 +96,11 @@ const StyledRating = styled(Rating)({
 })
 
 const ReviewDetail = (props) => {
-  const { onChange, value } = props
+  const { onChange, value, label } = props
   return (
     <Grid container>
       <Grid item xs={4}>
-        <TextGrey sx={{ fontSize: '0.75rem', color: '#b8c2cc' }}>OFFERS</TextGrey>
+        <TextGrey sx={{ fontSize: '0.75rem', color: '#b8c2cc' }}>{label}</TextGrey>
       </Grid>
       <Grid item xs={8}>
         <StyledRating
@@ -117,7 +118,7 @@ const ReviewDetail = (props) => {
 
 const ReviewForm = (props) => {
   const ref = React.useRef(null)
-  const { open, handleClose, title } = props
+  const { open, handleClose, title, refetchComment } = props
   const [rating, setRating] = React.useState(2)
   const [image, setImage] = React.useState('')
 
@@ -148,8 +149,19 @@ const ReviewForm = (props) => {
     }
   }
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data)
+
+    try {
+      handleClose()
+      const res = await axios.post('http://localhost:8000/api/reviews', data)
+      console.log(res.data)
+      if (refetchComment) {
+        refetchComment()
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -176,7 +188,7 @@ const ReviewForm = (props) => {
             <Stack direction="row">
               <Controller
                 control={control}
-                name="rating.overall"
+                name="score"
                 defaultValue={2}
                 render={({ field: { onChange, value } }) => (
                   <Rating
@@ -212,10 +224,10 @@ const ReviewForm = (props) => {
                 <Grid item xs={6} key={index}>
                   <Controller
                     control={control}
-                    name={`rating.${item.label.toLocaleLowerCase()}`}
+                    name={`${item.label.toLocaleLowerCase()}`}
                     defaultValue={2}
                     render={({ field: { onChange, value } }) => (
-                      <ReviewDetail onChange={onChange} value={value} />
+                      <ReviewDetail onChange={onChange} value={value} label={item.label} />
                     )}
                   />
                 </Grid>
@@ -227,15 +239,23 @@ const ReviewForm = (props) => {
             <TitleReviewForm>
               Your review <span style={{ color: 'red' }}>*</span>
             </TitleReviewForm>
-            <TextareaAutosize
-              aria-label="minimum height"
-              minRows={4}
-              style={{
-                width: '100%',
-                backgroundColor: '#f8fafc',
-                border: '1px solid #dae1e7',
-                borderRadius: '0.25rem'
-              }}
+            <Controller
+              control={control}
+              name={'content'}
+              render={({ field: { onChange, value } }) => (
+                <TextareaAutosize
+                  aria-label="minimum height"
+                  minRows={4}
+                  value={value}
+                  onChange={onChange}
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#f8fafc',
+                    border: '1px solid #dae1e7',
+                    borderRadius: '0.25rem'
+                  }}
+                />
+              )}
             />
           </Box>
 

@@ -15,7 +15,7 @@ import { List } from '~/components/List'
 import { Button } from '~/components/Buttons'
 import { AffiliateOfferItem } from '~/screens/Home'
 import { BoxWithPagination } from '~/components/Pagination'
-import { getDataDetail, getWebsite } from '~/apis'
+import { getDataDetail, getWebsite, getListComments } from '~/apis'
 import { FlexBoxAlignCenterJustifyBetween, FlexBoxAlignCenter } from '~/styles'
 import { ReviewForm } from './ReviewForm'
 import { useQuery } from 'react-query'
@@ -33,15 +33,6 @@ const data1 = [
   },
   {
     title: 'offers'
-  },
-  {
-    title: 'tracking'
-  },
-  {
-    title: 'offers'
-  },
-  {
-    title: 'tracking'
   }
 ]
 
@@ -51,8 +42,18 @@ export const Detail = () => {
   const { slug, id } = useParams()
   const [open, setOpen] = React.useState(false)
   const { isLoading, error, data: dataDetail } = useQuery('website-detail', () => getWebsite(id))
+  const {
+    isLoading: isLoadingComment,
+    error: errorComment,
+    data: dataComment,
+    refetch: refetchComment
+  } = useQuery('list-comment', () => getListComments(id))
 
   useEffect(() => {}, [dataDetail, isLoading, error])
+
+  useEffect(() => {
+    console.log('dataComment', dataComment)
+  }, [dataComment])
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -86,35 +87,36 @@ export const Detail = () => {
         id: 4,
         title: 'Payment Frequency',
         content: dataDetail?.data_api?.payment_freq
-      },
-      {
-        id: 5,
-        title: 'Commission Type',
-        content: 'CPA, CPL, CGR'
-      },
-      {
-        id: 6,
-        title: 'Minimum Payment',
-        content: '$100'
       }
+      // {
+      //   id: 5,
+      //   title: 'Commission Type',
+      //   content: 'CPA, CPL, CGR'
+      // },
+      // {
+      //   id: 6,
+      //   title: 'Minimum Payment',
+      //   content: '$100'
+      // }
     ],
     [dataDetail, isLoading, error]
   )
 
   return (
     <>
-      {isLoading ? (
+      {isLoading || isLoadingComment ? (
         <ListSkeleton />
-      ) : error ? (
+      ) : error || errorComment ? (
         <h1>Error ...</h1>
       ) : (
         <BoxWithPagination>
           <ReviewForm
             open={open}
             handleClose={handleClose}
+            refetchComment={refetchComment}
             title={
               <Typography sx={{ color: '#2779bd', fontSize: '1.5rem', fontWeight: 'bold' }}>
-                {dataDetail.name}
+                {dataDetail?.name}
               </Typography>
             }
           />
@@ -184,7 +186,7 @@ export const Detail = () => {
                     <Box sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
                       <Stack direction="row">
                         <Stars rating={4} />
-                        <TextGrey ml={1}>84 reviews fixcung</TextGrey>
+                        <TextGrey ml={1}>{dataComment.length} reviews</TextGrey>
                       </Stack>
                       <Stack direction="row" gap={0.5}>
                         <Icon src={emailImg} sx={{ width: '12px', height: '12px' }} />
@@ -195,10 +197,10 @@ export const Detail = () => {
                     </Box>
 
                     <Stack direction="row" gap="12px" mt="12px">
-                      <TagScore lable="offers" score={4} />
-                      <TagScore lable="offers" score={4} />
-                      <TagScore lable="offers" score={4} />
-                      <TagScore lable="offers" score={4} />
+                      <TagScore label="offers" score={4} />
+                      <TagScore label="offers" score={4} />
+                      <TagScore label="offers" score={4} />
+                      <TagScore label="offers" score={4} />
                     </Stack>
                   </Stack>
 
@@ -407,6 +409,7 @@ export const Detail = () => {
             <Stack sx={{ backgroundColor: 'white' }}>
               <List
                 sx={{ px: 3, pb: 2 }}
+                data={dataComment}
                 header={() => (
                   <FlexBoxAlignCenterJustifyBetween
                     sx={{
@@ -424,7 +427,7 @@ export const Detail = () => {
                       <Button type="button-grey">Questions</Button>
                     </FlexBoxAlignCenter>
                     <FlexBoxAlignCenter gap="8px">
-                      <TextGrey>sort:</TextGrey>
+                      <TextGrey>Sort:</TextGrey>
                       <select style={{ minWidth: '128px' }}>
                         <option value="1">Most recent</option>
                         <option value="2">Popular</option>

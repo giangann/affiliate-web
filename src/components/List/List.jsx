@@ -5,6 +5,8 @@ import { baseColor, blue, grey, red } from '~/styles/colors'
 import Flag from '~/assets/svgs/sidebar/flag.svg'
 
 export const List = ({ heading, data, mainColor, Item, ...props }) => {
+  // const { isLoading, error, data: dataDetail } = useQuery('website-detail', () => props.api)
+
   return (
     <Stack
       sx={{

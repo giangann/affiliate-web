@@ -23,7 +23,7 @@ export const getAllWebsites = async () => {
 }
 
 export const getWebsite = async (id) => {
-  const res = await axios.get(`${BASE_URL}/websites/${id}`)
+  const res = await axios.get(`${BASE_URL}/websites/show/${id}`)
   const data = await axios.get(res.data.api)
 
   return {
@@ -46,4 +46,9 @@ export const getApiResource = async (name) => {
 export const login = async (data, url) => {
   const res = await axios.post(`${BASE_URL}/${url}`, data)
   return res
+}
+
+export const getListComments = async (id) => {
+  const res = await axios.get(`${BASE_URL}/reviews`, { params: { websiteId: id } })
+  return res.data
 }

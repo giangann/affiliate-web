@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { CommentReply } from '../Comment'
+import { useQuery } from 'react-query'
 
 const comments = [
   {
