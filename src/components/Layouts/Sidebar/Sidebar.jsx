@@ -23,8 +23,17 @@ import DynulnMedia from '~/assets/gifs/sidebar/DynuInMedia.gif'
 import c3pa from '~/assets/gifs/sidebar/c3pa-300.gif'
 import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
 import { baseColor, blue, grey, red } from '~/styles/colors'
+import { useQuery } from 'react-query'
+import { getTop10Networks, getRecentReviews } from '~/apis'
+import { ListSkeleton } from '~/components/Skeleton'
 
 const Sidebar = () => {
+  const { isLoading, error, data: top10Networks } = useQuery('top-10-networks', getTop10Networks)
+  const {
+    isLoading: isLoadingRecentReviews,
+    error: errorRecentReviews,
+    data: recentReviews
+  } = useQuery('recent-reviews', getRecentReviews)
   return (
     <Stack>
       <BoxContainer sx={{ border: `3px solid ${baseColor.blue}` }}>
@@ -149,28 +158,33 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List
-          heading="Recent Reviews"
-          mainColor={baseColor.yellow}
-          Item={RecentReviewItem}
-          footer={() => (
-            <Box
-              sx={{
-                textAlign: 'center',
-                py: '0.5rem',
-                borderTop: '1px solid #dae1e7',
-                '&:hover': {
-                  backgroundColor: '#f8fafc',
-                  cursor: 'pointer'
-                }
-              }}
-            >
-              <Typography sx={{ fontSize: '.75rem', color: '#2779bd', fontWeight: '700' }}>
-                More Reviews
-              </Typography>
-            </Box>
-          )}
-        />
+        {isLoadingRecentReviews ? (
+          <ListSkeleton />
+        ) : (
+          <List
+            data={recentReviews}
+            heading="Recent Reviews"
+            mainColor={baseColor.yellow}
+            Item={RecentReviewItem}
+            footer={() => (
+              <Box
+                sx={{
+                  textAlign: 'center',
+                  py: '0.5rem',
+                  borderTop: '1px solid #dae1e7',
+                  '&:hover': {
+                    backgroundColor: '#f8fafc',
+                    cursor: 'pointer'
+                  }
+                }}
+              >
+                <Typography sx={{ fontSize: '.75rem', color: '#2779bd', fontWeight: '700' }}>
+                  More Reviews
+                </Typography>
+              </Box>
+            )}
+          />
+        )}
       </BoxContainer>
 
       <BoxContainer>
@@ -178,11 +192,16 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List
-          mainColor={baseColor.blue}
-          heading="Top 10 Rated Networks"
-          Item={Top10RatedNetworkItem}
-        />
+        {isLoading ? (
+          <ListSkeleton />
+        ) : (
+          <List
+            data={top10Networks}
+            mainColor={baseColor.blue}
+            heading="Top 10 Rated Networks"
+            Item={Top10RatedNetworkItem}
+          />
+        )}
       </BoxContainer>
     </Stack>
   )

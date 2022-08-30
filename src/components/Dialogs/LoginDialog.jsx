@@ -26,6 +26,7 @@ import { orange } from '~/styles'
 import { BootstrapButton, AlignItemGrid } from '../Layouts/Header/Navbar'
 import { GoogleLogin } from 'react-google-login'
 import { gapi } from 'gapi-script'
+import GoogleButton from 'react-google-button'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -103,8 +104,8 @@ const LoginDialog = (props) => {
   })
 
   const onSuccess = (res) => {
-    console.log(res.profileObj);
-    const login = loginWithGG('login-with-google',res?.profileObj)
+    console.log(res.profileObj)
+    const login = loginWithGG('login-with-google', res?.profileObj)
   }
   const onFailure = (err) => {
     console.log('failed:', err)
@@ -184,24 +185,44 @@ const LoginDialog = (props) => {
                 )}
               />
             </Grid>
-            <Grid item xs={4}>
-              <BootstrapButton sx={{ margin: 0 }} type="submit">
+            <Grid item {...grid}>
+              <BootstrapButton
+                sx={{
+                  margin: 0,
+                  width: '100%',
+                  height: '100%',
+                  maxHeight: 'unset',
+                  marginLeft: {
+                    xs: 0
+                  }
+                }}
+                type="submit"
+              >
                 <AlibabaText>Login</AlibabaText>
               </BootstrapButton>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item {...grid}>
               {/* <BootstrapButton sx={{ margin: 0 }}>
                 <AlibabaText>
                 </AlibabaText>
               </BootstrapButton> */}
-                  <GoogleLogin
-                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                    buttonText="Sign in with Google"
-                    onSuccess={onSuccess}
-                    onFailure={onFailure}
-                    cookiePolicy={'single_host_origin'}
-                    // isSignedIn={true}
-                  />
+              <GoogleLogin
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                buttonText="Sign in with Google"
+                onSuccess={onSuccess}
+                onFailure={onFailure}
+                cookiePolicy={'single_host_origin'}
+                // isSignedIn={true}
+                render={(renderProps) => (
+                  <GoogleButton
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                    style={{ width: '100%' }}
+                  >
+                    Sign in with Google
+                  </GoogleButton>
+                )}
+              />
             </Grid>
           </Grid>
         </DialogContent>
