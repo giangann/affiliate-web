@@ -52,9 +52,7 @@ export const Detail = () => {
   const [open, setOpen] = React.useState(false)
   const { isLoading, error, data: dataDetail } = useQuery('website-detail', () => getWebsite(id))
 
-  useEffect(() => {
-    console.log('Detail', dataDetail, isLoading, error)
-  }, [dataDetail, isLoading, error])
+  useEffect(() => {}, [dataDetail, isLoading, error])
 
   const handleClickOpen = () => {
     setOpen(true)

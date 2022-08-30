@@ -42,3 +42,8 @@ export const getApiResource = async (name) => {
   const res = await axios.get(`${BASE_URL}/${name}`)
   return res.data
 }
+
+export const login = async (data, url) => {
+  const res = await axios.post(`${BASE_URL}/${url}`, data)
+  return res
+}
