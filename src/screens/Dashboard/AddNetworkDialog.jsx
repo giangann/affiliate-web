@@ -1,3 +1,5 @@
+import { Button, Grid } from '@mui/material'
+import React from 'react'
 import { Grid3x3 } from '@mui/icons-material'
 import CloseIcon from '@mui/icons-material/Close'
 import {
@@ -6,7 +8,6 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  Grid,
   IconButton,
   Input,
   Stack,
@@ -14,25 +15,13 @@ import {
   Typography
 } from '@mui/material'
 import PropTypes from 'prop-types'
-import * as React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { getApiResource, getGoogleLoginUrl, login } from '~/apis'
-import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { gray, silver } from '~/constants/color'
 import { AlibabaText } from '~/screens/Home'
 import { orange } from '~/styles'
-import { BootstrapButton, AlignItemGrid } from '../Layouts/Header/Navbar'
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: '2rem 2.5rem'
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1)
-  }
-}))
 
 const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props
@@ -58,37 +47,30 @@ const BootstrapDialogTitle = (props) => {
   )
 }
 
-BootstrapDialogTitle.propTypes = {
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired
-}
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: '2rem 2.5rem'
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1)
+  }
+}))
 
-const LoginDialog = (props) => {
+function AddNetworkDialog(props) {
   const { open, handleClose, children, title } = props
-
   const grid = { xs: 12, md: 6 }
   const gridFull = { xs: 12, md: 12 }
 
-  const navigate = useNavigate()
+  console.log('open', open)
 
   const { handleSubmit, control } = useForm({
     email: 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues: {}
   })
+
   const onSubmit = (data) => {
     console.log(data)
-    const result = login('login', data)
-
-    console.log('result', result)
-  }
-
-  const loginWithGoogle = async () => {
-    const res = await getGoogleLoginUrl('get-google-sign-in-url')
-    console.log('url', res.url)
-
-    window.open(res.url, '_blank')
-
   }
 
   return (
@@ -166,14 +148,9 @@ const LoginDialog = (props) => {
               />
             </Grid>
             <Grid item xs={4}>
-              <BootstrapButton sx={{ margin: 0 }} type="submit">
-                <AlibabaText>Login</AlibabaText>
-              </BootstrapButton>
-            </Grid>
-            <Grid item xs={4}>
-              <BootstrapButton sx={{ margin: 0 }} onClick={loginWithGoogle}>
-                <AlibabaText>Login with gg</AlibabaText>
-              </BootstrapButton>
+              <Button type="submit" variant="contained">
+                Add
+              </Button>
             </Grid>
           </Grid>
         </DialogContent>
@@ -193,4 +170,4 @@ const styledTitle = {
   paddingBottom: 2
 }
 
-export { LoginDialog }
+export default AddNetworkDialog
