@@ -24,31 +24,23 @@ export const BoxWithPagination = ({ children, ...props }) => {
   }, [props.refetchBoxComment])
 
   const handleClick = (e) => {
-    console.log(e.target.text)
-
     let value = 0
 
     switch (e.target.text) {
       case '»Last':
         value = data?.meta?.pagination?.total_pages
-        console.log('»Last', value)
         break
       case '«First':
         value = 1
-        console.log('«First', value)
         break
       case '›Next':
-        console.log({ pageIndex })
         value = data?.meta?.pagination?.total_pages > pageIndex ? pageIndex + 1 : pageIndex
-        console.log('›Next', value)
         break
       case '<Previous':
         value = 0 > pageIndex ? pageIndex - 1 : 0
-        console.log('<Previous', value)
         break
       default:
         value = parseInt(e.target.text)
-        console.log('default', value)
         break
     }
     setPageIndex(value)

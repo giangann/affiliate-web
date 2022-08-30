@@ -79,10 +79,7 @@ const LoginDialog = (props) => {
     defaultValues: {}
   })
   const onSubmit = (data) => {
-    console.log(data)
     const result = login('login', data)
-
-    console.log('result', result)
   }
 
   // const loginWithGoogle = async () => {
@@ -103,11 +100,9 @@ const LoginDialog = (props) => {
   })
 
   const onSuccess = (res) => {
-    console.log(res.profileObj);
     const login = loginWithGG('login-with-google',res?.profileObj)
   }
   const onFailure = (err) => {
-    console.log('failed:', err)
   }
 
   return (

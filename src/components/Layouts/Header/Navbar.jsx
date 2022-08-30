@@ -37,6 +37,7 @@ import logo from '~/assets/images/affiliate/logo.png'
 import logo2 from '~/assets/images/affiliate/logo2.png'
 import logo4 from '~/assets/images/affiliate/logo4.svg'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
+import Select from 'react-select'
 
 export const Navbar = () => {
   const pages = ['Products', 'Pricing', 'Blog']
@@ -189,7 +190,6 @@ export const Navbar = () => {
     if (index === settings.indexOf('Login')) {
       setOpenDialog(true)
     }
-    console.log('index', index)
     setAnchorElUser(null)
   }
 
@@ -260,7 +260,7 @@ export const Navbar = () => {
               display: { xs: 'flex', md: 'none' }
             }}
           />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
             {navBarItem.map((item) => (
               <Button
                 key={item}
@@ -270,6 +270,7 @@ export const Navbar = () => {
                 {item.name}
               </Button>
             ))}
+            {/* <Select /> */}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
