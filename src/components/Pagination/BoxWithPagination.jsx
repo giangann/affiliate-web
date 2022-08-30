@@ -42,13 +42,7 @@ export const BoxWithPagination = ({ children, ...props }) => {
       {children}
 
       <Box sx={{ marginTop: '16px' }}>
-        <Pagination>
-          <Pagination.First onClick={handleClick} />
-          <Pagination.Prev onClick={handleClick} />
-          {items}
-          <Pagination.Next onClick={handleClick} />
-          <Pagination.Last onClick={handleClick} />
-        </Pagination>
+        <Pagination>{items}</Pagination>
       </Box>
     </Paper>
   )

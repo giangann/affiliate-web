@@ -8,7 +8,7 @@ import { Resource } from '~/screens/Resource'
 import Dashboard from '~/screens/Dashboard/Dashboard'
 
 export const Router = () => {
-  const isAdmin = false
+  const isAdmin = true
   return (
     <Routes>
       <Route path="/" element={<Home />} />
