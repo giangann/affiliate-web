@@ -6,7 +6,7 @@ import AvatarImg from '~/assets/images/sidebar/pulsar-ads-circle.png'
 import { TextHeading, TextContent } from './Sidebar'
 import { red } from '~/styles/colors'
 
-export const Top10RatedNetworkItem = () => {
+export const Top10RatedNetworkItem = ({ item }) => {
   return (
     <Box
       sx={{
@@ -41,9 +41,9 @@ export const Top10RatedNetworkItem = () => {
             fontWeight: '600'
           }}
         >
-          DMSAffiliates
+          {item?.name}
         </Typography>
-        <TextContent>(600)</TextContent>
+        <TextContent>({item?.reviews && item?.reviews.length})</TextContent>
       </Box>
       <Typography
         sx={{
@@ -52,7 +52,7 @@ export const Top10RatedNetworkItem = () => {
           fontWeight: '600'
         }}
       >
-        4.93
+        {item?.aveScore.toFixed(2)}
       </Typography>
     </Box>
   )

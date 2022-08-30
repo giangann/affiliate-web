@@ -44,12 +44,22 @@ export const getApiResource = async (name) => {
 }
 
 export const getListComments = async (id, page, per_page = 10) => {
-  // console.log({ id, page, per_page })
-
   const res = await axios.get(`${BASE_URL}/reviews`, {
     params: { websiteId: id, page, per_page }
   })
   return res.data
+}
+
+export const getTop10Networks = async () => {
+  const res = await axios.get(`${BASE_URL}/websites/top-10`)
+
+  return res.data
+}
+
+export const getRecentReviews = async () => {
+  const res = await axios.get(`${BASE_URL}/reviews/recent`)
+
+  return res.data.data
 }
 
 export const login = async (url, data) => {
