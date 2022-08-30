@@ -17,13 +17,15 @@ import PropTypes from 'prop-types'
 import * as React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { getApiResource, getGoogleLoginUrl, login } from '~/apis'
+import { getApiResource, getGoogleLoginUrl, login, loginWithGG } from '~/apis'
 import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { gray, silver } from '~/constants/color'
 import { AlibabaText } from '~/screens/Home'
 import { orange } from '~/styles'
 import { BootstrapButton, AlignItemGrid } from '../Layouts/Header/Navbar'
+import { GoogleLogin } from 'react-google-login'
+import { gapi } from 'gapi-script'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -83,12 +85,29 @@ const LoginDialog = (props) => {
     console.log('result', result)
   }
 
-  const loginWithGoogle = async () => {
-    const res = await getGoogleLoginUrl('get-google-sign-in-url')
-    console.log('url', res.url)
+  // const loginWithGoogle = async () => {
+  //   const res = await getGoogleLoginUrl('get-google-sign-in-url')
+  //   console.log('url', res.url)
 
-    window.open(res.url, '_blank')
+  //   window.open(res.url, '_blank')
 
+  // }
+  React.useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        scope: ''
+      })
+    }
+    gapi.load('client:auth2', initClient)
+  })
+
+  const onSuccess = (res) => {
+    console.log(res.profileObj);
+    const login = loginWithGG('login-with-google',res?.profileObj)
+  }
+  const onFailure = (err) => {
+    console.log('failed:', err)
   }
 
   return (
@@ -171,9 +190,18 @@ const LoginDialog = (props) => {
               </BootstrapButton>
             </Grid>
             <Grid item xs={4}>
-              <BootstrapButton sx={{ margin: 0 }} onClick={loginWithGoogle}>
-                <AlibabaText>Login with gg</AlibabaText>
-              </BootstrapButton>
+              {/* <BootstrapButton sx={{ margin: 0 }}>
+                <AlibabaText>
+                </AlibabaText>
+              </BootstrapButton> */}
+                  <GoogleLogin
+                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                    buttonText="Sign in with Google"
+                    onSuccess={onSuccess}
+                    onFailure={onFailure}
+                    cookiePolicy={'single_host_origin'}
+                    // isSignedIn={true}
+                  />
             </Grid>
           </Grid>
         </DialogContent>

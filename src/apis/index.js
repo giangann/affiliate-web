@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:8000/api'
+const BASE_URL = 'http://127.0.0.1:8000/api'
 
 export const getAllWebsites = async () => {
   const response = await axios.get(`${BASE_URL}/websites`)
@@ -48,8 +48,13 @@ export const login = async (url, data) => {
   return res
 }
 
+export const loginWithGG = async (url, data) => {
+  const res = await axios.post(`${BASE_URL}/${url}`, data)
+  return res
+}
+
 export const getGoogleLoginUrl = async (name) => {
-  const res = await axios.post(`${BASE_URL}/${name}`)
+  const res = await axios.get(`${BASE_URL}/${name}`)
   return res.data
 }
 
