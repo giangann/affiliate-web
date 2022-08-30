@@ -52,7 +52,7 @@ export const Top10RatedNetworkItem = ({ item }) => {
           fontWeight: '600'
         }}
       >
-        {item?.aveScore.toFixed(2)}
+        {item?.aveScore?.toFixed(2)}
       </Typography>
     </Box>
   )
