@@ -5,6 +5,7 @@ import { Pagination } from 'react-bootstrap'
 
 export const BoxWithPagination = ({ children, ...props }) => {
   const { pageSize } = props
+  console.log('pageSize', pageSize)
   const [pageIndex, setPageIndex] = useState(0)
 
   const [paginationData, setPaginationData] = useState([])

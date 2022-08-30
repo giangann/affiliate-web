@@ -350,7 +350,7 @@ export const Detail = () => {
             {/* End Affiliate Network Details */}
 
             {/* Affiliate Offers */}
-            <BoxWithPagination>
+            <BoxWithPagination pageSize={12}>
               <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
                 <List
                   sx={{ px: 3, pb: 2 }}
@@ -417,7 +417,7 @@ export const Detail = () => {
             {/* End Affiliate Offers */}
 
             {/* Affiliate Reviews */}
-            <BoxWithPagination>
+            <BoxWithPagination pageSize={12}>
               <Stack sx={{ backgroundColor: 'white' }}>
                 <List
                   sx={{ px: 3, pb: 2 }}
@@ -449,14 +449,6 @@ export const Detail = () => {
                     </FlexBoxAlignCenterJustifyBetween>
                   )}
                   Item={CommentItem}
-                  // footer={() => (
-                  //   <>
-                  //     <BoxWithPagination>
-                  //       <Typography>{slug}</Typography>
-                  //     </BoxWithPagination>
-                  //     <button>write a review</button>
-                  //   </>
-                  // )}
                 />
               </Stack>
             </BoxWithPagination>
