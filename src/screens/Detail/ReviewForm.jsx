@@ -195,8 +195,8 @@ const ReviewForm = (props) => {
   }
 
   const onSubmit = async (data) => {
+    data['websiteId'] = Number(props.websiteId)
     console.log(data)
-
     try {
       handleClose()
       const res = await axios.post('http://localhost:8000/api/reviews', data)
