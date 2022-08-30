@@ -43,9 +43,14 @@ export const getApiResource = async (name) => {
   return res.data
 }
 
-export const login = async (data, url) => {
+export const login = async (url, data) => {
   const res = await axios.post(`${BASE_URL}/${url}`, data)
   return res
+}
+
+export const getGoogleLoginUrl = async (name) => {
+  const res = await axios.post(`${BASE_URL}/${name}`)
+  return res.data
 }
 
 export const getListComments = async (id) => {

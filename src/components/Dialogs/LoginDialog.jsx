@@ -16,7 +16,8 @@ import {
 import PropTypes from 'prop-types'
 import * as React from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { login } from '~/apis'
+import { useNavigate } from 'react-router-dom'
+import { getApiResource, getGoogleLoginUrl, login } from '~/apis'
 import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { gray, silver } from '~/constants/color'
@@ -68,6 +69,8 @@ const LoginDialog = (props) => {
   const grid = { xs: 12, md: 6 }
   const gridFull = { xs: 12, md: 12 }
 
+  const navigate = useNavigate()
+
   const { handleSubmit, control } = useForm({
     email: 'onSubmit',
     reValidateMode: 'onChange',
@@ -75,9 +78,17 @@ const LoginDialog = (props) => {
   })
   const onSubmit = (data) => {
     console.log(data)
-    const result = login('/login', data)
+    const result = login('login', data)
 
     console.log('result', result)
+  }
+
+  const loginWithGoogle = async () => {
+    const res = await getGoogleLoginUrl('get-google-sign-in-url')
+    console.log('url', res.url)
+
+    window.open(res.url, '_blank')
+
   }
 
   return (
@@ -157,6 +168,11 @@ const LoginDialog = (props) => {
             <Grid item xs={4}>
               <BootstrapButton sx={{ margin: 0 }} type="submit">
                 <AlibabaText>Login</AlibabaText>
+              </BootstrapButton>
+            </Grid>
+            <Grid item xs={4}>
+              <BootstrapButton sx={{ margin: 0 }} onClick={loginWithGoogle}>
+                <AlibabaText>Login with gg</AlibabaText>
               </BootstrapButton>
             </Grid>
           </Grid>
