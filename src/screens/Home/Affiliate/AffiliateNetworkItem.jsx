@@ -14,7 +14,7 @@ const webkitBox = {
 export const AffiliateNetworkItem = ({ data, ...props }) => {
   const { data_api } = data ?? {}
 
-  console.log(data)
+  // console.log(data)
   // console.log({ data_api })
 
   return (

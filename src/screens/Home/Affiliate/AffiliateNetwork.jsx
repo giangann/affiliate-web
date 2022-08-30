@@ -9,7 +9,7 @@ import {
   TextContent,
   TextHeading
 } from '~/components/Layouts/Sidebar'
-import { getAllWebsites } from '~/apis'
+import { getAllWebsites, getTop10Networks, getRecentReviews } from '~/apis'
 import { List } from '~/components/List'
 import { Stars } from '~/components/Star'
 import {
@@ -35,6 +35,12 @@ const data_array = [1, 2, 3, 4, 5]
 
 const AffiliateNetwork = () => {
   const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
+
+  const {
+    isLoading: isLoadingRecentReviews,
+    error: errorRecentReviews,
+    data: recentReviews
+  } = useQuery('recent-reviews', getRecentReviews)
 
   useEffect(() => {
     console.log('callback useEffect', allWebsites, isLoading, error)
@@ -294,27 +300,32 @@ const AffiliateNetwork = () => {
 
           <Hidden mdUp>
             <BoxContainer>
-              <List
-                heading="Recent Reviews"
-                Item={RecentReviewItem}
-                footer={() => (
-                  <Box
-                    sx={{
-                      textAlign: 'center',
-                      py: '0.5rem',
-                      borderTop: '1px solid #dae1e7',
-                      '&:hover': {
-                        backgroundColor: '#f8fafc',
-                        cursor: 'pointer'
-                      }
-                    }}
-                  >
-                    <Typography sx={{ fontSize: '.75rem', color: '#2779bd', fontWeight: '700' }}>
-                      More Reviews
-                    </Typography>
-                  </Box>
-                )}
-              />
+              {isLoadingRecentReviews ? (
+                <ListSkeleton />
+              ) : (
+                <List
+                  data={recentReviews}
+                  heading="Recent Reviews"
+                  Item={RecentReviewItem}
+                  footer={() => (
+                    <Box
+                      sx={{
+                        textAlign: 'center',
+                        py: '0.5rem',
+                        borderTop: '1px solid #dae1e7',
+                        '&:hover': {
+                          backgroundColor: '#f8fafc',
+                          cursor: 'pointer'
+                        }
+                      }}
+                    >
+                      <Typography sx={{ fontSize: '.75rem', color: '#2779bd', fontWeight: '700' }}>
+                        More Reviews
+                      </Typography>
+                    </Box>
+                  )}
+                />
+              )}
             </BoxContainer>
           </Hidden>
 

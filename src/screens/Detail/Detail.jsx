@@ -117,6 +117,7 @@ export const Detail = () => {
             handleClose={handleClose}
             refetchComment={refetchComment}
             handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
+            websiteId={id}
             title={
               <Typography sx={{ color: '#2779bd', fontSize: '1.5rem', fontWeight: 'bold' }}>
                 {dataDetail?.name}
