@@ -16,13 +16,49 @@ import {
   Typography
 } from '@mui/material'
 import PropTypes from 'prop-types'
-import * as React from 'react'
+import React, { useCallback } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from '~/components/Buttons'
 import { gray, silver } from '~/constants/color'
 import { TextGrey } from '.'
 import axios from 'axios'
+import * as yup from 'yup'
 
+const useYupValidationResolver = (validationSchema) =>
+  useCallback(
+    async (data) => {
+      try {
+        const values = await validationSchema.validate(data, {
+          abortEarly: false
+        })
+
+        return {
+          values,
+          errors: {}
+        }
+      } catch (errors) {
+        console.log(errors)
+        return {
+          values: {},
+          errors: errors.inner.reduce(
+            (allErrors, currentError) => ({
+              ...allErrors,
+              [currentError.path]: {
+                type: currentError.type ?? 'validation',
+                message: currentError.message
+              }
+            }),
+            {}
+          )
+        }
+      }
+    },
+    [validationSchema]
+  )
+
+const validationSchema = yup.object({
+  content: yup.string().required('Required')
+})
 const reviewDetails = [
   {
     label: 'OFFER',
@@ -117,15 +153,23 @@ const ReviewDetail = (props) => {
 }
 
 const ReviewForm = (props) => {
+  const resolver = useYupValidationResolver(validationSchema)
+
   const ref = React.useRef(null)
   const { open, handleClose, title, refetchComment } = props
   const [rating, setRating] = React.useState(2)
   const [image, setImage] = React.useState('')
 
-  const { handleSubmit, control } = useForm({
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors }
+  } = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
-    defaultValues: {}
+    defaultValues: {},
+    resolver
   })
 
   const previewImageURL = (file) => {
@@ -239,24 +283,30 @@ const ReviewForm = (props) => {
             <TitleReviewForm>
               Your review <span style={{ color: 'red' }}>*</span>
             </TitleReviewForm>
-            <Controller
+            {/* <Controller
               control={control}
               name={'content'}
-              render={({ field: { onChange, value } }) => (
-                <TextareaAutosize
-                  aria-label="minimum height"
-                  minRows={4}
-                  value={value}
-                  onChange={onChange}
-                  style={{
-                    width: '100%',
-                    backgroundColor: '#f8fafc',
-                    border: '1px solid #dae1e7',
-                    borderRadius: '0.25rem'
-                  }}
-                />
-              )}
+              render={({ field: { onChange, value } }) => ( */}
+            <TextareaAutosize
+              aria-label="minimum height"
+              minRows={4}
+              // value={value}
+              {...register('content')}
+              // onChange={onChange}
+              style={{
+                width: '100%',
+                backgroundColor: '#f8fafc',
+                border: '1px solid #dae1e7',
+                borderRadius: '0.25rem'
+              }}
             />
+            {errors.content && errors.content.type === 'required' && (
+              <span style={{ color: 'red', fontSize: '12px', fontWeight: 'bold' }}>
+                Your review is required
+              </span>
+            )}
+            {/* )} */}
+            {/* /> */}
           </Box>
 
           <Box sx={{ my: 2 }}>
