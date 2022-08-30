@@ -38,7 +38,7 @@ export const AffiliateProgramItem = ({ data, ...props }) => {
           </Link>
         </Grid>
         <Grid item xs={2} className="d-flex justify-content-end">
-          <Stars rating={data_api.rating} />
+          <Stars rating={data_api?.rating} />
         </Grid>
       </Grid>
       <Grid container spacing={2}>

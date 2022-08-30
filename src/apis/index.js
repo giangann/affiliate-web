@@ -16,7 +16,7 @@ export const getAllWebsites = async () => {
 
       {
         ...item,
-        data_api: data_web.data.data
+        data_api: data_web ? data_web?.data?.data : null
       }
     ]
   }, [])
