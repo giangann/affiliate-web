@@ -49,9 +49,7 @@ export const Detail = () => {
     refetch: refetchComment
   } = useQuery('list-comment', () => getListComments(id))
 
-  useEffect(() => {
-    console.log('Detail', dataDetail, isLoading, error)
-  }, [dataDetail, isLoading, error])
+  useEffect(() => {}, [dataDetail, isLoading, error])
 
   // useEffect(() => {
   //   console.log('dataComment', dataComment)
@@ -127,6 +125,7 @@ export const Detail = () => {
           />
           <Stack>
             {/* Affiliate Network */}
+
             <Stack
               sx={{
                 px: '20px',
@@ -236,9 +235,11 @@ export const Detail = () => {
 
               <BoxDescription desc={dataDetail.data_api.description} isStringToHtml={true} />
             </Stack>
+
             {/* End Affiliate Network */}
 
             {/* Affiliate Network Details */}
+
             <Grid container px="1.25rem" mb="8px" backgroundColor="#fff">
               <Grid item sm={9} xs={12} py="16px" pr="0.5rem" borderRight="1px solid #f1f5f8">
                 <Stack>
@@ -264,7 +265,12 @@ export const Detail = () => {
                 <Stack ml="20px" sx={{ textAlign: 'center' }}>
                   <TextHeading pb="12px">Rating Distribution</TextHeading>
                   <Box
-                    sx={{ width: '100%', textAlign: 'center', py: '0.75rem', position: 'relative' }}
+                    sx={{
+                      width: '100%',
+                      textAlign: 'center',
+                      py: '0.75rem',
+                      position: 'relative'
+                    }}
                   >
                     <Box
                       component="img"
@@ -343,9 +349,11 @@ export const Detail = () => {
                 </Stack>
               </Grid>
             </Grid>
+
             {/* End Affiliate Network Details */}
 
             {/* Affiliate Offers */}
+            {/* <BoxWithPagination pageSize={12}> */}
             <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
               <List
                 sx={{ px: 3, pb: 2 }}
@@ -408,6 +416,7 @@ export const Detail = () => {
                 )}
               />
             </Stack>
+            {/* </BoxWithPagination> */}
             {/* End Affiliate Offers */}
 
             {/* Affiliate Reviews */}

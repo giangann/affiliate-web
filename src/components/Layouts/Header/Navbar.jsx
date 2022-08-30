@@ -9,7 +9,18 @@ import StayCurrentPortraitOutlinedIcon from '@mui/icons-material/StayCurrentPort
 import FeedIcon from '@mui/icons-material/Feed'
 import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion'
 import ForumIcon from '@mui/icons-material/Forum'
-import { Box, Button, Divider, Grid, Hidden, Menu, MenuItem, Stack, styled } from '@mui/material'
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Hidden,
+  Link,
+  Menu,
+  MenuItem,
+  Stack,
+  styled
+} from '@mui/material'
 import React from 'react'
 import { AlibabaText } from '~/screens/Home'
 import AppBar from '@mui/material/AppBar'
@@ -25,10 +36,11 @@ import { baseColor } from '~/styles'
 import logo from '~/assets/images/affiliate/logo.png'
 import logo2 from '~/assets/images/affiliate/logo2.png'
 import logo4 from '~/assets/images/affiliate/logo4.svg'
+import { LoginDialog } from '~/components/Dialogs/LoginDialog'
 
 export const Navbar = () => {
   const pages = ['Products', 'Pricing', 'Blog']
-  const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+  const settings = ['Profile', 'Account', 'Dashboard', 'Login']
   const navBarItem = [
     {
       name: 'Reviews',
@@ -156,6 +168,7 @@ export const Navbar = () => {
 
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
+  const [openDialog, setOpenDialog] = React.useState(null)
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
@@ -168,6 +181,18 @@ export const Navbar = () => {
     setAnchorElNav(null)
   }
 
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
+  }
+
+  const handleClickUserMenu = (index) => {
+    if (index === settings.indexOf('Login')) {
+      setOpenDialog(true)
+    }
+    console.log('index', index)
+    setAnchorElUser(null)
+  }
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
   }
@@ -176,16 +201,18 @@ export const Navbar = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Hidden mdDown>
-            <Box
-              component="img"
-              src={logo4}
-              sx={{
-                color: 'white',
-                height: '80px',
-                width: 'auto',
-                display: { xs: 'none', md: 'flex' }
-              }}
-            />
+            <Link href="/">
+              <Box
+                component="img"
+                src={logo4}
+                sx={{
+                  color: 'white',
+                  height: '80px',
+                  width: 'auto',
+                  display: { xs: 'none', md: 'flex' }
+                }}
+              />
+            </Link>
           </Hidden>
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -267,8 +294,8 @@ export const Navbar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              {settings.map((setting, index) => (
+                <MenuItem key={index} onClick={() => handleClickUserMenu(index)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -276,15 +303,19 @@ export const Navbar = () => {
           </Box>
         </Toolbar>
       </Container>
+
+      {/* login dialog */}
+      <LoginDialog open={openDialog} title="Login" handleClose={handleCloseDialog} />
     </AppBar>
   )
 }
-const AlignItemGrid = styled(Grid)({
+export const AlignItemGrid = styled(Grid)({
   display: 'flex',
-  alignItems: 'center'
+  alignItems: 'center',
+  justifyContent: 'center'
 })
 
-const BootstrapButton = styled(Button)(({ theme }) => ({
+export const BootstrapButton = styled(Button)(({ theme }) => ({
   width: '90%',
   marginLeft: '16px',
   color: 'white',
