@@ -1,5 +1,6 @@
 import { Grid3x3 } from '@mui/icons-material'
 import CloseIcon from '@mui/icons-material/Close'
+import { atom, useAtom } from 'jotai'
 import {
   Box,
   Chip,

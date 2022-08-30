@@ -37,6 +37,7 @@ import logo from '~/assets/images/affiliate/logo.png'
 import logo2 from '~/assets/images/affiliate/logo2.png'
 import logo4 from '~/assets/images/affiliate/logo4.svg'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
+import { useNavigate } from 'react-router-dom'
 
 export const Navbar = () => {
   const pages = ['Products', 'Pricing', 'Blog']
@@ -170,6 +171,8 @@ export const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null)
   const [openDialog, setOpenDialog] = React.useState(null)
 
+  const navigate = useNavigate()
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
@@ -188,6 +191,9 @@ export const Navbar = () => {
   const handleClickUserMenu = (index) => {
     if (index === settings.indexOf('Login')) {
       setOpenDialog(true)
+    }
+    if (index === settings.indexOf('Dashboard')) {
+      navigate('/dashboard')
     }
     console.log('index', index)
     setAnchorElUser(null)
