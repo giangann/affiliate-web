@@ -80,8 +80,14 @@ export const BoxWithPagination = ({ children, ...props }) => {
         cloneElement(children, { data: data.data, refetch })
       )}
 
-      <Box sx={{ marginTop: '16px', justifyContent: 'center', flex: 1 }}>
-        <Pagination>
+      <Box
+        sx={{
+          marginTop: '16px',
+          justifyContent: 'center',
+          flex: 1
+        }}
+      >
+        <Pagination className="d-flex justify-content-center">
           {/* <Pagination.First onClick={(e) => handleClick(e)} />
           <Pagination.Prev onClick={(e) => handleClick(e)} /> */}
           {items}
