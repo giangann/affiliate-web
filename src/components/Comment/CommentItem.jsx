@@ -22,8 +22,8 @@ export const CommentItem = ({ item }) => {
 
   const [likeActive, setLikeActive] = useState(false)
   const [dislikeActive, setDisLikeActive] = useState(false)
-  const [like, setLike] = useState(item.totalLike)
-  const [dislike, setDislike] = useState(item.totalDislike)
+  const [like, setLike] = useState(item?.totalLike)
+  const [dislike, setDislike] = useState(item?.totalDislike)
 
   const handleReply = () => {
     setIsReply(!isReply)
@@ -75,13 +75,14 @@ export const CommentItem = ({ item }) => {
             <Stars rating={item?.score} />
             <TextHeading>{item?.user_name}</TextHeading>
           </FlexBoxAlignCenter>
-          <TextGrey>{formatTimeDiff(item.created_at)}</TextGrey>
+          <TextGrey>{formatTimeDiff(item?.created_at || new Date())}</TextGrey>
         </FlexBoxAlignCenterJustifyBetween>
 
         <FlexBoxAlignCenter gap="4px" flexWrap="wrap">
-          {Object.entries(item?.rating).map(([label, score]) => (
-            <TagScore label={label} score={score} />
-          ))}
+          {item?.rating &&
+            Object.entries(item?.rating).map(([label, score]) => (
+              <TagScore label={label} score={score} />
+            ))}
           {/* <TagScore label="offers" score={5} />
           <TagScore label="PAYOUT" score={5} />
           <TagScore label="TRACKING" score={5} />

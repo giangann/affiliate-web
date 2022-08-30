@@ -156,7 +156,7 @@ const ReviewForm = (props) => {
   const resolver = useYupValidationResolver(validationSchema)
 
   const ref = React.useRef(null)
-  const { open, handleClose, title, refetchComment } = props
+  const { open, handleClose, title, refetchComment, handleRefetchComment } = props
   const [rating, setRating] = React.useState(2)
   const [image, setImage] = React.useState('')
 
@@ -164,7 +164,8 @@ const ReviewForm = (props) => {
     handleSubmit,
     control,
     register,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
@@ -200,9 +201,12 @@ const ReviewForm = (props) => {
       handleClose()
       const res = await axios.post('http://localhost:8000/api/reviews', data)
       console.log(res.data)
+
       if (refetchComment) {
         refetchComment()
+        handleRefetchComment()
       }
+      reset()
     } catch (error) {
       console.log(error)
     }

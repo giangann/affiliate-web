@@ -1,48 +1,99 @@
-import React, { useState } from 'react'
+import React, { useState, cloneElement, useEffect } from 'react'
 import { Stack, Box, Paper, Container } from '@mui/material'
-
+import { useQuery } from 'react-query'
 import { Pagination } from 'react-bootstrap'
+import { getListComments } from '~/apis'
+import { ListSkeleton } from '../Skeleton'
+import { ContactSupport } from '@mui/icons-material'
 
 export const BoxWithPagination = ({ children, ...props }) => {
   const { pageSize } = props
-  console.log('pageSize', pageSize)
-  const [pageIndex, setPageIndex] = useState(0)
+  const [pageIndex, setPageIndex] = useState(1)
 
   const [paginationData, setPaginationData] = useState([])
-
   // useQuery to call api here: (with pageSize and pageIndex)
-
+  const { data, isLoading, isError, refetch } = useQuery('pagination', () =>
+    props.api(Number(props?.id), pageIndex)
+  )
   //
+
+  useEffect(() => {
+    if (!isLoading) {
+      refetch()
+    }
+  }, [props.refetchBoxComment])
 
   const handleClick = (e) => {
     console.log(e.target.text)
+
     let value = 0
 
     switch (e.target.text) {
-      case '>>Last':
-        console.log('match')
+      case '»Last':
+        value = data?.meta?.pagination?.total_pages
+        console.log('»Last', value)
+        break
+      case '«First':
+        value = 1
+        console.log('«First', value)
+        break
+      case '›Next':
+        console.log({ pageIndex })
+        value = data?.meta?.pagination?.total_pages > pageIndex ? pageIndex + 1 : pageIndex
+        console.log('›Next', value)
+        break
+      case '<Previous':
+        value = 0 > pageIndex ? pageIndex - 1 : 0
+        console.log('<Previous', value)
         break
       default:
         value = parseInt(e.target.text)
+        console.log('default', value)
         break
     }
     setPageIndex(value)
   }
 
+  useEffect(() => {
+    refetch()
+  }, [pageIndex])
+
   let items = []
-  for (let item = 0; item < 5; item++) {
-    items.push(
-      <Pagination.Item key={item} onClick={handleClick}>
-        {item + 1}
-      </Pagination.Item>
-    )
+
+  const total_pages = data?.meta?.pagination?.total_pages
+  if (total_pages !== 1) {
+    for (let item = 0; item < total_pages; item++) {
+      items.push(
+        <Pagination.Item key={item} onClick={(e) => handleClick(e)} active={item === pageIndex - 1}>
+          {item + 1}
+        </Pagination.Item>
+      )
+    }
   }
   return (
     <Paper elevation={4} sx={{ padding: '16px' }}>
-      {children}
+      {isLoading ? (
+        <ListSkeleton />
+      ) : isError ? (
+        <h1>Error...</h1>
+      ) : (
+        cloneElement(children, { data: data.data, refetch })
+      )}
 
-      <Box sx={{ marginTop: '16px' }}>
-        <Pagination>{items}</Pagination>
+      <Box
+        sx={{
+          marginTop: '16px',
+          justifyContent: 'center',
+          flex: 1
+        }}
+      >
+        <Pagination className="d-flex justify-content-center">
+          {/* <Pagination.First onClick={(e) => handleClick(e)} />
+          <Pagination.Prev onClick={(e) => handleClick(e)} /> */}
+          {items}
+          {/* <Pagination.Next onClick={(e) => handleClick(e)} />
+          <Pagination.Last onClick={(e) => handleClick(e)} /> */}
+        </Pagination>
       </Box>
     </Paper>
   )

@@ -43,6 +43,15 @@ export const getApiResource = async (name) => {
   return res.data
 }
 
+export const getListComments = async (id, page, per_page = 10) => {
+  // console.log({ id, page, per_page })
+
+  const res = await axios.get(`${BASE_URL}/reviews`, {
+    params: { websiteId: id, page, per_page }
+  })
+  return res.data
+}
+
 export const login = async (url, data) => {
   const res = await axios.post(`${BASE_URL}/${url}`, data)
   return res
@@ -50,10 +59,5 @@ export const login = async (url, data) => {
 
 export const getGoogleLoginUrl = async (name) => {
   const res = await axios.post(`${BASE_URL}/${name}`)
-  return res.data
-}
-
-export const getListComments = async (id) => {
-  const res = await axios.get(`${BASE_URL}/reviews`, { params: { websiteId: id } })
   return res.data
 }
