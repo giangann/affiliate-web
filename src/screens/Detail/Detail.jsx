@@ -109,7 +109,7 @@ export const Detail = () => {
       ) : error || errorComment ? (
         <h1>Error ...</h1>
       ) : (
-        <BoxWithPagination>
+        <>
           <ReviewForm
             open={open}
             handleClose={handleClose}
@@ -122,6 +122,7 @@ export const Detail = () => {
           />
           <Stack>
             {/* Affiliate Network */}
+
             <Stack
               sx={{
                 px: '20px',
@@ -231,9 +232,11 @@ export const Detail = () => {
 
               <BoxDescription desc={dataDetail.data_api.description} isStringToHtml={true} />
             </Stack>
+
             {/* End Affiliate Network */}
 
             {/* Affiliate Network Details */}
+
             <Grid container px="1.25rem" mb="8px" backgroundColor="#fff">
               <Grid item sm={9} xs={12} py="16px" pr="0.5rem" borderRight="1px solid #f1f5f8">
                 <Stack>
@@ -259,7 +262,12 @@ export const Detail = () => {
                 <Stack ml="20px" sx={{ textAlign: 'center' }}>
                   <TextHeading pb="12px">Rating Distribution</TextHeading>
                   <Box
-                    sx={{ width: '100%', textAlign: 'center', py: '0.75rem', position: 'relative' }}
+                    sx={{
+                      width: '100%',
+                      textAlign: 'center',
+                      py: '0.75rem',
+                      position: 'relative'
+                    }}
                   >
                     <Box
                       component="img"
@@ -338,118 +346,123 @@ export const Detail = () => {
                 </Stack>
               </Grid>
             </Grid>
+
             {/* End Affiliate Network Details */}
 
             {/* Affiliate Offers */}
-            <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
-              <List
-                sx={{ px: 3, pb: 2 }}
-                header={() => (
-                  <>
-                    <Grid container sx={{ borderBottom: { xs: 'none', md: '1px solid #ccc' } }}>
-                      <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
-                        <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                          <Typography
-                            variant="h1"
-                            sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+            <BoxWithPagination>
+              <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
+                <List
+                  sx={{ px: 3, pb: 2 }}
+                  header={() => (
+                    <>
+                      <Grid container sx={{ borderBottom: { xs: 'none', md: '1px solid #ccc' } }}>
+                        <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
+                          <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
+                            <Typography
+                              variant="h1"
+                              sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
+                            >
+                              Affiliate Offers
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontStyle: 'italic',
+                                color: '#b8c2cc',
+                                fontSize: '.75rem',
+                                fontWeight: 'bold'
+                              }}
+                            >
+                              Data Provided by Affplus.com
+                            </Typography>
+                          </Stack>
+                        </Grid>
+                        <Grid item xs={12} md={6}>
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="flex-end"
+                            className="h-100"
+                            spacing={2}
                           >
-                            Affiliate Offers
-                          </Typography>
-                          <Typography
-                            sx={{
-                              fontStyle: 'italic',
-                              color: '#b8c2cc',
-                              fontSize: '.75rem',
-                              fontWeight: 'bold'
-                            }}
-                          >
-                            Data Provided by Affplus.com
-                          </Typography>
-                        </Stack>
+                            <Button variant="contained" type="button-blue">
+                              Top Converting
+                            </Button>
+                            <Button variant="contained" type="button-gray">
+                              Lastest
+                            </Button>
+                          </Stack>
+                        </Grid>
                       </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Stack
-                          direction="row"
-                          alignItems="center"
-                          justifyContent="flex-end"
-                          className="h-100"
-                          spacing={2}
-                        >
-                          <Button variant="contained" type="button-blue">
-                            Top Converting
-                          </Button>
-                          <Button variant="contained" type="button-gray">
-                            Lastest
-                          </Button>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </>
-                )}
-                Item={AffiliateOfferItem}
-                footer={() => (
-                  <div className="d-flex justify-content-center pt-3">
-                    <Button
-                      sx={{
-                        color: '#2779bd',
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold'
-                      }}
-                      className="ml-3 rounded px-1"
-                    >
-                      See more offers on affplus
-                    </Button>
-                  </div>
-                )}
-              />
-            </Stack>
+                    </>
+                  )}
+                  Item={AffiliateOfferItem}
+                  footer={() => (
+                    <div className="d-flex justify-content-center pt-3">
+                      <Button
+                        sx={{
+                          color: '#2779bd',
+                          fontSize: '0.75rem',
+                          fontWeight: 'bold'
+                        }}
+                        className="ml-3 rounded px-1"
+                      >
+                        See more offers on affplus
+                      </Button>
+                    </div>
+                  )}
+                />
+              </Stack>
+            </BoxWithPagination>
             {/* End Affiliate Offers */}
 
             {/* Affiliate Reviews */}
-            <Stack sx={{ backgroundColor: 'white' }}>
-              <List
-                sx={{ px: 3, pb: 2 }}
-                data={dataComment}
-                header={() => (
-                  <FlexBoxAlignCenterJustifyBetween
-                    sx={{
-                      flexDirection: {
-                        xs: 'column',
-                        md: 'row'
-                      }
-                    }}
-                    py="16px"
-                    borderBottom="1px solid #d6eaff"
-                  >
-                    <FlexBoxAlignCenter gap="1.25rem">
-                      <Button type="button-blue"> All Reviews (22)</Button>
-                      <Button type="button-grey">Payment Proofs</Button>
-                      <Button type="button-grey">Questions</Button>
-                    </FlexBoxAlignCenter>
-                    <FlexBoxAlignCenter gap="8px">
-                      <TextGrey>Sort:</TextGrey>
-                      <select style={{ minWidth: '128px' }}>
-                        <option value="1">Most recent</option>
-                        <option value="2">Popular</option>
-                        <option value="3">Oldest first</option>
-                      </select>
-                    </FlexBoxAlignCenter>
-                  </FlexBoxAlignCenterJustifyBetween>
-                )}
-                Item={CommentItem}
-                footer={() => (
-                  <>
-                    <BoxWithPagination>
-                      <Typography>{slug}</Typography>
-                    </BoxWithPagination>
-                    <button>write a review</button>
-                  </>
-                )}
-              />
-            </Stack>
+            <BoxWithPagination>
+              <Stack sx={{ backgroundColor: 'white' }}>
+                <List
+                  sx={{ px: 3, pb: 2 }}
+                  data={dataComment}
+                  header={() => (
+                    <FlexBoxAlignCenterJustifyBetween
+                      sx={{
+                        flexDirection: {
+                          xs: 'column',
+                          md: 'row'
+                        }
+                      }}
+                      py="16px"
+                      borderBottom="1px solid #d6eaff"
+                    >
+                      <FlexBoxAlignCenter gap="1.25rem">
+                        <Button type="button-blue"> All Reviews (22)</Button>
+                        <Button type="button-grey">Payment Proofs</Button>
+                        <Button type="button-grey">Questions</Button>
+                      </FlexBoxAlignCenter>
+                      <FlexBoxAlignCenter gap="8px">
+                        <TextGrey>Sort:</TextGrey>
+                        <select style={{ minWidth: '128px' }}>
+                          <option value="1">Most recent</option>
+                          <option value="2">Popular</option>
+                          <option value="3">Oldest first</option>
+                        </select>
+                      </FlexBoxAlignCenter>
+                    </FlexBoxAlignCenterJustifyBetween>
+                  )}
+                  Item={CommentItem}
+                  // footer={() => (
+                  //   <>
+                  //     <BoxWithPagination>
+                  //       <Typography>{slug}</Typography>
+                  //     </BoxWithPagination>
+                  //     <button>write a review</button>
+                  //   </>
+                  // )}
+                />
+              </Stack>
+            </BoxWithPagination>
             {/* End Affiliate Reviews */}
           </Stack>
-        </BoxWithPagination>
+        </>
       )}
     </>
   )
