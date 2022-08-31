@@ -80,13 +80,9 @@ export const CommentItem = ({ item }) => {
 
         <FlexBoxAlignCenter gap="4px" flexWrap="wrap">
           {item?.rating &&
-            Object.entries(item?.rating).map(([label, score]) => (
-              <TagScore label={label} score={score} />
+            Object.entries(item?.rating).map(([label, score], index) => (
+              <TagScore key={index} label={label} score={score} />
             ))}
-          {/* <TagScore label="offers" score={5} />
-          <TagScore label="PAYOUT" score={5} />
-          <TagScore label="TRACKING" score={5} />
-          <TagScore label="SUPPORT" score={5} /> */}
         </FlexBoxAlignCenter>
 
         <TextComment width="85%">{item?.content}</TextComment>

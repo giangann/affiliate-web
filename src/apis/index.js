@@ -87,3 +87,10 @@ export const getCategories = async () => {
   const res = await request.get('categories')
   return res
 }
+export const searchNetworks = async (keyword) => {
+  const res = await request.get(`websites`, {
+    params: { keyword }
+  })
+
+  return res.data
+}
