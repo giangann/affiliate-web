@@ -31,8 +31,10 @@ import { AlignItemGrid } from '../Layouts/Header/Navbar'
 import { getCategories } from '~/apis'
 import { useUpdateAtom } from 'jotai/utils'
 import { websitesAtom } from '~/libs/auth'
+import { useNavigate } from 'react-router-dom'
 
 function ButtonWithDropdown() {
+  const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const [categoriesItem, setCategoriesItem] = React.useState()
@@ -43,94 +45,13 @@ function ButtonWithDropdown() {
   }
   const handleChoseCategories = (item) => {
     setAnchorEl(null)
-    setWebsites(item?.websites)
+    // setWebsites(item?.websites)
+    navigate(`/affiliate-networks/category/${item?.id}`)
   }
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
 
-  // const categoriesItem = [
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 254
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 22
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 7
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 389
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 254
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 22
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 7
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 389
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 254
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 389
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 254
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 389
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 254
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 22
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 7
-  //   },
-  //   {
-  //     name: 'eCommerce',
-  //     icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-  //     amount: 389
-  //   }
-  // ]
   useEffect(() => {
     getCategories().then((res) => setCategoriesItem(res.data))
   }, [])
@@ -168,10 +89,17 @@ function ButtonWithDropdown() {
       >
         {categoriesItem &&
           categoriesItem.map((item, index) => (
-            <CategoryMenuItem key={index} onClick={() => {handleChoseCategories(item)}} alignItem="center" gap={2}>
+            <CategoryMenuItem
+              key={index}
+              onClick={() => {
+                handleChoseCategories(item)
+              }}
+              alignItem="center"
+              gap={2}
+            >
               <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />
               <AlibabaText fontWeight={600} ml={2}>
-                {item.name} ({item.amount})
+                {item.name} ({item.websites.length})
               </AlibabaText>
             </CategoryMenuItem>
           ))}

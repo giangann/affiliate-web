@@ -23,6 +23,28 @@ export const getAllWebsites = async () => {
   }, [])
 }
 
+export const getWebsitesByCategoryId = async (id, page, per_page = 10) => {
+  const response = await request.get(`websites/getByCategoryId`, {
+    params: { category_id: id, page, per_page }
+  })
+  const responses = await Promise.all(response.data.data.map((website) => axios.get(website.api)))
+
+  return response.data.data.reduce((total, item) => {
+    const data_web = responses.find(
+      (res) => res.data.data.title.toLowerCase() === item.name.toLowerCase()
+    )
+
+    return [
+      ...total,
+
+      {
+        ...item,
+        data_api: data_web ? data_web?.data?.data : null
+      }
+    ]
+  }, [])
+}
+
 export const getWebsite = async (id) => {
   const res = await request.get(`/websites/show/${id}`)
   const data = await axios.get(res.data.api)
