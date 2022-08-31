@@ -109,10 +109,10 @@ const LoginDialog = (props) => {
   })
 
   const onSuccess = (res) => {
-    console.log(res.profileObj)
-    setUser(res.profileObj)
-
-    const login = loginWithGG('login-with-google', res?.profileObj)
+    const login = loginWithGG('login-with-google', res?.profileObj).then((res) => {
+      setUser(res.data.data)
+      localStorage.setItem('user-token', res.data.access_token)
+    })
     alert('Login success!')
 
     handleClose()
