@@ -1,0 +1,44 @@
+.ant-spin {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+}
+
+.menu-search {
+  list-style-type: none;
+  padding: unset;
+
+  /* display: none; */
+}
+
+.hide {
+  display: none;
+}
+
+.header__search__inner {
+  z-index: 1000;
+}
+
+.header__search__dropdown {
+  z-index: 10;
+}
+
+.header__search__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: -100;
+  /* background-color: aquamarine; */
+}
+
+.header__search__dropdown {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.menu-search-item:hover {
+  background: '#f5f5f5' !important;
+}

@@ -40,7 +40,7 @@ import logo4 from '~/assets/images/affiliate/logo4.svg'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '~/libs/hooks/useAuth'
-
+import { Search } from './Search'
 export const Navbar = () => {
   const { user } = useAuth()
 
@@ -282,7 +282,9 @@ export const Navbar = () => {
               </Button>
             ))}
           </Box>
-
+          <Box mr={1}>
+            <Search />
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
