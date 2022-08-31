@@ -104,12 +104,17 @@ export const addNetWork = async (data) => {
   const res = await request.post(`websites`, data)
   return res
 }
+
+export const editNetWork = async (id, data) => {
+  const res = await request.patch(`websites/${id}`, data)
+  return res
+}
+
 export const deleteNetWork = async (id) => {
   const res = await request.delete(`websites/${id}`)
 
   return res
 }
-
 
 export const getCategories = async () => {
   const res = await request.get('categories')
