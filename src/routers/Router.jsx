@@ -8,9 +8,12 @@ import { Resource } from '~/screens/Resource'
 import { Category } from '~/screens/Category'
 import Dashboard from '~/screens/Dashboard/Dashboard'
 import AddNetworkForm from '~/screens/Dashboard/AddNetworkForm'
+import { getUserLocalStorage } from '~/libs/function/user'
+import { ADMIN_EMAIL } from '~/constants/name'
 
 export const Router = () => {
-  const isAdmin = true
+  const userInfo = getUserLocalStorage()
+  const isAdmin = userInfo?.email === ADMIN_EMAIL
   return (
     <Routes>
       <Route path="/" element={<Home />} />

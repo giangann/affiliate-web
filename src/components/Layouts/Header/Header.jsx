@@ -10,6 +10,8 @@ import carousel_05 from '~/assets/images/affiliate/carousel_05.jpg'
 import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css'
 import '~/components/Comment/style.css'
+import { SubNavbar } from './SubNavbar'
+import { Hidden } from '@mui/material'
 
 function Header() {
   const listImages = [carousel_02, carousel_03, carousel_04, carousel_02, carousel_05, carousel_03]
@@ -39,6 +41,9 @@ function Header() {
           controlsStrategy="alternate"
           items={items}
         />
+        <Hidden lgUp>
+          <SubNavbar />
+        </Hidden>
       </ResponsiveContainer>
     </>
   )

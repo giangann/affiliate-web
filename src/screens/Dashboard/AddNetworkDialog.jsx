@@ -61,8 +61,6 @@ function AddNetworkDialog(props) {
   const grid = { xs: 12, md: 6 }
   const gridFull = { xs: 12, md: 12 }
 
-  console.log('open', open)
-
   const { handleSubmit, control } = useForm({
     email: 'onSubmit',
     reValidateMode: 'onChange',
