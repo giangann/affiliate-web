@@ -82,3 +82,8 @@ export const addNetWork = async (data) => {
   const res = await request.post(`websites`, data)
   return res
 }
+export const deleteNetWork = async (id) => {
+  const res = await request.delete(`websites/${id}`)
+
+  return res
+}

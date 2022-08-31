@@ -9,11 +9,14 @@ import { AffiliateNetworkItem } from '../Home'
 import { NetworkItem } from './NetworkItem'
 import AddNetworkDialog from './AddNetworkDialog'
 import { useNavigate } from 'react-router-dom'
+import AlertDialog from '~/components/Dialogs/AlertDialog'
 
 function Dashboard() {
   const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
 
   const [openAddDialog, setOpenAddDialog] = useState(false)
+  const [openAlertDialog, setOpenAlertDialog] = useState(false)
+
 
   const navigate = useNavigate()
 
@@ -21,8 +24,8 @@ function Dashboard() {
     setOpenAddDialog(false)
   }
 
-  const handleOpenAddDialog = () => {
-    setOpenAddDialog(true)
+  const handleOpenAlertDialog = () => {
+    setOpenAlertDialog(true)
   }
 
   const handleClickAddBtn = () =>{
@@ -67,6 +70,9 @@ function Dashboard() {
         handleClose={handleCloseAddDialog}
         title="Add Network"
       />
+
+      {/* Alert dialog before delete */}
+      {/* <AlertDialog open = {openAlertDialog}/> */}
     </>
   )
 }
