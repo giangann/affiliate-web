@@ -8,6 +8,7 @@ import { Resource } from '~/screens/Resource'
 import { Category } from '~/screens/Category'
 import Dashboard from '~/screens/Dashboard/Dashboard'
 import AddNetworkForm from '~/screens/Dashboard/AddNetworkForm'
+import EditNetWork from '~/screens/Dashboard/EditNetWork'
 
 export const Router = () => {
   const isAdmin = true
@@ -20,6 +21,10 @@ export const Router = () => {
       <Route path="/resources" element={<Resource />} />
       <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <NotFound />} />
       <Route path="/dashboard/add-network" element={isAdmin ? <AddNetworkForm /> : <NotFound />} />
+      <Route
+        path="/dashboard/edit-network/:network_id"
+        element={isAdmin ? <EditNetWork /> : <NotFound />}
+      />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
