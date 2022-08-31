@@ -84,7 +84,7 @@ export const addNetWork = async (data) => {
 }
 
 export const searchNetworks = async (keyword) => {
-  const res = await axios.get(`${BASE_URL}/websites`, {
+  const res = await request.get(`websites`, {
     params: { keyword }
   })
 
