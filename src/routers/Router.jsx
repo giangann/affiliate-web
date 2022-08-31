@@ -10,6 +10,7 @@ import Dashboard from '~/screens/Dashboard/Dashboard'
 import AddNetworkForm from '~/screens/Dashboard/AddNetworkForm'
 import { getUserLocalStorage } from '~/libs/function/user'
 import { ADMIN_EMAIL } from '~/constants/name'
+import EditNetWork from '~/screens/Dashboard/EditNetWork'
 
 export const Router = () => {
   const userInfo = getUserLocalStorage()
@@ -23,6 +24,10 @@ export const Router = () => {
       <Route path="/resources" element={<Resource />} />
       <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <NotFound />} />
       <Route path="/dashboard/add-network" element={isAdmin ? <AddNetworkForm /> : <NotFound />} />
+      <Route
+        path="/dashboard/edit-network/:network_id"
+        element={isAdmin ? <EditNetWork /> : <NotFound />}
+      />
 
       <Route path="*" element={<NotFound />} />
     </Routes>

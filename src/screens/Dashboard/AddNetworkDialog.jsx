@@ -23,41 +23,9 @@ import { gray, silver } from '~/constants/color'
 import { AlibabaText } from '~/screens/Home'
 import { orange } from '~/styles'
 
-const BootstrapDialogTitle = (props) => {
-  const { children, onClose, ...other } = props
-
-  return (
-    <DialogTitle sx={{ m: 0, p: 0 }} {...other}>
-      {children}
-      {onClose ? (
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500]
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-      ) : null}
-    </DialogTitle>
-  )
-}
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: '2rem 2.5rem'
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1)
-  }
-}))
-
 function AddNetworkDialog(props) {
   const { open, handleClose, children, title } = props
+
   const grid = { xs: 12, md: 6 }
   const gridFull = { xs: 12, md: 12 }
 
@@ -157,6 +125,30 @@ function AddNetworkDialog(props) {
   )
 }
 
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 0 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500]
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  )
+}
+
 const styledTitle = {
   fontSize: '1.125rem',
   color: silver[100],
@@ -167,5 +159,14 @@ const styledTitle = {
   paddingTop: 2,
   paddingBottom: 2
 }
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: '2rem 2.5rem'
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1)
+  }
+}))
 
 export default AddNetworkDialog

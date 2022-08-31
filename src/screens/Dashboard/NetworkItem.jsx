@@ -5,7 +5,7 @@ import { Stars } from '~/components/Star'
 import { Link } from 'react-router-dom'
 import { BootstrapButton } from '~/components/Layouts/Header/Navbar'
 import { deleteNetWork } from '~/apis'
-
+import { useNavigate } from 'react-router-dom'
 const webkitBox = {
   WebkitBoxOrient: 'vertical',
   display: '-webkit-box',
@@ -14,6 +14,8 @@ const webkitBox = {
 }
 
 export const NetworkItem = ({ data, ...props }) => {
+  const navigate = useNavigate()
+
   const { data_api } = data ?? {}
   const handleDelete = async (id) => {
     // alert('Xác nhận xóa ?')
@@ -27,6 +29,10 @@ export const NetworkItem = ({ data, ...props }) => {
     } catch (error) {
       alert(error)
     }
+  }
+
+  const handleEdit = (id) => {
+    navigate('/dashboard/edit-network/' + id)
   }
 
   // console.log(data)
@@ -47,7 +53,8 @@ export const NetworkItem = ({ data, ...props }) => {
           alt="1"
         />
         <Hidden mdUp>
-          <BootstrapButton>Delete</BootstrapButton>
+          <BootstrapButton onClick={() => handleDelete(data?.id)}>Delete</BootstrapButton>
+          <BootstrapButton onClick={() => handleEdit(data?.id)}>Edit</BootstrapButton>
         </Hidden>
       </Grid>
       <Grid item xs={9} md={10}>
@@ -70,7 +77,7 @@ export const NetworkItem = ({ data, ...props }) => {
               >
                 {data?.name}
               </Typography>
-            </Link> 
+            </Link>
 
             <Typography
               component="span"
@@ -90,15 +97,16 @@ export const NetworkItem = ({ data, ...props }) => {
           </Grid>
         </Grid>
         <Grid container>
-          <Grid item xs={10}>
+          <Grid item xs={8}>
             <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
               {data?.reviews?.length} Reviews / {data?.data_api?.offer_count} Offers /{' '}
               {data_api?.platform} / {data_api?.payment_freq}
             </Typography>
           </Grid>
           <Hidden mdDown>
-            <Grid item xs={2} className="d-flex align-items-center justify-content-end">
+            <Grid item xs={4} className="d-flex align-items-center justify-content-end">
               <BootstrapButton onClick={() => handleDelete(data?.id)}>Delete</BootstrapButton>
+              <BootstrapButton onClick={() => handleEdit(data?.id)}>Edit</BootstrapButton>
             </Grid>
           </Hidden>
         </Grid>
