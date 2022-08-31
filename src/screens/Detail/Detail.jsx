@@ -41,7 +41,11 @@ const arr = [0, 1, 2, 3]
 export const Detail = () => {
   const { slug, id } = useParams()
   const [open, setOpen] = React.useState(false)
-  const { isLoading, error, data: dataDetail } = useQuery('website-detail', () => getWebsite(id))
+  const {
+    isLoading,
+    error,
+    data: dataDetail
+  } = useQuery('website-detail' + id, () => getWebsite(id))
   const {
     isLoading: isLoadingComment,
     error: errorComment,

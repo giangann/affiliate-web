@@ -17,6 +17,8 @@ import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { useQuery } from 'react-query'
 import { ListSkeleton } from '~/components/Skeleton'
+import { useWebsites } from '~/libs/hooks/useWebsites'
+
 function Reels() {
   const topWebsite = [
     {
@@ -50,13 +52,12 @@ function Reels() {
       rate: 5
     }
   ]
-
-  const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
-
+  const globalWebsite = useWebsites()
+  console.log(123,globalWebsite)
+  const { isLoading, error, data: websites } = useQuery('allWebsites', () => getAllWebsites())
   useEffect(() => {
-    console.log('callback useEffect', allWebsites, isLoading, error)
-  }, [allWebsites, isLoading, error])
-
+    // console.log('callback useEffect', allWebsites, isLoading, error)
+  }, [JSON.stringify(globalWebsite)])
   const [open, setOpen] = useState(true)
 
   const [focusWebsite, setFocusWebsite] = useState(1)
@@ -68,7 +69,8 @@ function Reels() {
         ) : (
           <BoxWithHeader
             mainColor={baseColor.blue}
-            data={allWebsites}
+            keyCache={JSON.stringify(globalWebsite.websites)}
+            data={globalWebsite.websites === null ? websites : globalWebsite.websites}
             title={() => (
               <Grid container>
                 <Grid item xs={6} sx={{ justifyContent: 'center' }}>
