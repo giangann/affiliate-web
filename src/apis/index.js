@@ -76,3 +76,8 @@ export const getGoogleLoginUrl = async (name) => {
   const res = await axios.get(`${BASE_URL}/${name}`)
   return res.data
 }
+
+export const addNetWork = async (data) => {
+  const res = await axios.post(`${BASE_URL}/websites`, data)
+  return res
+}

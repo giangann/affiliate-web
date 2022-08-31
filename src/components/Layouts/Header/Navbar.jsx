@@ -19,7 +19,8 @@ import {
   Menu,
   MenuItem,
   Stack,
-  styled
+  styled,
+  useRadioGroup
 } from '@mui/material'
 import React from 'react'
 import { AlibabaText } from '~/screens/Home'
@@ -38,8 +39,12 @@ import logo2 from '~/assets/images/affiliate/logo2.png'
 import logo4 from '~/assets/images/affiliate/logo4.svg'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '~/libs/hooks/useAuth'
 
 export const Navbar = () => {
+  const { user } = useAuth()
+
+  console.log('user by useAuth', user)
   const pages = ['Products', 'Pricing', 'Blog']
   const settings = ['Profile', 'Account', 'Dashboard', 'Login']
   const navBarItem = [

@@ -28,6 +28,8 @@ import { BootstrapButton, AlignItemGrid } from '../Layouts/Header/Navbar'
 import { GoogleLogin } from 'react-google-login'
 import { gapi } from 'gapi-script'
 import GoogleButton from 'react-google-button'
+import { useUpdateAtom } from 'jotai/utils'
+import { userAtom } from '~/libs/auth'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -69,6 +71,8 @@ BootstrapDialogTitle.propTypes = {
 
 const LoginDialog = (props) => {
   const { open, handleClose, children, title } = props
+  // const [user, setUser] = React.useState(null)
+  const setUser = useUpdateAtom(userAtom)
 
   const grid = { xs: 12, md: 6 }
   const gridFull = { xs: 12, md: 12 }
@@ -106,7 +110,12 @@ const LoginDialog = (props) => {
 
   const onSuccess = (res) => {
     console.log(res.profileObj)
+    setUser(res.profileObj)
+
     const login = loginWithGG('login-with-google', res?.profileObj)
+    alert('Login success!')
+
+    handleClose()
   }
   const onFailure = (err) => {
     console.log('failed:', err)

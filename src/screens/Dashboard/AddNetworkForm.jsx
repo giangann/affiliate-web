@@ -5,7 +5,8 @@ import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { ResponsiveContainer } from '~/components/Layouts'
 import { baseColor } from '~/styles'
 import { makeStyles } from '@material-ui/core/styles'
-import { getApiResource, getGoogleLoginUrl, login, loginWithGG } from '~/apis'
+import { addNetWork, getApiResource, getGoogleLoginUrl, login, loginWithGG } from '~/apis'
+import { useNavigate } from 'react-router-dom'
 
 function AddNetworkForm() {
   const [categories, setCategories] = React.useState([])
@@ -19,8 +20,21 @@ function AddNetworkForm() {
     defaultValues: {}
   })
 
-  const onSubmit = (data) => {
+  const navigate = useNavigate()
+
+  const onSubmit = async (data) => {
     console.log(data)
+    try {
+      const res = await addNetWork(data)
+
+      if (res.status === 200) {
+        alert('Thêm mới thành công')
+        navigate(-1)
+      }
+      console.log('res of add', res)
+    } catch (error) {
+      alert(error)
+    }
   }
 
   useEffect(() => {
