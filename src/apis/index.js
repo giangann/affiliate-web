@@ -127,3 +127,8 @@ export const searchNetworks = async (keyword) => {
 
   return res.data
 }
+
+export const getMe = async () => {
+  const res = await request.get('users/me')
+  return res
+}

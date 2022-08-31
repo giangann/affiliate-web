@@ -38,14 +38,11 @@ import logo from '~/assets/images/affiliate/logo.png'
 import logo2 from '~/assets/images/affiliate/logo2.png'
 import logo4 from '~/assets/images/affiliate/logo4.svg'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
-<<<<<<< HEAD
 import Select from 'react-select'
-=======
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '~/libs/hooks/useAuth'
 import { Search } from './Search'
 import ButtonWithDropdown from '~/components/Buttons/ButtonWithDropdown'
->>>>>>> 62808a0cd7a171be9386f4f8ed2a680d3360c8fb
 
 export const Navbar = () => {
   const { user } = useAuth()

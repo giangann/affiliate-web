@@ -2,6 +2,10 @@ import { createTheme, ScopedCssBaseline, ThemeProvider } from '@mui/material'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Layout } from '~/components/Layouts'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+import { useEffect } from 'react'
+import { getMe } from './apis'
+import { useUpdateAtom } from 'jotai/utils'
+import { userAtom } from './libs/auth'
 
 const queryClient = new QueryClient()
 
@@ -19,6 +23,11 @@ function App() {
       }
     }
   })
+  const setUser = useUpdateAtom(userAtom)
+
+  useEffect(() => {
+    getMe().then((res) => setUser(res.data.data))
+  }, [])
 
   return (
     <ThemeProvider theme={theme}>
