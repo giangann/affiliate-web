@@ -19,7 +19,8 @@ import {
   Menu,
   MenuItem,
   Stack,
-  styled
+  styled,
+  useRadioGroup
 } from '@mui/material'
 import React from 'react'
 import { AlibabaText } from '~/screens/Home'
@@ -37,9 +38,19 @@ import logo from '~/assets/images/affiliate/logo.png'
 import logo2 from '~/assets/images/affiliate/logo2.png'
 import logo4 from '~/assets/images/affiliate/logo4.svg'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
+<<<<<<< HEAD
 import Select from 'react-select'
+=======
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '~/libs/hooks/useAuth'
+import { Search } from './Search'
+import ButtonWithDropdown from '~/components/Buttons/ButtonWithDropdown'
+>>>>>>> 62808a0cd7a171be9386f4f8ed2a680d3360c8fb
 
 export const Navbar = () => {
+  const { user } = useAuth()
+
+  console.log('user by useAuth', user)
   const pages = ['Products', 'Pricing', 'Blog']
   const settings = ['Profile', 'Account', 'Dashboard', 'Login']
   const navBarItem = [
@@ -171,6 +182,8 @@ export const Navbar = () => {
   const [anchorElUser, setAnchorElUser] = React.useState(null)
   const [openDialog, setOpenDialog] = React.useState(null)
 
+  const navigate = useNavigate()
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget)
   }
@@ -190,6 +203,10 @@ export const Navbar = () => {
     if (index === settings.indexOf('Login')) {
       setOpenDialog(true)
     }
+    if (index === settings.indexOf('Dashboard')) {
+      navigate('/dashboard')
+    }
+    console.log('index', index)
     setAnchorElUser(null)
   }
 
@@ -250,6 +267,7 @@ export const Navbar = () => {
               ))}
             </Menu>
           </Box>
+          <ButtonWithDropdown />
           <Box
             component="img"
             src={logo4}
@@ -272,7 +290,9 @@ export const Navbar = () => {
             ))}
             {/* <Select /> */}
           </Box>
-
+          <Box mr={1}>
+            <Search />
+          </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

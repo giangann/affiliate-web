@@ -8,22 +8,37 @@ import { baseColor } from '~/styles'
 import { AffiliateNetworkItem } from '../Home'
 import { NetworkItem } from './NetworkItem'
 import AddNetworkDialog from './AddNetworkDialog'
+import { useNavigate } from 'react-router-dom'
+import { useWebsites } from '~/libs/hooks/useWebsites'
+import AlertDialog from '~/components/Dialogs/AlertDialog'
 
 function Dashboard() {
-  const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
+  const globalWebsite = useWebsites()
+
+  const { isLoading, error, data: websites } = useQuery('allWebsites', () => getAllWebsites())
 
   const [openAddDialog, setOpenAddDialog] = useState(false)
+  const [openAlertDialog, setOpenAlertDialog] = useState(false)
+
+
+  const navigate = useNavigate()
 
   const handleCloseAddDialog = () => {
     setOpenAddDialog(false)
   }
 
-  const handleOpenAddDialog = () => {
-    setOpenAddDialog(true)
+  const handleOpenAlertDialog = () => {
+    setOpenAlertDialog(true)
   }
-  useEffect(() => {
-    console.log('callback useEffect', allWebsites, isLoading, error)
-  }, [allWebsites, isLoading, error])
+
+  const handleClickAddBtn = () => {
+    navigate('add-network')
+  }
+  let allWebsites
+  globalWebsite === null ? (allWebsites = globalWebsite) : (allWebsites = websites)
+  // useEffect(() => {
+  //   console.log('callback useEffect', websites, isLoading, error)
+  // }, [allWebsites, isLoading, error])
   return (
     <>
       <BoxWithHeader
@@ -45,7 +60,9 @@ function Dashboard() {
                 >
                   All current networks
                 </Typography>
-                <Button variant="contained" onClick={handleOpenAddDialog}>Add network</Button>
+                <Button variant="contained" onClick={handleClickAddBtn}>
+                  Add network
+                </Button>
               </Stack>
             </Grid>
           </Grid>
@@ -60,6 +77,9 @@ function Dashboard() {
         handleClose={handleCloseAddDialog}
         title="Add Network"
       />
+
+      {/* Alert dialog before delete */}
+      {/* <AlertDialog open = {openAlertDialog}/> */}
     </>
   )
 }

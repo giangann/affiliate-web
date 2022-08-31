@@ -4,6 +4,7 @@ import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { Link } from 'react-router-dom'
 import { BootstrapButton } from '~/components/Layouts/Header/Navbar'
+import { deleteNetWork } from '~/apis'
 
 const webkitBox = {
   WebkitBoxOrient: 'vertical',
@@ -14,9 +15,18 @@ const webkitBox = {
 
 export const NetworkItem = ({ data, ...props }) => {
   const { data_api } = data ?? {}
+  const handleDelete = async (id) => {
+    // alert('Xác nhận xóa ?')
+    try {
+      const res = await deleteNetWork(parseInt(id))
+      console.log('res', res)
 
-  const handleDelete = (id)=>{
-    console.log('delete in id',id)
+      if (res.status === 200 || res.status === 201) {
+        alert('Xóa thành công')
+      }
+    } catch (error) {
+      alert(error)
+    }
   }
 
   // console.log(data)
@@ -60,7 +70,7 @@ export const NetworkItem = ({ data, ...props }) => {
               >
                 {data?.name}
               </Typography>
-            </Link>
+            </Link> 
 
             <Typography
               component="span"
@@ -88,7 +98,7 @@ export const NetworkItem = ({ data, ...props }) => {
           </Grid>
           <Hidden mdDown>
             <Grid item xs={2} className="d-flex align-items-center justify-content-end">
-              <BootstrapButton onClick={handleDelete}>Delete</BootstrapButton>
+              <BootstrapButton onClick={() => handleDelete(data?.id)}>Delete</BootstrapButton>
             </Grid>
           </Hidden>
         </Grid>

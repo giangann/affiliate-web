@@ -5,6 +5,7 @@ import { Pagination } from 'react-bootstrap'
 import { getListComments } from '~/apis'
 import { ListSkeleton } from '../Skeleton'
 import { ContactSupport } from '@mui/icons-material'
+import { isArray } from 'lodash'
 
 export const BoxWithPagination = ({ children, ...props }) => {
   const { pageSize } = props
@@ -12,7 +13,7 @@ export const BoxWithPagination = ({ children, ...props }) => {
 
   const [paginationData, setPaginationData] = useState([])
   // useQuery to call api here: (with pageSize and pageIndex)
-  const { data, isLoading, isError, refetch } = useQuery('pagination', () =>
+  const { data, isLoading, isError, refetch } = useQuery('pagination' + props?.id + pageIndex, () =>
     props.api(Number(props?.id), pageIndex)
   )
   //
@@ -22,6 +23,8 @@ export const BoxWithPagination = ({ children, ...props }) => {
       refetch()
     }
   }, [props.refetchBoxComment])
+
+  // console.log('BoxWithPagination', data)
 
   const handleClick = (e) => {
     let value = 0
@@ -69,7 +72,7 @@ export const BoxWithPagination = ({ children, ...props }) => {
       ) : isError ? (
         <h1>Error...</h1>
       ) : (
-        cloneElement(children, { data: data.data, refetch })
+        cloneElement(children, { data: isArray(data) ? data : data.data, refetch })
       )}
 
       <Box

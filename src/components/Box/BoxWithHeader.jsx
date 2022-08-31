@@ -1,8 +1,15 @@
 import { Grid, Paper, Stack, styled } from '@mui/material'
 import { blue } from '~/styles/colors'
-import React, { cloneElement } from 'react'
+import React, { cloneElement, useEffect } from 'react'
 
-function BoxWithHeader({ elevation, children, ...props }) {
+function BoxWithHeader({ elevation, keyCache, children, ...props }) {
+  // console.log('BoxWithHeader', props?.data)
+  const [cache, setCache] = React.useState()
+
+  useEffect(() => {
+    // console.log('data', props.data)
+    setCache(keyCache)
+  }, [keyCache])
   return (
     <Paper
       elevation={4}

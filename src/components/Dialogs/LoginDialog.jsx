@@ -1,15 +1,11 @@
-import { Grid3x3 } from '@mui/icons-material'
 import CloseIcon from '@mui/icons-material/Close'
 import {
-  Box,
-  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
   Grid,
   IconButton,
   Input,
-  Stack,
   styled,
   Typography
 } from '@mui/material'
@@ -18,8 +14,6 @@ import * as React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { getApiResource, getGoogleLoginUrl, login, loginWithGG } from '~/apis'
-import { Button } from '~/components/Buttons'
-import { Stars } from '~/components/Star'
 import { gray, silver } from '~/constants/color'
 import { AlibabaText } from '~/screens/Home'
 import { orange } from '~/styles'
@@ -27,6 +21,8 @@ import { BootstrapButton, AlignItemGrid } from '../Layouts/Header/Navbar'
 import { GoogleLogin } from 'react-google-login'
 import { gapi } from 'gapi-script'
 import GoogleButton from 'react-google-button'
+import { useUpdateAtom } from 'jotai/utils'
+import { userAtom } from '~/libs/auth'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -68,6 +64,8 @@ BootstrapDialogTitle.propTypes = {
 
 const LoginDialog = (props) => {
   const { open, handleClose, children, title } = props
+  // const [user, setUser] = React.useState(null)
+  const setUser = useUpdateAtom(userAtom)
 
   const grid = { xs: 12, md: 6 }
   const gridFull = { xs: 12, md: 12 }
@@ -101,7 +99,13 @@ const LoginDialog = (props) => {
   })
 
   const onSuccess = (res) => {
-    const login = loginWithGG('login-with-google',res?.profileObj)
+    const login = loginWithGG('login-with-google', res?.profileObj).then((res) => {
+      setUser(res.data.data)
+      localStorage.setItem('user-token', res.data.access_token)
+    })
+    alert('Login success!')
+
+    handleClose()
   }
   const onFailure = (err) => {
   }
