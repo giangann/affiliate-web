@@ -23,6 +23,7 @@ import { gapi } from 'gapi-script'
 import GoogleButton from 'react-google-button'
 import { useUpdateAtom } from 'jotai/utils'
 import { userAtom } from '~/libs/auth'
+import { saveUserLocalStorage } from '~/libs/function/user'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -103,9 +104,11 @@ const LoginDialog = (props) => {
       setUser(res.data.data)
       localStorage.setItem('user-token', res.data.access_token)
     })
-    alert('Login success!')
+
+    saveUserLocalStorage(res.profileObj)
 
     handleClose()
+    window.location.reload()
   }
   const onFailure = (err) => {
   }

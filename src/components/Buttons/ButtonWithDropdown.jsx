@@ -33,7 +33,7 @@ import { useUpdateAtom } from 'jotai/utils'
 import { websitesAtom } from '~/libs/auth'
 import { useNavigate } from 'react-router-dom'
 
-function ButtonWithDropdown() {
+function ButtonWithDropdown({ props }) {
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
@@ -117,7 +117,7 @@ const BootstrapButton = styled(Button)(({ theme }) => ({
   boxShadow: 'none',
   textTransform: 'none',
   fontSize: 16,
-  padding: { xs: '2px 4px', md: '6px 12px' },
+  padding: '18px',
   border: '1px solid',
   lineHeight: 0.5,
   backgroundColor: primaryBlueColor,

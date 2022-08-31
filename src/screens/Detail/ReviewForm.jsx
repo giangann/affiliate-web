@@ -199,7 +199,6 @@ const ReviewForm = (props) => {
     try {
       handleClose()
       const res = await axios.post('http://localhost:8000/api/reviews', data)
-      console.log(res.data)
 
       if (refetchComment) {
         refetchComment()

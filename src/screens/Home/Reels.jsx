@@ -53,7 +53,6 @@ function Reels() {
     }
   ]
   const globalWebsite = useWebsites()
-  console.log(123,globalWebsite)
   const { isLoading, error, data: websites } = useQuery('allWebsites', () => getAllWebsites())
   useEffect(() => {
     // console.log('callback useEffect', allWebsites, isLoading, error)

@@ -43,13 +43,16 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '~/libs/hooks/useAuth'
 import { Search } from './Search'
 import ButtonWithDropdown from '~/components/Buttons/ButtonWithDropdown'
+import { clearUserLocalStorage, getUserLocalStorage } from '~/libs/function/user'
+import { ADMIN_EMAIL } from '~/constants/name'
 
 export const Navbar = () => {
-  const { user } = useAuth()
+  const userInfo = getUserLocalStorage()
+  const isAdmin = userInfo?.email === ADMIN_EMAIL
+  const isLoginned = userInfo
 
-  console.log('user by useAuth', user)
   const pages = ['Products', 'Pricing', 'Blog']
-  const settings = ['Profile', 'Account', 'Dashboard', 'Login']
+  const settings = isLoginned ? (isAdmin ? ['Dashboard', 'Logout'] : ['Logout']) : ['Login']
   const navBarItem = [
     {
       name: 'Reviews',
@@ -73,107 +76,6 @@ export const Navbar = () => {
       icon: <ForumIcon />
     }
   ]
-
-  // {name, icon, amount }
-  const categoriesItem = [
-    {
-      name: 'eCommerce',
-      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 254
-    },
-    {
-      name: 'eCommerce',
-      icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 22
-    },
-    {
-      name: 'eCommerce',
-      icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 7
-    },
-    {
-      name: 'eCommerce',
-      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 389
-    },
-    {
-      name: 'eCommerce',
-      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 254
-    },
-    {
-      name: 'eCommerce',
-      icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 22
-    },
-    {
-      name: 'eCommerce',
-      icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 7
-    },
-    {
-      name: 'eCommerce',
-      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 389
-    },
-    {
-      name: 'eCommerce',
-      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 254
-    },
-    {
-      name: 'eCommerce',
-      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 389
-    },
-    {
-      name: 'eCommerce',
-      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 254
-    },
-    {
-      name: 'eCommerce',
-      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 389
-    },
-    {
-      name: 'eCommerce',
-      icon: <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 254
-    },
-    {
-      name: 'eCommerce',
-      icon: <FlightTakeoffOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 22
-    },
-    {
-      name: 'eCommerce',
-      icon: <StayCurrentPortraitOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 7
-    },
-    {
-      name: 'eCommerce',
-      icon: <FavoriteBorderOutlinedIcon sx={{ fontSize: 16 }} />,
-      amount: 389
-    }
-  ]
-  // const [anchorEl, setAnchorEl] = React.useState(null)
-  // const [anchorElNav, setAnchorElNav] = React.useState(null)
-
-  // const open = Boolean(anchorEl)
-  // const openNav = Boolean(anchorElNav)
-
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget)
-  // }
-
-  // const handleClickNav = (event) => {
-  //   setAnchorElNav(event.currentTarget)
-  // }
-  // const handleClose = () => {
-  //   setAnchorEl(null)
-  //   setAnchorElNav(null)
-  // }
 
   const [anchorElNav, setAnchorElNav] = React.useState(null)
   const [anchorElUser, setAnchorElUser] = React.useState(null)
@@ -203,7 +105,11 @@ export const Navbar = () => {
     if (index === settings.indexOf('Dashboard')) {
       navigate('/dashboard')
     }
-    console.log('index', index)
+    if (index === settings.indexOf('Logout')) {
+      clearUserLocalStorage()
+      navigate('/')
+      window.location.reload()
+    }
     setAnchorElUser(null)
   }
 
@@ -213,7 +119,7 @@ export const Navbar = () => {
   return (
     <AppBar sx={{ backgroundColor: baseColor.blue, marginBottom: '16px' }} position="static">
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
+        <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
           <Hidden mdDown>
             <Link href="/">
               <Box
@@ -223,7 +129,7 @@ export const Navbar = () => {
                   color: 'white',
                   height: '80px',
                   width: 'auto',
-                  display: { xs: 'none', md: 'flex' }
+                  display: 'flex'
                 }}
               />
             </Link>
@@ -290,10 +196,90 @@ export const Navbar = () => {
           <Box mr={1}>
             <Search />
           </Box>
+          <Hidden mdUp>
+            <Box sx={{ display: 'flex' }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left'
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left'
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none' }
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          </Hidden>
+
+          <Hidden mdUp>
+            <Link href="/">
+              <Box
+                component="img"
+                src={logo4}
+                sx={{
+                  color: 'white',
+                  height: '80px',
+                  width: 'auto',
+                  display: 'flex'
+                }}
+              />
+            </Link>
+          </Hidden>
+
+          <Hidden mdDown>
+            <Box sx={{ display: 'flex' }}>
+              {navBarItem.map((item) => (
+                <Button
+                  key={item}
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: 'white', display: 'block', fontWeight: 900 }}
+                >
+                  {item.name}
+                </Button>
+              ))}
+            </Box>
+          </Hidden>
+
+          <Hidden lgDown>
+            <ButtonWithDropdown sxCustom={{ padding: '18px' }} />
+          </Hidden>
+
+          <Hidden lgDown>
+            <Box mr={1}>
+              <Search />
+            </Box>
+          </Hidden>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt="Remy Sharp"
+                  src={userInfo?.imageUrl ?? '/static/images/avatar/2.jpg'}
+                />
               </IconButton>
             </Tooltip>
             <Menu

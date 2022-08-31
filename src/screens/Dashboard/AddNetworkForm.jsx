@@ -23,7 +23,6 @@ function AddNetworkForm() {
   const navigate = useNavigate()
 
   const onSubmit = async (data) => {
-    console.log(data)
     try {
       const res = await addNetWork(data)
 

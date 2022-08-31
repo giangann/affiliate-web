@@ -8,7 +8,6 @@ export const AffiliateOfferItem = () => {
 
   const handleClickOpen = () => {
     setOpen(true)
-    console.log(open)
   }
   const handleClose = () => {
     setOpen(false)
