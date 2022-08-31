@@ -10,7 +10,7 @@ async function authRequestInterceptor(config) {
   if (_token && _token !== 'undefined' && config.headers) {
     const token = _token
     config.headers.authorization = `Bearer ${token}`
-    console.log(`Bearer ${token}`)
+    // console.log(`Bearer ${token}`)
   }
   return config
 }

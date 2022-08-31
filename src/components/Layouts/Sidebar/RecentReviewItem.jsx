@@ -45,7 +45,7 @@ export const RecentReviewItem = ({ item }) => {
         </Box>
         <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <Stars rating={item?.score} />
-          <TextContent>{formatTimeDiff(item?.created_at)}</TextContent>
+          <TextContent>{formatTimeDiff(item?.created_at || new Date())}</TextContent>
         </Box>
         <TextContent sx={{ ...webkitBox }}>{item?.content}</TextContent>
       </Stack>
