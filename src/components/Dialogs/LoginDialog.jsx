@@ -1,16 +1,11 @@
-import { Grid3x3 } from '@mui/icons-material'
 import CloseIcon from '@mui/icons-material/Close'
-import { atom, useAtom } from 'jotai'
 import {
-  Box,
-  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
   Grid,
   IconButton,
   Input,
-  Stack,
   styled,
   Typography
 } from '@mui/material'
@@ -19,8 +14,6 @@ import * as React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { getApiResource, getGoogleLoginUrl, login, loginWithGG } from '~/apis'
-import { Button } from '~/components/Buttons'
-import { Stars } from '~/components/Star'
 import { gray, silver } from '~/constants/color'
 import { AlibabaText } from '~/screens/Home'
 import { orange } from '~/styles'
@@ -109,10 +102,10 @@ const LoginDialog = (props) => {
   })
 
   const onSuccess = (res) => {
-    console.log(res.profileObj)
-    setUser(res.profileObj)
-
-    const login = loginWithGG('login-with-google', res?.profileObj)
+    const login = loginWithGG('login-with-google', res?.profileObj).then((res) => {
+      setUser(res.data.data)
+      localStorage.setItem('user-token', res.data.access_token)
+    })
     alert('Login success!')
 
     handleClose()

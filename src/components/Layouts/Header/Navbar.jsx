@@ -41,6 +41,8 @@ import { LoginDialog } from '~/components/Dialogs/LoginDialog'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '~/libs/hooks/useAuth'
 import { Search } from './Search'
+import ButtonWithDropdown from '~/components/Buttons/ButtonWithDropdown'
+
 export const Navbar = () => {
   const { user } = useAuth()
 
@@ -261,6 +263,7 @@ export const Navbar = () => {
               ))}
             </Menu>
           </Box>
+          <ButtonWithDropdown />
           <Box
             component="img"
             src={logo4}
