@@ -1,3 +1,6 @@
+# Run project
+1. install node_modules: `npm install --legacy-peer-deps`
+2. start: `npm start`
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
