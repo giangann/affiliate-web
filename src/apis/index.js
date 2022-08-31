@@ -82,3 +82,8 @@ export const addNetWork = async (data) => {
   const res = await request.post(`websites`, data)
   return res
 }
+
+export const getCategories = async () => {
+  const res = await request.get('categories')
+  return res
+}

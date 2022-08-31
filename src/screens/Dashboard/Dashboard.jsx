@@ -9,9 +9,12 @@ import { AffiliateNetworkItem } from '../Home'
 import { NetworkItem } from './NetworkItem'
 import AddNetworkDialog from './AddNetworkDialog'
 import { useNavigate } from 'react-router-dom'
+import { useWebsites } from '~/libs/hooks/useWebsites'
 
 function Dashboard() {
-  const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
+  const globalWebsite = useWebsites()
+
+  const { isLoading, error, data: websites } = useQuery('allWebsites', () => getAllWebsites())
 
   const [openAddDialog, setOpenAddDialog] = useState(false)
 
@@ -25,12 +28,14 @@ function Dashboard() {
     setOpenAddDialog(true)
   }
 
-  const handleClickAddBtn = () =>{
+  const handleClickAddBtn = () => {
     navigate('add-network')
   }
-  useEffect(() => {
-    console.log('callback useEffect', allWebsites, isLoading, error)
-  }, [allWebsites, isLoading, error])
+  let allWebsites
+  globalWebsite === null ? (allWebsites = globalWebsite) : (allWebsites = websites)
+  // useEffect(() => {
+  //   console.log('callback useEffect', websites, isLoading, error)
+  // }, [allWebsites, isLoading, error])
   return (
     <>
       <BoxWithHeader
@@ -52,7 +57,9 @@ function Dashboard() {
                 >
                   All current networks
                 </Typography>
-                <Button variant="contained" onClick={handleClickAddBtn}>Add network</Button>
+                <Button variant="contained" onClick={handleClickAddBtn}>
+                  Add network
+                </Button>
               </Stack>
             </Grid>
           </Grid>
