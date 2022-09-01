@@ -117,7 +117,7 @@ export const Navbar = () => {
     }
     setAnchorElUser(null)
   }
-  const handleChoseElVav = (item) => {
+  const handleChoseElNav = (item) => {
     setAnchorElNav(null)
     // setWebsites(item?.websites)
 
@@ -178,7 +178,7 @@ export const Navbar = () => {
                 display: { xs: 'block', md: 'none' }
               }}
             >
-              {pages.map((page) => (
+              {navBarItem.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
@@ -242,7 +242,7 @@ export const Navbar = () => {
                 }}
               >
                 {navBarItem.map((item) => (
-                  <MenuItem key={item.name} onClick={() => handleChoseElVav(item)}>
+                  <MenuItem key={item.name} onClick={() => handleChoseElNav(item)}>
                     <Typography textAlign="center">{item.name}</Typography>
                   </MenuItem>
                 ))}
@@ -270,7 +270,7 @@ export const Navbar = () => {
               {navBarItem.map((item) => (
                 <Button
                   key={item}
-                  onClick={() => handleChoseElVav(item)}
+                  // onClick={() => handleChoseElNav(item)}
                   sx={{ my: 2, color: 'white', display: 'block', fontWeight: 900 }}
                 >
                   {item.name}
