@@ -34,6 +34,7 @@ const Sidebar = () => {
     error: errorRecentReviews,
     data: recentReviews
   } = useQuery('recent-reviews', getRecentReviews)
+  console.log('top10', top10Networks)
   return (
     <Stack>
       <BoxContainer sx={{ border: `3px solid ${baseColor.blue}` }}>

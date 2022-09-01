@@ -74,7 +74,7 @@ export const getListComments = async (id, page, per_page = 10) => {
 }
 
 export const getTop10Networks = async () => {
-  const res = await request.get(`websites/top-10`)
+  const res = await request.get(`websites-top-10`)
 
   return res.data
 }
