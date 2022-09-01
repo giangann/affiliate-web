@@ -80,7 +80,7 @@ export const getTop10Networks = async () => {
 }
 
 export const getRecentReviews = async () => {
-  const res = await request.get(`reviews/recent`)
+  const res = await request.get(`reviews-recent`)
 
   return res.data.data
 }
