@@ -23,6 +23,7 @@ import { gray, silver } from '~/constants/color'
 import { TextGrey } from '.'
 import axios from 'axios'
 import * as yup from 'yup'
+import { request } from '~/apis/request'
 
 const useYupValidationResolver = (validationSchema) =>
   useCallback(
@@ -37,7 +38,6 @@ const useYupValidationResolver = (validationSchema) =>
           errors: {}
         }
       } catch (errors) {
-        console.log(errors)
         return {
           values: {},
           errors: errors.inner.reduce(
@@ -199,8 +199,10 @@ const ReviewForm = (props) => {
     console.log(data)
     try {
       handleClose()
-      const res = await axios.post('http://localhost:8000/api/reviews', data)
-
+      const res = await request.post('reviews', data)
+      if (res.status ==200) {
+        alert('review thành công')
+      }
       if (refetchComment) {
         refetchComment()
         handleRefetchComment()

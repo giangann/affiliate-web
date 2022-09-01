@@ -107,7 +107,7 @@ export const Detail = () => {
     ],
     [dataDetail, isLoading, error]
   )
-
+  console.log('data', dataDetail)
   return (
     <>
       {isLoading || isLoadingComment ? (
@@ -194,7 +194,7 @@ export const Detail = () => {
                     </Typography>
                     <Box sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
                       <Stack direction="row">
-                        <Stars rating={4} />
+                        <Stars rating={dataDetail.aveScore} />
                         <TextGrey ml={1}>{dataComment.length} reviews</TextGrey>
                       </Stack>
                       <Stack direction="row" gap={0.5}>
@@ -206,10 +206,10 @@ export const Detail = () => {
                     </Box>
 
                     <Stack direction="row" gap="12px" mt="12px">
-                      <TagScore label="offers" score={4} />
-                      <TagScore label="offers" score={4} />
-                      <TagScore label="offers" score={4} />
-                      <TagScore label="offers" score={4} />
+                      <TagScore label="offers" score={dataDetail?.avg_offer} />
+                      <TagScore label="tracking" score={dataDetail?.avg_tracking} />
+                      <TagScore label="support" score={dataDetail?.avg_support} />
+                      <TagScore label="payout" score={dataDetail?.avg_payout} />
                     </Stack>
                   </Stack>
 

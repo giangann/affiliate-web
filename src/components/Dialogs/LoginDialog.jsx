@@ -111,7 +111,6 @@ const LoginDialog = (props) => {
     window.location.reload()
   }
   const onFailure = (err) => {
-    console.log('failed:', err)
   }
 
   return (
