@@ -250,7 +250,7 @@ export const Navbar = () => {
             </Link>
           </Hidden>
 
-          <Hidden mdDown>
+          <Hidden lgDown>
             <Box sx={{ display: 'flex' }}>
               {navBarItem.map((item) => (
                 <Button

@@ -37,7 +37,6 @@ export const NetworkItem = ({ data, ...props }) => {
 
   // console.log(data)
   // console.log({ data_api })
-
   return (
     <Grid container columnSpacing={2} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
       <Grid
@@ -49,7 +48,7 @@ export const NetworkItem = ({ data, ...props }) => {
         <img
           style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
           className="bg-white shadow-lg rounded"
-          src={data_api?.profile_banner}
+          src={data_api?.profile_banner || data?.link_banner}
           alt="1"
         />
         <Hidden mdUp>
@@ -89,18 +88,19 @@ export const NetworkItem = ({ data, ...props }) => {
               }}
               className="scale-sm ml-3 rounded px-1"
             >
-              {data?.data_api?.rating}
+              {data?.aveScore || 5}
             </Typography>
           </Grid>
           <Grid item xs={4} md={2} className="d-flex justify-content-end">
-            <Stars rating={data_api?.rating} />
+            <Stars rating={data?.aveScore || 5} />
           </Grid>
         </Grid>
         <Grid container>
           <Grid item xs={8}>
             <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
-              {data?.reviews?.length} Reviews / {data?.data_api?.offer_count} Offers /{' '}
-              {data_api?.platform} / {data_api?.payment_freq}
+              {data?.reviews?.length} Reviews / {data?.data_api?.offer_count || 0} Offers{' '}
+              {data_api?.platform && `/ ${data_api?.platform}`}{' '}
+              {data_api?.payment_freq && `/ ${data_api?.payment_freq}`}
             </Typography>
           </Grid>
           <Hidden mdDown>
