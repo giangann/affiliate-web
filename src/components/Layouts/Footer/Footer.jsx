@@ -126,7 +126,7 @@ function Footer() {
     }
   ]
   return (
-    <Box sx={{ backgroundColor: '#12283A' }} py={2}>
+    <Box sx={{ backgroundColor: '#12283A' }} mt={2} py={2}>
       <Container>
         <Grid container spacing={{ xs: 4, md: 2 }} justifyContent="space-between">
           <Grid item xs={12} md={3.5}>

@@ -2,6 +2,7 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import FlightTakeoffOutlinedIcon from '@mui/icons-material/FlightTakeoffOutlined'
 import MenuIcon from '@mui/icons-material/Menu'
 import ReviewsIcon from '@mui/icons-material/Reviews'
+
 import StorageIcon from '@mui/icons-material/Storage'
 import SearchIcon from '@mui/icons-material/Search'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
@@ -38,33 +39,35 @@ import logo from '~/assets/images/affiliate/logo.png'
 import logo2 from '~/assets/images/affiliate/logo2.png'
 import logo4 from '~/assets/images/affiliate/logo4.svg'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
-import Select from 'react-select'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '~/libs/hooks/useAuth'
 import { Search } from './Search'
 import ButtonWithDropdown from '~/components/Buttons/ButtonWithDropdown'
 import { clearUserLocalStorage, getUserLocalStorage } from '~/libs/function/user'
 import { ADMIN_EMAIL } from '~/constants/name'
+import { validURL, validUrlRegex } from '~/libs/regex'
 
 export const Navbar = () => {
   const userInfo = getUserLocalStorage()
   const isAdmin = userInfo?.email === ADMIN_EMAIL
   const isLoginned = userInfo
 
-  const pages = ['Products', 'Pricing', 'Blog']
   const settings = isLoginned ? (isAdmin ? ['Dashboard', 'Logout'] : ['Logout']) : ['Login']
   const navBarItem = [
     {
       name: 'Reviews',
-      icon: <ReviewsIcon />
+      icon: <ReviewsIcon />,
+      path: 'https://www.affdaily.com/'
     },
     {
       name: 'Offers',
-      icon: <StorageIcon />
+      icon: <StorageIcon />,
+      path: 'https://www.affdaily.com/'
     },
     {
       name: 'News',
-      icon: <FeedIcon />
+      icon: <FeedIcon />,
+      path: 'https://www.affdaily.com/'
     },
     {
       name: 'Resources',
@@ -73,7 +76,8 @@ export const Navbar = () => {
     },
     {
       name: 'Blog',
-      icon: <ForumIcon />
+      icon: <ForumIcon />,
+      path: 'https://www.affdaily.com/'
     }
   ]
 
@@ -112,6 +116,16 @@ export const Navbar = () => {
     }
     setAnchorElUser(null)
   }
+  const hanldeChooseElNav = (item) => {
+    setAnchorElNav(null)
+    // setWebsites(item?.websites)
+
+    if (item.path.match(validUrlRegex)) {
+      window.open(item.path)
+    } else {
+      navigate(`${item?.path}`)
+    }
+  }
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null)
@@ -134,68 +148,6 @@ export const Navbar = () => {
               />
             </Link>
           </Hidden>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left'
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left'
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' }
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <ButtonWithDropdown />
-          <Box
-            component="img"
-            src={logo4}
-            sx={{
-              color: 'white',
-              height: '80px',
-              width: 'auto',
-              display: { xs: 'flex', md: 'none' }
-            }}
-          />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
-            {navBarItem.map((item) => (
-              <Button
-                key={item}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block', fontWeight: 900 }}
-              >
-                {item.name}
-              </Button>
-            ))}
-            {/* <Select /> */}
-          </Box>
-          <Box mr={1}>
-            <Search />
-          </Box>
           <Hidden mdUp>
             <Box sx={{ display: 'flex' }}>
               <IconButton
@@ -226,9 +178,9 @@ export const Navbar = () => {
                   display: { xs: 'block', md: 'none' }
                 }}
               >
-                {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                {navBarItem.map((item) => (
+                  <MenuItem key={item.name} onClick={() => hanldeChooseElNav(item)}>
+                    <Typography textAlign="center">{item.name}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -250,12 +202,12 @@ export const Navbar = () => {
             </Link>
           </Hidden>
 
-          <Hidden lgDown>
+          <Hidden mdDown>
             <Box sx={{ display: 'flex' }}>
               {navBarItem.map((item) => (
                 <Button
                   key={item}
-                  onClick={handleCloseNavMenu}
+                  onClick={() => hanldeChooseElNav(item)}
                   sx={{ my: 2, color: 'white', display: 'block', fontWeight: 900 }}
                 >
                   {item.name}

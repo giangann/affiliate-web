@@ -9,7 +9,6 @@ import { ResourceBlock } from './ResourceBlock'
 const Resource = () => {
   return (
     <Stack spacing={3}>
-      <Reels />
       <Stack sx={{ backgroundColor: 'white', px: 3 }}>
         <Box sx={{ py: 2 }}>
           <TitleWithBorder sx={{ borderColor: orange[500] }} title="Resources" />
