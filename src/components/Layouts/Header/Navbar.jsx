@@ -39,7 +39,6 @@ import logo from '~/assets/images/affiliate/logo.png'
 import logo2 from '~/assets/images/affiliate/logo2.png'
 import logo4 from '~/assets/images/affiliate/logo4.svg'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
-import Select from 'react-select'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '~/libs/hooks/useAuth'
 import { Search } from './Search'
@@ -117,7 +116,7 @@ export const Navbar = () => {
     }
     setAnchorElUser(null)
   }
-  const handleChoseElNav = (item) => {
+  const hanldeChooseElNav = (item) => {
     setAnchorElNav(null)
     // setWebsites(item?.websites)
 
@@ -149,68 +148,6 @@ export const Navbar = () => {
               />
             </Link>
           </Hidden>
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left'
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left'
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' }
-              }}
-            >
-              {navBarItem.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-          <ButtonWithDropdown />
-          <Box
-            component="img"
-            src={logo4}
-            sx={{
-              color: 'white',
-              height: '80px',
-              width: 'auto',
-              display: { xs: 'flex', md: 'none' }
-            }}
-          />
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
-            {navBarItem.map((item) => (
-              <Button
-                key={item}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block', fontWeight: 900 }}
-              >
-                {item.name}
-              </Button>
-            ))}
-            {/* <Select /> */}
-          </Box>
-          <Box mr={1}>
-            <Search />
-          </Box>
           <Hidden mdUp>
             <Box sx={{ display: 'flex' }}>
               <IconButton
@@ -242,7 +179,7 @@ export const Navbar = () => {
                 }}
               >
                 {navBarItem.map((item) => (
-                  <MenuItem key={item.name} onClick={() => handleChoseElNav(item)}>
+                  <MenuItem key={item.name} onClick={() => hanldeChooseElNav(item)}>
                     <Typography textAlign="center">{item.name}</Typography>
                   </MenuItem>
                 ))}
@@ -265,12 +202,12 @@ export const Navbar = () => {
             </Link>
           </Hidden>
 
-          <Hidden lgDown>
+          <Hidden mdDown>
             <Box sx={{ display: 'flex' }}>
               {navBarItem.map((item) => (
                 <Button
                   key={item}
-                  // onClick={() => handleChoseElNav(item)}
+                  onClick={() => hanldeChooseElNav(item)}
                   sx={{ my: 2, color: 'white', display: 'block', fontWeight: 900 }}
                 >
                   {item.name}
