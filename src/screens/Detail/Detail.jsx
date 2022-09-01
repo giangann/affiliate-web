@@ -206,10 +206,10 @@ export const Detail = () => {
                     </Box>
 
                     <Stack direction="row" gap="12px" mt="12px">
-                      <TagScore label="offers" score={dataDetail?.reviews[0].offer} />
-                      <TagScore label="tracking" score={dataDetail?.reviews[0].tracking} />
-                      <TagScore label="support" score={dataDetail?.reviews[0].support} />
-                      <TagScore label="payout" score={dataDetail?.reviews[0].payout} />
+                      <TagScore label="offers" score={dataDetail?.avg_offer} />
+                      <TagScore label="tracking" score={dataDetail?.avg_tracking} />
+                      <TagScore label="support" score={dataDetail?.avg_support} />
+                      <TagScore label="payout" score={dataDetail?.avg_payout} />
                     </Stack>
                   </Stack>
 
