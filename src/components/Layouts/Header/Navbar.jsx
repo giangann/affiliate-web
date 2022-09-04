@@ -111,6 +111,7 @@ export const Navbar = () => {
     }
     if (index === settings.indexOf('Logout')) {
       clearUserLocalStorage()
+      localStorage.removeItem('user-token')
       navigate('/')
       window.location.reload()
     }

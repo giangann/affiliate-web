@@ -99,10 +99,11 @@ const LoginDialog = (props) => {
     gapi.load('client:auth2', initClient)
   })
 
-  const onSuccess = (res) => {
-    const login = loginWithGG('login-with-google', res?.profileObj).then((res) => {
+  const onSuccess = async (res) => {
+    const login = await loginWithGG('login-with-google', res?.profileObj).then((res) => {
       setUser(res.data.data)
       localStorage.setItem('user-token', res.data.access_token)
+      console.log(1)
     })
 
     saveUserLocalStorage(res.profileObj)
