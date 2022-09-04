@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Stack, Box, Link, Grid, Typography, styled } from '@mui/material'
 import { TagScore, CommentItem } from '~/components'
 import { Icon } from '~/components/Icons'
@@ -20,27 +20,38 @@ import { FlexBoxAlignCenterJustifyBetween, FlexBoxAlignCenter } from '~/styles'
 import { ReviewForm } from './ReviewForm'
 import { useQuery } from 'react-query'
 import { ListSkeleton } from '~/components/Skeleton'
+import { getUserLocalStorage } from '~/libs/function/user'
+import { LoginDialog } from '~/components/Dialogs/LoginDialog'
+import { type } from '@testing-library/user-event/dist/type'
+import { financial } from '~/libs/function'
 
 const desc =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facere adipisci, eiusquo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit amet consecteturadipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic,aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatem corporis accusamusanimi? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugitperspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facereadipisci, eius quo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit ametconsectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventoretempore, hic, aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatemcorporis accusamus animi?'
 
 const data1 = [
   {
-    title: 'offers'
+    title: 'Offers'
   },
   {
-    title: 'tracking'
+    title: 'Tracking'
   },
   {
-    title: 'offers'
+    title: 'Payout'
+  },
+  {
+    title: 'Support'
   }
 ]
 
 const arr = [0, 1, 2, 3]
 
+const userInfo = getUserLocalStorage()
+
 export const Detail = () => {
-  const { slug, id } = useParams()
   const [open, setOpen] = React.useState(false)
+  const [openDialog, setOpenDialog] = React.useState(null)
+
+  const { slug, id } = useParams()
   const {
     isLoading,
     error,
@@ -60,10 +71,17 @@ export const Detail = () => {
   // }, [dataComment])
 
   const handleClickOpen = () => {
-    setOpen(true)
+    if (userInfo) {
+      setOpen(true)
+    } else {
+      setOpenDialog(true)
+    }
   }
   const handleClose = () => {
     setOpen(false)
+  }
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
   }
 
   useEffect(() => {
@@ -107,7 +125,7 @@ export const Detail = () => {
     ],
     [dataDetail, isLoading, error]
   )
-  console.log('data', dataDetail)
+
   return (
     <>
       {isLoading || isLoadingComment ? (
@@ -206,10 +224,10 @@ export const Detail = () => {
                     </Box>
 
                     <Stack direction="row" gap="12px" mt="12px">
-                      <TagScore label="offers" score={dataDetail?.avg_offer} />
-                      <TagScore label="tracking" score={dataDetail?.avg_tracking} />
-                      <TagScore label="support" score={dataDetail?.avg_support} />
-                      <TagScore label="payout" score={dataDetail?.avg_payout} />
+                      <TagScore label="offers" score={financial(dataDetail?.avg_offer)} />
+                      <TagScore label="tracking" score={financial(dataDetail?.avg_tracking)} />
+                      <TagScore label="support" score={financial(dataDetail?.avg_support)} />
+                      <TagScore label="payout" score={financial(dataDetail?.avg_payout)} />
                     </Stack>
                   </Stack>
 
@@ -469,6 +487,9 @@ export const Detail = () => {
           </Stack>
         </>
       )}
+
+      {/* login dialog */}
+      <LoginDialog open={openDialog} title="Login" handleClose={handleCloseDialog} />
     </>
   )
 }
