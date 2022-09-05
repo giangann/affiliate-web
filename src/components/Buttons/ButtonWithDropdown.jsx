@@ -37,7 +37,7 @@ function ButtonWithDropdown({ props }) {
   const navigate = useNavigate()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
-  const [categoriesItem, setCategoriesItem] = React.useState()
+  const [categoriesItem, setCategoriesItem] = React.useState([])
   const setWebsites = useUpdateAtom(websitesAtom)
 
   const handleClose = () => {
