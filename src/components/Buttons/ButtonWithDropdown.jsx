@@ -88,21 +88,20 @@ function ButtonWithDropdown({ props }) {
         }}
       >
         {categoriesItem &&
-          categoriesItem.map((item, index) => (
-            <CategoryMenuItem
-              key={index}
-              onClick={() => {
-                handleChoseCategories(item)
-              }}
-              alignItem="center"
-              gap={2}
-            >
-              <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />
-              <AlibabaText fontWeight={600} ml={2}>
-                {item.name} ({item.websites.length})
-              </AlibabaText>
-            </CategoryMenuItem>
-          ))}
+          categoriesItem.map((item, index) =>
+          <CategoryMenuItem
+          key={index}
+          onClick={() => {
+            handleChoseCategories(item)
+          }}
+          alignItem="center"
+          gap={2}
+        >
+          <ShoppingCartOutlinedIcon sx={{ fontSize: 16 }} />
+          <AlibabaText fontWeight={600} ml={2}>
+            {item.name} ({item.websites.length})
+          </AlibabaText>
+        </CategoryMenuItem>)}
       </Menu>
     </AlignItemGrid>
   )
