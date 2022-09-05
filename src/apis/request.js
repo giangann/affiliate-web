@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-const baseURL = 'https://rubyaff.com/public/api'
+const baseURL = 'https://rubyaff.com/public/api/'
 
 // const refetchTokenURL = ${baseURL}/${V1}/user/refresh-token
 
