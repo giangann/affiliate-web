@@ -62,7 +62,7 @@ export const Navbar = () => {
     {
       name: 'Offers',
       icon: <StorageIcon />,
-      path: 'https://www.affdaily.com/'
+      path: 'https://www.affplus.com/'
     },
     {
       name: 'News',

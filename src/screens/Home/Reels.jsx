@@ -81,7 +81,7 @@ function Reels() {
                       variant="h1"
                       sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
                     >
-                      Premiun Networks
+                      Premium Networks
                     </Typography>
                   </Stack>
                 </Grid>
