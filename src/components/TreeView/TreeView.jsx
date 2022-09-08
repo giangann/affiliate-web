@@ -113,7 +113,8 @@ export function TreeView({ ...props }) {
         id: item.id,
         parentId: null,
         text: item.reply_content,
-        author: item.user.name
+        author: item.user.name,
+        created_at: item.created_at
       }))
       setListReplies(listOfReplies)
     }

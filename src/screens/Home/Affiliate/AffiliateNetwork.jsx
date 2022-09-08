@@ -31,8 +31,6 @@ import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 
-const data_array = [1, 2, 3, 4, 5]
-
 const AffiliateNetwork = () => {
   const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
 
@@ -46,6 +44,7 @@ const AffiliateNetwork = () => {
     // console.log('callback useEffect', allWebsites, isLoading, error)
   }, [allWebsites, isLoading, error])
 
+  console.log('all websites', allWebsites)
   return (
     <React.Fragment>
       {isLoading ? (
