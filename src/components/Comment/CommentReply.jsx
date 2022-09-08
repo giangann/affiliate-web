@@ -10,11 +10,20 @@ import {
   TextComment
 } from '~/styles'
 import messageImg from '~/assets/svgs/message.svg'
+import deleteImg from '~/assets/svgs/delete.svg'
+import editImg from '~/assets/svgs/edit.svg'
+
 import avatarImg from '~/assets/images/avatar3.webp'
 import { BoxComment } from './BoxComment'
+import { useAtom } from 'jotai'
+import { userAtom } from '~/libs/auth'
+import { deleteReply } from '~/apis'
 
 export const CommentReply = memo(({ comment, first }) => {
+  const me = useAtom(userAtom)[0]
   const [isReply, setIsReply] = React.useState(false)
+
+  console.log('comment', comment)
 
   const handleReply = () => {
     setIsReply(!isReply)
@@ -23,6 +32,18 @@ export const CommentReply = memo(({ comment, first }) => {
   const nestedComments = (comment.children || []).map((comment) => {
     return <CommentReply key={comment.id} comment={comment} type="child" first={false} />
   })
+
+  const handleEditReply = async () => {
+    console.log('edit')
+  }
+  const handleDeleteReply = async () => {
+    if (comment.author === me.name) {
+      const res = await deleteReply(comment.id)
+      console.log('result', res)
+    } else {
+      alert('Không thể xóa bài của người khác')
+    }
+  }
 
   return (
     <div style={{ ...{ margin: `${first ? 'none' : '16px 0 0 25px'}` } }}>
@@ -46,18 +67,31 @@ export const CommentReply = memo(({ comment, first }) => {
 
           <TextComment width="85%">{comment.text}</TextComment>
 
-          <FlexBoxAlignCenter gap="12px">
-            <FlexBoxAlignCenter
-              gap="4px"
-              onClick={handleReply}
-              sx={{
-                cursor: 'pointer'
-              }}
-            >
-              <Icon src={messageImg} />
-              <TextGrey>REPLY</TextGrey>
+          {first ? (
+            <FlexBoxAlignCenter gap="12px">
+              <FlexBoxAlignCenter
+                gap="4px"
+                // onClick={}
+                sx={{
+                  cursor: 'pointer'
+                }}
+              >
+                <Icon src={editImg} />
+                <TextGrey>EDIT</TextGrey>
+              </FlexBoxAlignCenter>
+
+              <FlexBoxAlignCenter
+                gap="4px"
+                onClick={handleDeleteReply}
+                sx={{
+                  cursor: 'pointer'
+                }}
+              >
+                <Icon src={deleteImg} />
+                <TextGrey>DELETE</TextGrey>
+              </FlexBoxAlignCenter>
             </FlexBoxAlignCenter>
-          </FlexBoxAlignCenter>
+          ) : null}
           {isReply && (
             <Box>
               <BoxComment userName={comment.author} />

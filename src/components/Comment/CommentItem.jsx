@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Stack, Box, Hidden } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Stack, Box, Hidden, Typography } from '@mui/material'
 import { Stars, Icon, TagScore } from '~/components'
 import { TreeView } from '~/components/TreeView'
 import {
@@ -10,55 +10,137 @@ import {
   TextComment
 } from '~/styles'
 import messageImg from '~/assets/svgs/message.svg'
+import editImg from '~/assets/svgs/edit.svg'
 import avatarImg from '~/assets/images/avatar3.webp'
 import shareImg from '~/assets/svgs/share.svg'
 import { LikeIcon, DislikeIcon } from '~/components/Icons'
 import { BoxComment } from './BoxComment'
 import { formatTimeDiff } from '~/libs/utils'
+import { addReply, getMe, addReaction } from '~/apis'
+import { STATUS } from '~/constants/name'
+import { useAtom } from 'jotai'
+import { userAtom } from '~/libs/auth'
+import { ReviewForm } from '~/screens/Detail/ReviewForm'
 
-export const CommentItem = ({ item }) => {
-  // console.log('CommentItem', item)
+export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
   const [isReply, setIsReply] = useState(false)
-
-  const [likeActive, setLikeActive] = useState(false)
-  const [dislikeActive, setDisLikeActive] = useState(false)
+  const [isEditReview, setIsEditReview] = useState(false)
+  const [likeActive, setLikeActive] = useState(item.is_liked === STATUS.IS_LIKE)
+  const [dislikeActive, setDisLikeActive] = useState(item.is_liked === STATUS.IS_DISLIKE)
   const [like, setLike] = useState(item?.totalLike)
   const [dislike, setDislike] = useState(item?.totalDislike)
+  const [forceRender, setForceRender] = useState(1)
+  const [openReviewForm, setOpenReviewForm] = useState(false)
+
+  console.log('item', item)
+  const me = useAtom(userAtom)[0]
 
   const handleReply = () => {
     setIsReply(!isReply)
   }
 
-  const handleLike = () => {
+  const handleLike = async () => {
     if (dislikeActive) {
       setDislike(dislike - 1)
       setDisLikeActive(false)
+
+      let data = {
+        reviewId: item.id,
+        status: STATUS.IS_LIKE
+      }
+      const res = await addReaction(data)
+      console.log('result of like', res)
     }
 
     if (!likeActive) {
       setLike(like + 1)
       setLikeActive(true)
+
+      let data = {
+        reviewId: item.id,
+        status: STATUS.IS_LIKE
+      }
+      const res = await addReaction(data)
+      console.log('result of like', res)
     } else {
       setLike(like - 1)
       setLikeActive(false)
+
+      let data = {
+        reviewId: item.id,
+        status: STATUS.NO_REACT
+      }
+      const res = await addReaction(data)
+      console.log('result of like', res)
     }
   }
 
-  const handleDislike = () => {
+  const handleDislike = async () => {
     if (likeActive) {
       setLike(like - 1)
       setLikeActive(false)
+      let data = {
+        reviewId: item.id,
+        status: STATUS.IS_DISLIKE
+      }
+      const res = await addReaction(data)
+      console.log('result of like', res)
     }
 
     if (!dislikeActive) {
       setDislike(dislike + 1)
       setDisLikeActive(true)
+      let data = {
+        reviewId: item.id,
+        status: STATUS.IS_DISLIKE
+      }
+      const res = await addReaction(data)
+      console.log('result of like', res)
     } else {
       setDislike(dislike - 1)
       setDisLikeActive(false)
+      let data = {
+        reviewId: item.id,
+        status: STATUS.NO_REACT
+      }
+      const res = await addReaction(data)
+      console.log('result of like', res)
     }
   }
 
+  const handleEditComment = async () => {
+    console.log('review id', item.id)
+    handleOpenEditReview()
+  }
+
+  const handleOpenReviewForm = () => {
+    setIsEditReview(true)
+    setOpenReviewForm(true)
+  }
+
+  const handleCloseReviewForm = () => {
+    setOpenReviewForm(false)
+  }
+
+  const onSubmitReply = async (replyValue) => {
+    console.log('review id:', item.id)
+    const data = {
+      interactionId: 0,
+      // user_id: user.id,
+      replyContent: replyValue,
+      reviewId: item.id
+    }
+    console.log('data', data)
+    const res = await addReply(data)
+    console.log('result of post reply', res)
+    setForceRender((prev) => prev + 1)
+  }
+
+  // useEffect(() => {
+  //   getMe().then((data) => {
+  //     setUser(data.data.data)
+  //   })
+  // }, [])
   return (
     <Stack direction={{ xs: 'column', sm: 'row' }} py="32px" borderBottom="1px solid #d6eaff">
       <Hidden smDown>
@@ -109,18 +191,38 @@ export const CommentItem = ({ item }) => {
             <TextGrey>({dislike})</TextGrey>
           </FlexBoxAlignCenter>
 
-          <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }}>
-            <Icon src={shareImg} />
-            <TextGrey>SHARE</TextGrey>
-          </FlexBoxAlignCenter>
+          {me?.id === item.user_id ? (
+            <FlexBoxAlignCenter gap="4px" sx={{ cursor: 'pointer' }} onClick={handleOpenReviewForm}>
+              <Icon src={editImg} />
+              <TextGrey>EDIT</TextGrey>
+            </FlexBoxAlignCenter>
+          ) : null}
         </FlexBoxAlignCenter>
         {isReply && (
           <Box>
-            <BoxComment userName={item?.user_name} />
-            {/* <TreeView /> */}
+            <BoxComment reviewId={item.id} onSubmit={onSubmitReply} userName={item?.user_name} />
+            <TreeView reRender={forceRender} reviewId={item.id} />
           </Box>
         )}
       </Stack>
+
+      {/* Review form for edit */}
+      {isEditReview ? (
+        <ReviewForm
+          isEditReview={isEditReview}
+          open={openReviewForm}
+          handleClose={handleCloseReviewForm}
+          refetchComment={props?.refetchComment}
+          handleRefetchComment={props?.handleRefetchComment}
+          websiteId={item.website_id}
+          reviewId={item.id}
+          title={
+            <Typography sx={{ color: '#2779bd', fontSize: '1.5rem', fontWeight: 'bold' }}>
+              {props?.networkName}
+            </Typography>
+          }
+        />
+      ) : null}
     </Stack>
   )
 }

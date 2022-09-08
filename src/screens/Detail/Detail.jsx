@@ -24,6 +24,8 @@ import { getUserLocalStorage } from '~/libs/function/user'
 import { LoginDialog } from '~/components/Dialogs/LoginDialog'
 import { type } from '@testing-library/user-event/dist/type'
 import { financial } from '~/libs/function'
+import { useAtom } from 'jotai'
+import { userAtom } from '~/libs/auth'
 
 const desc =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facere adipisci, eiusquo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit amet consecteturadipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic,aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatem corporis accusamusanimi? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugitperspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facereadipisci, eius quo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit ametconsectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventoretempore, hic, aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatemcorporis accusamus animi?'
@@ -48,8 +50,11 @@ const arr = [0, 1, 2, 3]
 const userInfo = getUserLocalStorage()
 
 export const Detail = () => {
+  const user = useAtom(userAtom)
+
   const [open, setOpen] = React.useState(false)
   const [openDialog, setOpenDialog] = React.useState(null)
+  const [refetchBoxComment, setRefetchBoxComment] = React.useState(false)
 
   const { slug, id } = useParams()
   const {
@@ -80,6 +85,9 @@ export const Detail = () => {
   const handleClose = () => {
     setOpen(false)
   }
+  const handleOpenEditReview = () => {
+    setOpen(true)
+  }
   const handleCloseDialog = () => {
     setOpenDialog(false)
   }
@@ -87,8 +95,6 @@ export const Detail = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-
-  const [refetchBoxComment, setRefetchBoxComment] = React.useState(false)
 
   const affiliateProgramDetails = useMemo(
     () => [
@@ -447,9 +453,14 @@ export const Detail = () => {
               <BoxWithPagination
                 api={getListComments}
                 id={Number(id)}
+                user_id={user[0]?.id}
                 refetchBoxComment={refetchBoxComment}
               >
                 <List
+                  networkName = {dataDetail?.name}
+                  refetchComment={refetchComment}
+                  handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
+                  handleOpenEditReview={handleOpenEditReview}
                   sx={{ px: 3, pb: 2 }}
                   // data={dataComment?.data}
                   header={() => (

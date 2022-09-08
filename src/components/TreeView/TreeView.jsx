@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { CommentReply } from '../Comment'
 import { useQuery } from 'react-query'
+import axios from 'axios'
+import { baseURL } from '~/apis/request'
 
 const comments = [
   {
@@ -98,12 +100,28 @@ function createTree(list) {
   return roots
 }
 
-const commentTree = createTree(comments)
+export function TreeView({ ...props }) {
+  const [listReplies, setListReplies] = React.useState([])
+  const replyTree = createTree(listReplies)
 
-export function TreeView() {
+  React.useEffect(() => {
+    const getRepliesByReviewId = async () => {
+      const res = await axios.get(
+        `${baseURL}interaction/getInteractionByIdReview?reviewId=${props.reviewId}`
+      )
+      const listOfReplies = res.data.data.map((item, index) => ({
+        id: item.id,
+        parentId: null,
+        text: item.reply_content,
+        author: item.user.name
+      }))
+      setListReplies(listOfReplies)
+    }
+    getRepliesByReviewId()
+  }, [props.reRender])
   return (
     <div style={{ fontFamily: 'sans-serif' }}>
-      {commentTree.map((comment) => {
+      {replyTree.map((comment) => {
         return <CommentReply key={comment.id} comment={comment} first={true} />
       })}
     </div>

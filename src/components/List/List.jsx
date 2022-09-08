@@ -42,7 +42,17 @@ export const List = ({ heading, data, mainColor, Item, ...props }) => {
       )}
       {props.header && props.header()}
       {data
-        ? data.map((item) => <Item key={item.id} mainColor={mainColor} item={item} />)
+        ? data.map((item) => (
+            <Item
+              networkName={props?.networkName}
+              refetchComment={props?.refetchComment}
+              handleRefetchComment={props?.handleRefetchComment}
+              handleOpenEditReview={props?.handleOpenEditReview}
+              key={item.id}
+              mainColor={mainColor}
+              item={item}
+            />
+          ))
         : [0, 1, 2, 4, 5, 6, 7, 8].map((item) => <Item key={item} mainColor={mainColor} />)}
 
       {props.footer && props.footer()}

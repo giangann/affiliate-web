@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { request } from './request'
+import { baseURL, request } from './request'
 
 // const BASE_URL = 'http://127.0.0.1:8000/api'
 
@@ -24,9 +24,12 @@ export const getAllWebsites = async () => {
 }
 
 export const getWebsitesByCategoryId = async (id, page, per_page = 10) => {
-  const response = await request.get(`websites/getByCategoryId`, {
-    params: { category_id: id, page, per_page }
-  })
+  const response = {
+    data: await request.get(`websites/getByCategoryId`, {
+      params: { category_id: id, page, per_page }
+    })
+  }
+  console.log(response.data.data)
   const responses = await Promise.all(response.data.data.map((website) => axios.get(website.api)))
 
   return response.data.data.reduce((total, item) => {
@@ -66,9 +69,9 @@ export const getApiResource = async (name) => {
   return res.data
 }
 
-export const getListComments = async (id, page, per_page = 10) => {
+export const getListComments = async (id, user_id, page, per_page = 10) => {
   const res = await request.get(`reviews`, {
-    params: { websiteId: id, page, per_page }
+    params: { websiteId: id, user_id: user_id, page, per_page }
   })
   return res.data
 }
@@ -130,5 +133,37 @@ export const searchNetworks = async (keyword) => {
 
 export const getMe = async () => {
   const res = await request.get('users/me')
+  return res
+}
+
+export const addReply = async (data) => {
+  const res = await request.post(`interaction/replyContent`, data)
+  return res
+}
+
+export const addReaction = async (data) => {
+  const res = await request.post(`like/like`, data)
+  return res
+}
+
+export const getRepliesByReviewId = async (id) => {
+  const res = await axios.get(`${baseURL}interaction/getInteractionByIdReview`, {
+    params: { reviewId: id }
+  })
+  return res.data
+}
+
+export const updateReview = async (id) => {
+  const res = await axios.patch(`${baseURL}reviews/${id}`)
+  return res.data
+}
+
+export const getReviewById = async (id) => {
+  const res = await request.get(`reviews/${id}`)
+  return res.data
+}
+
+export const deleteReply = async (id) => {
+  const res = await request.delete(`interaction/${id}`)
   return res
 }

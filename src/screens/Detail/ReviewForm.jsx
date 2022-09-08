@@ -16,14 +16,15 @@ import {
   Typography
 } from '@mui/material'
 import PropTypes from 'prop-types'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from '~/components/Buttons'
 import { gray, silver } from '~/constants/color'
 import { TextGrey } from '.'
 import axios from 'axios'
 import * as yup from 'yup'
-import { request } from '~/apis/request'
+import { baseURL, request } from '~/apis/request'
+import { getReviewById } from '~/apis'
 
 const useYupValidationResolver = (validationSchema) =>
   useCallback(
@@ -165,7 +166,8 @@ const ReviewForm = (props) => {
     control,
     register,
     formState: { errors },
-    reset
+    reset,
+    setValue
   } = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
@@ -196,13 +198,20 @@ const ReviewForm = (props) => {
 
   const onSubmit = async (data) => {
     data['websiteId'] = Number(props.websiteId)
-    console.log(data)
     try {
       handleClose()
-      const res = await request.post('reviews', data)
-      if (res.status ==200) {
-        alert('review thành công')
+      if (props?.isEditReview) {
+        const res = await request.patch(`reviews/${props?.reviewId}`, data)
+        if (res.status == 200) {
+          alert('update thành công')
+        }
+      } else {
+        const res = await request.post('reviews', data)
+        if (res.status == 200) {
+          alert('review thành công')
+        }
       }
+
       if (refetchComment) {
         refetchComment()
         handleRefetchComment()
@@ -212,6 +221,26 @@ const ReviewForm = (props) => {
       console.log(error)
     }
   }
+
+  useEffect(() => {
+    async function getReview(id) {
+      const response = await request.get(`reviews/${id}`)
+      return response.data
+    }
+    if (props?.isEditReview) {
+      getReview(props?.reviewId).then((data) => {
+        setValue('content', data.data.content)
+        setValue('score', data.data.score)
+        setValue('offer', data.data.offer)
+        setValue('payout', data.data.payout)
+        setValue('tracking', data.data.tracking)
+        setValue('support', data.data.support)
+        setValue('websiteId', data.data.websiteId)
+        setValue('name', data.data.user.name)
+        setValue('email', data.data.user.email)
+      })
+    }
+  }, [])
 
   return (
     <React.Fragment>
