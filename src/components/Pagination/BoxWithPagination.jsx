@@ -13,8 +13,9 @@ export const BoxWithPagination = ({ children, ...props }) => {
 
   const [paginationData, setPaginationData] = useState([])
   // useQuery to call api here: (with pageSize and pageIndex)
-  const { data, isLoading, isError, refetch } = useQuery('pagination' + props?.id + pageIndex, () =>
-    props.api(Number(props?.id), pageIndex)
+  const { data, isLoading, isError, refetch } = useQuery(
+    'pagination' + props?.id + props?.user_id + pageIndex,
+    () => props.api(Number(props?.id), props?.user_id, pageIndex)
   )
   //
 

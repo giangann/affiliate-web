@@ -42,15 +42,15 @@ function AddNetworkForm() {
       setCategories(listOfCategory)
     }
     const getTrackingSoftwares = async () => {
-      const listOfTrackingSoftware = await getApiResource('categories')
+      const listOfTrackingSoftware = await getApiResource('tracking_software')
       setTrackingSoftware(listOfTrackingSoftware)
     }
     const getPaymentMethods = async () => {
-      const listOfPaymentMethod = await getApiResource('categories')
+      const listOfPaymentMethod = await getApiResource('payment_method')
       setPaymentMethod(listOfPaymentMethod)
     }
     const getPaymentFrequencies = async () => {
-      const listOfPaymentFrequencies = await getApiResource('categories')
+      const listOfPaymentFrequencies = await getApiResource('payment_frequencies')
       setPaymentFrequencies(listOfPaymentFrequencies)
     }
 

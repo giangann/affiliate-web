@@ -3,6 +3,7 @@ import { Grid, Hidden, Typography } from '@mui/material'
 import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { Link } from 'react-router-dom'
+import { financial } from '~/libs/function'
 
 const webkitBox = {
   WebkitBoxOrient: 'vertical',
@@ -14,8 +15,8 @@ const webkitBox = {
 export const AffiliateNetworkItem = ({ data, ...props }) => {
   const { data_api } = data ?? {}
 
-  console.log(data)
-  console.log({ data_api })
+  // console.log(data)
+  // console.log({ data_api })
   return (
     <Grid container columnSpacing={2} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
       <Grid
@@ -74,7 +75,7 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
               }}
               className="scale-sm ml-3 rounded px-1"
             >
-              {data?.aveScore || 5}
+              {financial(data?.aveScore || 5)}
             </Typography>
           </Grid>
           <Grid item xs={4} md={2} className="d-flex justify-content-end">

@@ -43,7 +43,7 @@ const AffiliateNetwork = () => {
   } = useQuery('recent-reviews', getRecentReviews)
 
   useEffect(() => {
-    console.log('callback useEffect', allWebsites, isLoading, error)
+    // console.log('callback useEffect', allWebsites, isLoading, error)
   }, [allWebsites, isLoading, error])
 
   return (

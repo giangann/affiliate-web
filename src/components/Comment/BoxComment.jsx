@@ -1,25 +1,28 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Button } from '~/components/Buttons'
-import { grey } from '~/styles/colors'
 import './style.css'
+import { addReply, getMe } from '~/apis'
 
 const INITIAL_HEIGHT = 36
 const EXPAND_HEIGHT = 130
 
 export const BoxComment = ({ userName, ...props }) => {
   const [isExpanded, setIsExpanded] = useState(false)
-  const [commentValue, setCommentValue] = useState('')
+  const [replyContent, setReplyContent] = useState('')
+  const [user, setUser] = useState({})
 
   const textRef = useRef(null)
 
   const handleChange = (e) => {
-    setCommentValue(e.target.value)
+    setReplyContent(e.target.value)
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    props.onSubmit(commentValue)
-    setCommentValue('')
+    console.log('reply content', replyContent)
+    props.onSubmit(replyContent)
+    setReplyContent('')
+    setIsExpanded(false)
   }
 
   const handleKeyDown = (e) => {
@@ -37,6 +40,11 @@ export const BoxComment = ({ userName, ...props }) => {
       setIsExpanded(true)
     }
   }
+  useEffect(() => {
+    getMe().then((data) => {
+      setUser(data.data)
+    })
+  }, [])
 
   return (
     <div
@@ -55,7 +63,7 @@ export const BoxComment = ({ userName, ...props }) => {
         onKeyDown={handleKeyDown}
         onChange={handleChange}
         placeholder={`@${userName}`}
-        value={commentValue}
+        value={replyContent}
         className="comment-input"
       />
       <div
@@ -83,7 +91,7 @@ export const BoxComment = ({ userName, ...props }) => {
             CANCEL
           </Button>
 
-          <Button type="button-blue" disabled={commentValue.length < 1}>
+          <Button type="button-blue" disabled={replyContent.length < 1}>
             REPLY
           </Button>
         </div>
