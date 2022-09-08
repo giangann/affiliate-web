@@ -21,7 +21,7 @@ const StyledButton = styled(MUIButton)({
   fontSize: '0.75rem',
   padding: '0.25rem 0.5rem 0.25rem 0.5rem',
   '&:hover': {
-    opacity: 0.5,
+    opacity: 0.5
   }
 })
 

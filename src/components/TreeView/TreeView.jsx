@@ -122,7 +122,14 @@ export function TreeView({ ...props }) {
   return (
     <div style={{ fontFamily: 'sans-serif' }}>
       {replyTree.map((comment) => {
-        return <CommentReply key={comment.id} comment={comment} first={true} />
+        return (
+          <CommentReply
+            forceReRender={props.forceReRender}
+            key={comment.id}
+            comment={comment}
+            first={true}
+          />
+        )
       })}
     </div>
   )

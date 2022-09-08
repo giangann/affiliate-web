@@ -26,6 +26,7 @@ import { type } from '@testing-library/user-event/dist/type'
 import { financial } from '~/libs/function'
 import { useAtom } from 'jotai'
 import { userAtom } from '~/libs/auth'
+import { useState } from 'react'
 
 const desc =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facere adipisci, eiusquo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit amet consecteturadipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic,aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatem corporis accusamusanimi? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugitperspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facereadipisci, eius quo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit ametconsectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventoretempore, hic, aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatemcorporis accusamus animi?'
@@ -51,6 +52,7 @@ const userInfo = getUserLocalStorage()
 
 export const Detail = () => {
   const user = useAtom(userAtom)
+  const [isUserReviewed, setIsUserReviewed] = useState(false)
 
   const [open, setOpen] = React.useState(false)
   const [openDialog, setOpenDialog] = React.useState(null)
@@ -69,7 +71,14 @@ export const Detail = () => {
     refetch: refetchComment
   } = useQuery('list-comment', () => getListComments(id))
 
-  useEffect(() => {}, [dataDetail, isLoading, error])
+  useEffect(() => {
+    dataDetail?.reviews.forEach((review) => {
+      if (review.user_id === user[0]?.id) {
+        setIsUserReviewed(true)
+        return true
+      }
+    })
+  }, [dataDetail, isLoading, error])
 
   // useEffect(() => {
   //   console.log('dataComment', dataComment)
@@ -245,6 +254,7 @@ export const Detail = () => {
                     borderTop="1px dashed #dae1e7"
                   >
                     <Button
+                      disabled={isUserReviewed}
                       type="button-blue"
                       onClick={() => {
                         handleClickOpen()
@@ -457,7 +467,7 @@ export const Detail = () => {
                 refetchBoxComment={refetchBoxComment}
               >
                 <List
-                  networkName = {dataDetail?.name}
+                  networkName={dataDetail?.name}
                   refetchComment={refetchComment}
                   handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
                   handleOpenEditReview={handleOpenEditReview}

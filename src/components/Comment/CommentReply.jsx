@@ -1,6 +1,13 @@
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import React, { useMemo, memo } from 'react'
 import { Stack, Box, Hidden } from '@mui/material'
 import { Stars, Icon } from '~/components'
+import Button from '@mui/material/Button'
+
 import { TreeView } from '~/components/TreeView'
 import {
   FlexBoxAlignCenterJustifyBetween,
@@ -18,12 +25,12 @@ import { BoxComment } from './BoxComment'
 import { useAtom } from 'jotai'
 import { userAtom } from '~/libs/auth'
 import { deleteReply } from '~/apis'
+import { useState } from 'react'
 
-export const CommentReply = memo(({ comment, first }) => {
+export const CommentReply = memo(({ comment, first, ...props }) => {
   const me = useAtom(userAtom)[0]
   const [isReply, setIsReply] = React.useState(false)
-
-  console.log('comment', comment)
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
 
   const handleReply = () => {
     setIsReply(!isReply)
@@ -40,9 +47,18 @@ export const CommentReply = memo(({ comment, first }) => {
     if (comment.author === me.name) {
       const res = await deleteReply(comment.id)
       console.log('result', res)
+      props.forceReRender()
+      handleClose()
     } else {
-      alert('Không thể xóa bài của người khác')
+      alert('This is not your own post, can not delete!')
     }
+  }
+
+  const handleClickOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true)
+  }
+  const handleClose = () => {
+    setOpenDeleteDialog(false)
   }
 
   return (
@@ -69,7 +85,7 @@ export const CommentReply = memo(({ comment, first }) => {
 
           {first ? (
             <FlexBoxAlignCenter gap="12px">
-              <FlexBoxAlignCenter
+              {/* <FlexBoxAlignCenter
                 gap="4px"
                 // onClick={}
                 sx={{
@@ -78,11 +94,11 @@ export const CommentReply = memo(({ comment, first }) => {
               >
                 <Icon src={editImg} />
                 <TextGrey>EDIT</TextGrey>
-              </FlexBoxAlignCenter>
+              </FlexBoxAlignCenter> */}
 
               <FlexBoxAlignCenter
                 gap="4px"
-                onClick={handleDeleteReply}
+                onClick={handleClickOpenDeleteDialog}
                 sx={{
                   cursor: 'pointer'
                 }}
@@ -100,6 +116,27 @@ export const CommentReply = memo(({ comment, first }) => {
         </Stack>
       </Stack>
       {nestedComments}
+
+      {/* Delete dialog */}
+      <Dialog
+        open={openDeleteDialog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{'Confirm delete?'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure to permantly delete this reply?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button onClick={handleDeleteReply} autoFocus>
+            Yes, delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 })

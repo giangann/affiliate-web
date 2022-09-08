@@ -32,7 +32,6 @@ export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
   const [forceRender, setForceRender] = useState(1)
   const [openReviewForm, setOpenReviewForm] = useState(false)
 
-  console.log('item', item)
   const me = useAtom(userAtom)[0]
 
   const handleReply = () => {
@@ -49,7 +48,6 @@ export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
         status: STATUS.IS_LIKE
       }
       const res = await addReaction(data)
-      console.log('result of like', res)
     }
 
     if (!likeActive) {
@@ -108,11 +106,6 @@ export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
     }
   }
 
-  const handleEditComment = async () => {
-    console.log('review id', item.id)
-    handleOpenEditReview()
-  }
-
   const handleOpenReviewForm = () => {
     setIsEditReview(true)
     setOpenReviewForm(true)
@@ -133,6 +126,10 @@ export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
     console.log('data', data)
     const res = await addReply(data)
     console.log('result of post reply', res)
+    setForceRender((prev) => prev + 1)
+  }
+
+  const forceReRender = () => {
     setForceRender((prev) => prev + 1)
   }
 
@@ -201,7 +198,7 @@ export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
         {isReply && (
           <Box>
             <BoxComment reviewId={item.id} onSubmit={onSubmitReply} userName={item?.user_name} />
-            <TreeView reRender={forceRender} reviewId={item.id} />
+            <TreeView forceReRender={forceReRender} reRender={forceRender} reviewId={item.id} />
           </Box>
         )}
       </Stack>
