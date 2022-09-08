@@ -26,6 +26,7 @@ import { useAtom } from 'jotai'
 import { userAtom } from '~/libs/auth'
 import { deleteReply } from '~/apis'
 import { useState } from 'react'
+import { formatTimeDiff } from '~/libs/utils'
 
 export const CommentReply = memo(({ comment, first, ...props }) => {
   const me = useAtom(userAtom)[0]
@@ -46,7 +47,6 @@ export const CommentReply = memo(({ comment, first, ...props }) => {
   const handleDeleteReply = async () => {
     if (comment.author === me.name) {
       const res = await deleteReply(comment.id)
-      console.log('result', res)
       props.forceReRender()
       handleClose()
     } else {
@@ -78,7 +78,7 @@ export const CommentReply = memo(({ comment, first, ...props }) => {
               <Stars rating={4.5} />
               <TextHeading>{comment.author}</TextHeading>
             </FlexBoxAlignCenter>
-            <TextGrey>1 day ago</TextGrey>
+            <TextGrey>{formatTimeDiff(comment?.created_at || new Date())}</TextGrey>
           </FlexBoxAlignCenterJustifyBetween>
 
           <TextComment width="85%">{comment.text}</TextComment>
