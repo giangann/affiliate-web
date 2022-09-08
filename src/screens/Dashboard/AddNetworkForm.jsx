@@ -5,8 +5,16 @@ import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { ResponsiveContainer } from '~/components/Layouts'
 import { baseColor } from '~/styles'
 import { makeStyles } from '@material-ui/core/styles'
-import { addNetWork, getApiResource, getGoogleLoginUrl, login, loginWithGG } from '~/apis'
+import {
+  addNetWork,
+  getApiResource,
+  getDataDetail,
+  getGoogleLoginUrl,
+  login,
+  loginWithGG
+} from '~/apis'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function AddNetworkForm() {
   const [categories, setCategories] = React.useState([])
@@ -24,15 +32,22 @@ function AddNetworkForm() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await addNetWork(data)
+      const checkData = await axios.get(watch('api'))
+      if (checkData.status === 200 || checkData.status === 201) {
+        const res = await addNetWork(data)
+        console.log('res of add', res)
 
-      if (res.status === 200) {
-        alert('Thêm mới thành công')
-        navigate(-1)
+        if (res.status === 200) {
+          alert('Thêm mới thành công')
+          navigate(-1)
+        }
       }
-      console.log('res of add', res)
+      console.log('check data', checkData)
     } catch (error) {
-      alert(error)
+      if (error.response.status === 404) {
+        alert('Error 404')
+      }
+      console.log('eror', error)
     }
   }
 
@@ -76,6 +91,15 @@ function AddNetworkForm() {
       )}
       footer={() => (
         <Grid container component="form" spacing={2} onSubmit={handleSubmit(onSubmit)}>
+          <Grid item {...gridFull}>
+            <Typography variant="caption">
+              Nếu đã điền đủ thông tin mà vẫn hiện lỗi 404 là do đường dẫn API bạn nhập bị sai và
+              không trả về dữ liệu, hãy kiểm tra lại hoặc dùng API mặc định sau đây:{' '}
+              <span style={{ fontWeight: 700 }}>
+                https://api.affplus.com/v1/entity/dmsaffiliates
+              </span>
+            </Typography>
+          </Grid>
           <Grid item {...grid}>
             <Controller
               control={control}
