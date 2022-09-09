@@ -10,7 +10,7 @@ export const List = ({ heading, data, mainColor, Item, ...props }) => {
   return (
     <Stack
       sx={{
-        border: mainColor ? `3px solid ${mainColor}` : `3px solid ${blue['border']}`,
+        borderTop: mainColor ? `3px solid ${mainColor}` : `3px solid ${blue['border']}`,
         ...props?.sx
       }}
     >
