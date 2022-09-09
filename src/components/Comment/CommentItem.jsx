@@ -196,7 +196,14 @@ export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
           ) : null}
         </FlexBoxAlignCenter>
         {isReply && (
-          <Box>
+          <Box
+            sx={{
+              marginLeft: {
+                sm: 0,
+                xs: 2
+              }
+            }}
+          >
             <BoxComment reviewId={item.id} onSubmit={onSubmitReply} userName={item?.user_name} />
             <TreeView forceReRender={forceReRender} reRender={forceRender} reviewId={item.id} />
           </Box>

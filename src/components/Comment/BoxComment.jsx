@@ -91,7 +91,7 @@ export const BoxComment = ({ userName, ...props }) => {
             CANCEL
           </Button>
 
-          <Button type="button-blue" disabled={replyContent.length < 1}>
+          <Button type="button-blue" onClick={handleSubmit} disabled={replyContent.length < 1}>
             REPLY
           </Button>
         </div>
