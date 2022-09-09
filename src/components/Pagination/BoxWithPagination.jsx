@@ -67,7 +67,7 @@ export const BoxWithPagination = ({ children, ...props }) => {
     }
   }
   return (
-    <Paper elevation={4} sx={{ padding: '16px' }}>
+    <Paper elevation={4} sx={{ padding: props.removePadding ? '0px' : '16px' }}>
       {isLoading ? (
         <ListSkeleton />
       ) : isError ? (

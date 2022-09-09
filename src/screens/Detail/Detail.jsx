@@ -461,6 +461,7 @@ export const Detail = () => {
             {/* Affiliate Reviews */}
             <Stack sx={{ backgroundColor: 'white' }}>
               <BoxWithPagination
+                removePadding = {true}
                 api={getListComments}
                 id={Number(id)}
                 user_id={user[0]?.id}
