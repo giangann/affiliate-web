@@ -50,7 +50,7 @@
   width: 30%;
 }
 
-.__active{
+.__active {
   margin-right: 10px !important;
 }
 
@@ -65,11 +65,11 @@
     width: 50%;
   }
 
-  .actions .action-button {
+  /* .actions .action-button {
     display: flex;
     flex-direction: column;
     gap: 4;
-  }
+  } */
 
   .comment-input {
     height: 50%;
