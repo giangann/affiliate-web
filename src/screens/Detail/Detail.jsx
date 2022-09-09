@@ -391,6 +391,55 @@ export const Detail = () => {
 
             {/* End Affiliate Network Details */}
 
+               {/* Affiliate Reviews */}
+            <Stack sx={{ backgroundColor: 'white' }}>
+              <BoxWithPagination
+                removePadding = {true}
+                api={getListComments}
+                id={Number(id)}
+                user_id={user[0]?.id}
+                refetchBoxComment={refetchBoxComment}
+              >
+                <List
+                  networkName={dataDetail?.name}
+                  refetchComment={refetchComment}
+                  handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
+                  handleOpenEditReview={handleOpenEditReview}
+                  sx={{ px: 3, pb: 2 }}
+                  // data={dataComment?.data}
+                  header={() => (
+                    <FlexBoxAlignCenterJustifyBetween
+                      sx={{
+                        flexDirection: {
+                          xs: 'column',
+                          md: 'row'
+                        }
+                      }}
+                      py="16px"
+                      borderBottom="1px solid #d6eaff"
+                    >
+                      <FlexBoxAlignCenter gap="1.25rem">
+                        <Button type="button-blue"> All Reviews ({dataComment.length})</Button>
+                        <Button type="button-grey">Payment Proofs</Button>
+                        <Button type="button-grey">Questions</Button>
+                      </FlexBoxAlignCenter>
+                      <FlexBoxAlignCenter gap="8px">
+                        <TextGrey>Sort:</TextGrey>
+                        <select style={{ minWidth: '128px' }}>
+                          <option value="1">Most recent</option>
+                          <option value="2">Popular</option>
+                          <option value="3">Oldest first</option>
+                        </select>
+                      </FlexBoxAlignCenter>
+                    </FlexBoxAlignCenterJustifyBetween>
+                  )}
+                  Item={CommentItem}
+                  footer={() => <>{/* <button>write a review</button> */}</>}
+                />
+              </BoxWithPagination>
+            </Stack>
+            {/* End Affiliate Reviews */}
+
             {/* Affiliate Offers */}
             {/* <BoxWithPagination pageSize={12}> */}
             <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
@@ -457,55 +506,6 @@ export const Detail = () => {
             </Stack>
             {/* </BoxWithPagination> */}
             {/* End Affiliate Offers */}
-
-            {/* Affiliate Reviews */}
-            <Stack sx={{ backgroundColor: 'white' }}>
-              <BoxWithPagination
-                removePadding = {true}
-                api={getListComments}
-                id={Number(id)}
-                user_id={user[0]?.id}
-                refetchBoxComment={refetchBoxComment}
-              >
-                <List
-                  networkName={dataDetail?.name}
-                  refetchComment={refetchComment}
-                  handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
-                  handleOpenEditReview={handleOpenEditReview}
-                  sx={{ px: 3, pb: 2 }}
-                  // data={dataComment?.data}
-                  header={() => (
-                    <FlexBoxAlignCenterJustifyBetween
-                      sx={{
-                        flexDirection: {
-                          xs: 'column',
-                          md: 'row'
-                        }
-                      }}
-                      py="16px"
-                      borderBottom="1px solid #d6eaff"
-                    >
-                      <FlexBoxAlignCenter gap="1.25rem">
-                        <Button type="button-blue"> All Reviews ({dataComment.length})</Button>
-                        <Button type="button-grey">Payment Proofs</Button>
-                        <Button type="button-grey">Questions</Button>
-                      </FlexBoxAlignCenter>
-                      <FlexBoxAlignCenter gap="8px">
-                        <TextGrey>Sort:</TextGrey>
-                        <select style={{ minWidth: '128px' }}>
-                          <option value="1">Most recent</option>
-                          <option value="2">Popular</option>
-                          <option value="3">Oldest first</option>
-                        </select>
-                      </FlexBoxAlignCenter>
-                    </FlexBoxAlignCenterJustifyBetween>
-                  )}
-                  Item={CommentItem}
-                  footer={() => <>{/* <button>write a review</button> */}</>}
-                />
-              </BoxWithPagination>
-            </Stack>
-            {/* End Affiliate Reviews */}
           </Stack>
         </>
       )}

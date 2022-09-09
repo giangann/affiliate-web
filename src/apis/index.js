@@ -4,7 +4,27 @@ import { baseURL, request } from './request'
 // const BASE_URL = 'http://127.0.0.1:8000/api'
 
 export const getAllWebsites = async () => {
-  const response = await request.get(`/websites`)
+  const response = await request.get(`websites`)
+  const responses = await Promise.all(response.data.map((website) => axios.get(website.api)))
+
+  return response.data.reduce((total, item) => {
+    const data_web = responses.find(
+      (res) => res.data.data.title.toLowerCase() === item.name.toLowerCase()
+    )
+
+    return [
+      ...total,
+
+      {
+        ...item,
+        data_api: data_web ? data_web?.data?.data : null
+      }
+    ]
+  }, [])
+}
+
+export const getFeaturesNetwork = async () => {
+  const response = await request.get(`websites-feature-network`)
   const responses = await Promise.all(response.data.map((website) => axios.get(website.api)))
 
   return response.data.reduce((total, item) => {
@@ -166,4 +186,19 @@ export const getReviewById = async (id) => {
 export const deleteReply = async (id) => {
   const res = await request.delete(`interaction/${id}`)
   return res
+}
+
+export const getTrackingSoftware = async () => {
+  const res = await request.get('tracking_software')
+  return res.data
+}
+
+export const getPaymentMethod = async () => {
+  const res = await request.get('payment_method')
+  return res.data
+}
+
+export const getPaymentFrequencies = async () => {
+  const res = await request.get('payment_frequencies')
+  return res.data
 }

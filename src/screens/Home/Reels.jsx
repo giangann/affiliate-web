@@ -7,7 +7,7 @@ import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
 import { baseColor, red, blue } from '~/styles/colors'
 import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
 import { Button } from '~/components/Buttons'
-import { getAllWebsites } from '~/apis'
+import { getAllWebsites, getFeaturesNetwork } from '~/apis'
 import { BoxContainer, FeaturedNetworkItem } from '~/components/Layouts/Sidebar'
 import { TextContent, TextHeading } from '~/styles'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
@@ -18,6 +18,7 @@ import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { useQuery } from 'react-query'
 import { ListSkeleton } from '~/components/Skeleton'
 import { useWebsites } from '~/libs/hooks/useWebsites'
+import { FeaturedNetwork } from '~/components/Layouts/Sidebar/FeaturedNetwork'
 
 function Reels() {
   const topWebsite = [
@@ -205,11 +206,11 @@ function Reels() {
       </Grid>
       <Grid item xs={12} sm={6}>
         <BoxContainer>
-          <List
+          <FeaturedNetwork
             mainColor={baseColor.orange}
             heading="Featured Networks"
             Item={FeaturedNetworkItem}
-          />
+            callback={getFeaturesNetwork}/>
         </BoxContainer>
         {/* <img
           style={{ width: '100%', height: 'auto' }}

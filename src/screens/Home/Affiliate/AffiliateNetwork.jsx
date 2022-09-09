@@ -9,7 +9,7 @@ import {
   TextContent,
   TextHeading
 } from '~/components/Layouts/Sidebar'
-import { getAllWebsites, getTop10Networks, getRecentReviews } from '~/apis'
+import { getAllWebsites, getTop10Networks, getRecentReviews, getFeaturesNetwork } from '~/apis'
 import { List } from '~/components/List'
 import { Stars } from '~/components/Star'
 import {
@@ -30,21 +30,25 @@ import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
+import { useState } from 'react'
 
 const AffiliateNetwork = () => {
+  const [filterValue, setFilterValue] = useState()
   const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
-
   const {
     isLoading: isLoadingRecentReviews,
     error: errorRecentReviews,
     data: recentReviews
   } = useQuery('recent-reviews', getRecentReviews)
 
+  const handleFilterValue = (value) => {
+    // setFilterValue(value)
+    console.log(12)
+  }
   useEffect(() => {
     // console.log('callback useEffect', allWebsites, isLoading, error)
   }, [allWebsites, isLoading, error])
 
-  console.log('all websites', allWebsites)
   return (
     <React.Fragment>
       {isLoading ? (
@@ -88,7 +92,7 @@ const AffiliateNetwork = () => {
             )}
             restOfHeader={() => (
               <>
-                <Filter />
+                <Filter handleFilterValue={handleFilterValue}/>
                 <img
                   className="block"
                   style={{ width: '100%' }}
@@ -260,7 +264,7 @@ const AffiliateNetwork = () => {
 
           <Hidden mdUp>
             <BoxContainer>
-              <List heading="Featured Networks" Item={FeaturedNetworkItem} />
+              <FeaturedNetworkItem heading="Featured Networks" callback={getFeaturesNetwork} Item={FeaturedNetworkItem} />
             </BoxContainer>
           </Hidden>
 

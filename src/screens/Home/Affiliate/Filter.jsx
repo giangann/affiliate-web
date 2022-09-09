@@ -4,10 +4,26 @@ import { grey } from '~/styles/colors'
 import Dropdown from 'react-bootstrap/Dropdown'
 import BootstrapDropdown from 'react-bootstrap/DropdownButton'
 import styled from '@emotion/styled'
+import { getPaymentFrequencies, getPaymentMethod, getTrackingSoftware } from '~/apis'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
-const Filter = () => {
+const Filter = (props) => {
+  const [trackingSoftware, setTrackingSoftware] = useState()
+  const [paymentMethod, setPaymentMethod] = useState()
+  const [paymentFrequencies, setPaymentFrequencies] = useState()
+  useEffect(() => {
+    getTrackingSoftware().then((res) => setTrackingSoftware(res))
+    getPaymentFrequencies().then((res) => setPaymentFrequencies(res))
+    getPaymentMethod().then((res) => setPaymentFrequencies(res))
+    props?.handleFilterValue(123)
+  }, [])
+
+  const [trackingValue, setTrackingValue] = useState()
+  const [pMethodValue, setPMethodValue] = useState()
+  const [pFrequencyValue, setPFrequencyValue] = useState()
   return (
-    <Stack direction="row" paddingY={3} gap={2}>
+    <Stack direction="row" paddingY={3} gap={2} alignItems="center">
       <Stack direction="row" color={grey['text']}>
         <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
           <FilterIcon />
@@ -17,38 +33,72 @@ const Filter = () => {
       <Grid container gap={3.6}>
         <Grid item xs={3.5}>
           <DropdownButton
-            title="Tracking Software"
+            title={trackingValue ? trackingValue.name : 'Tracking Software'}
             id="dropdown-basic-button"
             className="dropdown-basic-button"
             style={{ backgroundColor: 'unset' }}
           >
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            {trackingSoftware &&
+              trackingSoftware.map((item, index) => (
+                <Dropdown.Item
+                  onClick={() => {
+                    setTrackingValue(item)
+                    props?.handleFilterValue(123)
+                  }}
+                  key={index}
+                  href="#"
+                >
+                  {item.name}
+                </Dropdown.Item>
+              ))}
           </DropdownButton>
         </Grid>
         <Grid item xs={3.5}>
           <DropdownButton
             id="dropdown-basic-button"
-            title="Tracking Software"
+            title={pFrequencyValue ? pFrequencyValue.name : 'Payment Frequency'}
             className="dropdown-basic-button"
             style={{ backgroundColor: 'unset' }}
           >
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            {paymentFrequencies &&
+              paymentFrequencies.map((item, index) => (
+                <Dropdown.Item
+                  onClick={() => {
+                    setPFrequencyValue(item)
+                    props?.handleFilterValue((pre) => {
+                      return { ...pre, paymentFrequency: item.id }
+                    })
+                  }}
+                  key={index}
+                  href="#"
+                >
+                  {item.name}
+                </Dropdown.Item>
+              ))}
           </DropdownButton>
         </Grid>
         <Grid item xs={3.5}>
           <DropdownButton
             id="dropdown-basic-button"
-            title="Tracking Software"
+            title={pMethodValue ? pMethodValue.name : 'Payment Method'}
             className="dropdown-basic-button"
             style={{ backgroundColor: 'unset' }}
           >
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+            {paymentMethod &&
+              paymentMethod.map((item, index) => (
+                <Dropdown.Item
+                  onClick={() => {
+                    setPMethodValue(item)
+                    props?.handleFilterValue((pre) => {
+                      return { ...pre, paymentMethod: item.id }
+                    })
+                  }}
+                  key={index}
+                  href="#"
+                >
+                  {item.name}
+                </Dropdown.Item>
+              ))}
           </DropdownButton>
         </Grid>
       </Grid>
