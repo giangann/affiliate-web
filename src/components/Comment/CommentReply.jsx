@@ -75,10 +75,19 @@ export const CommentReply = memo(({ comment, first, ...props }) => {
               <Hidden smUp>
                 <Icon src={avatarImg} sx={{ width: '32px', height: '32px' }} />
               </Hidden>
-              <Stars rating={4.5} />
-              <TextHeading>{comment.author}</TextHeading>
+              <Box>
+                <FlexBoxAlignCenter gap="12px">
+                  <TextHeading>{comment.author}</TextHeading>
+                  <Stars rating={5} />
+                </FlexBoxAlignCenter>
+                <Hidden smUp>
+                  <TextGrey>{formatTimeDiff(comment?.created_at || new Date())}</TextGrey>
+                </Hidden>
+              </Box>
             </FlexBoxAlignCenter>
-            <TextGrey>{formatTimeDiff(comment?.created_at || new Date())}</TextGrey>
+            <Hidden smDown>
+              <TextGrey>{formatTimeDiff(comment?.created_at || new Date())}</TextGrey>
+            </Hidden>
           </FlexBoxAlignCenterJustifyBetween>
 
           <TextComment width="85%">{comment.text}</TextComment>
