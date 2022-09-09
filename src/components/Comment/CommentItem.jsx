@@ -151,10 +151,19 @@ export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
             <Hidden smUp>
               <Icon src={avatarImg} sx={{ width: '32px', height: '32px' }} />
             </Hidden>
-            <Stars rating={item?.score} />
-            <TextHeading>{item?.user_name}</TextHeading>
+            <Box>
+              <FlexBoxAlignCenter gap="12px">
+                <TextHeading>{item?.user_name}</TextHeading>
+                <Stars rating={item?.score} />
+              </FlexBoxAlignCenter>
+              <Hidden smUp>
+                <TextGrey>{formatTimeDiff(item?.created_at || new Date())}</TextGrey>
+              </Hidden>
+            </Box>
           </FlexBoxAlignCenter>
-          <TextGrey>{formatTimeDiff(item?.created_at || new Date())}</TextGrey>
+          <Hidden smDown>
+            <TextGrey>{formatTimeDiff(item?.created_at || new Date())}</TextGrey>
+          </Hidden>
         </FlexBoxAlignCenterJustifyBetween>
 
         <FlexBoxAlignCenter gap="4px" flexWrap="wrap">

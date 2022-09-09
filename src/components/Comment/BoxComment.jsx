@@ -70,31 +70,32 @@ export const BoxComment = ({ userName, ...props }) => {
         className={`actions ${!isExpanded ? 'hide' : 'show'}`}
         style={{
           display: 'flex',
-          width: '100%'
+          width: '95%',
+          justifyContent: 'flex-end'
         }}
       >
-        <div style={{ flex: 2 }}>
+        {/* <div style={{ flex: 2 }}>
           <input type="text" placeholder="Name" className="action-input" />
           <input type="text" placeholder="Email" className="action-input" />
-        </div>
-        <div
+        </div> */}
+        {/* <div
           style={{
-            flex: 1,
-            position: 'absolute',
-            right: '16px',
-            top: '50%',
-            transform: 'translateY(-50%)'
+            flex: 1
+            // position: 'absolute',
+            // right: '16px',
+            // top: '50%',
+            // transform: 'translateY(-50%)'
           }}
           className="action-button"
-        >
-          <Button type="button-grey" onClick={handleClose} sx={{ marginRight: '8px' }}>
-            CANCEL
-          </Button>
+        > */}
+        <Button type="button-grey" onClick={handleClose} sx={{ marginRight: '8px' }}>
+          CANCEL
+        </Button>
 
-          <Button type="button-blue" onClick={handleSubmit} disabled={replyContent.length < 1}>
-            REPLY
-          </Button>
-        </div>
+        <Button type="button-blue" onClick={handleSubmit} disabled={replyContent.length < 1}>
+          REPLY
+        </Button>
+        {/* </div> */}
       </div>
     </div>
   )
