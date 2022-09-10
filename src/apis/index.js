@@ -3,8 +3,18 @@ import { baseURL, request } from './request'
 
 // const BASE_URL = 'http://127.0.0.1:8000/api'
 
-export const getAllWebsites = async () => {
-  const response = await request.get(`websites`)
+export const getAllWebsites = async (query) => {
+  const params = new URLSearchParams()
+  if (query.queryKey[1].tracking_software?.id) {
+    params.append('tracking_software_id', query.queryKey[1].tracking_software.id)
+  }
+  if (query.queryKey[1].payment_frequency?.id) {
+    params.append('payment_frequency_id', query.queryKey[1].payment_frequency.id)
+  }
+  if (query.queryKey[1].payment_method?.id) {
+    params.append('payment_method_id', query.queryKey[1].payment_method.id)
+  }
+  const response = await request.get(`websites`, { params })
   const responses = await Promise.all(response.data.map((website) => axios.get(website.api)))
 
   return response.data.reduce((total, item) => {

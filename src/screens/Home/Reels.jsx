@@ -1,66 +1,31 @@
-import { Grid, Typography, Stack, Box, Avatar, Link } from '@mui/material'
-import { Filter, AffiliateNetworkItem } from '~/screens/Home'
-import { useEffect, useState } from 'react'
-import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
+import { Avatar, Box, Grid, Link, Stack, Typography } from '@mui/material'
+import { useState } from 'react'
 import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
-
-import { baseColor, red, blue } from '~/styles/colors'
-import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
-import { Button } from '~/components/Buttons'
+import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
+import { AffiliateNetworkItem } from '~/screens/Home'
+import { useQuery } from 'react-query'
 import { getAllWebsites, getFeaturesNetwork } from '~/apis'
-import { BoxContainer, FeaturedNetworkItem } from '~/components/Layouts/Sidebar'
-import { TextContent, TextHeading } from '~/styles'
+import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
+import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import { Stars } from '~/components'
-import { List } from '~/components/List'
-import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
-import { useQuery } from 'react-query'
+import { Button } from '~/components/Buttons'
+import { BoxContainer, FeaturedNetworkItem } from '~/components/Layouts/Sidebar'
+import { FeaturedNetwork } from '~/components/Layouts/Sidebar/FeaturedNetwork'
 import { ListSkeleton } from '~/components/Skeleton'
 import { useWebsites } from '~/libs/hooks/useWebsites'
-import { FeaturedNetwork } from '~/components/Layouts/Sidebar/FeaturedNetwork'
+import { TextContent, TextHeading } from '~/styles'
+import { baseColor } from '~/styles/colors'
 
 function Reels() {
-  const topWebsite = [
-    {
-      name: 'MyBid',
-      avatar: 'https://apimg.net/sponsors/circle/c78a6d37510f1083975e7bfe0c89bb9d.jpg',
-      num_of_review: 14,
-      rate: 5
-    },
-    {
-      name: 'EvaDav',
-      avatar: 'https://apimg.net/sponsors/circle/ed3d74a40fa6819feeb63777b5e7886a.jpg',
-      num_of_review: 14,
-      rate: 5
-    },
-    {
-      name: 'LosPollos',
-      avatar: 'https://apimg.net/sponsors/circle/8bd51c64d0efddbff360c1e899c2b3a8.jpg',
-      num_of_review: 14,
-      rate: 5
-    },
-    {
-      name: 'Adverten',
-      avatar: 'https://apimg.net/sponsors/circle/277bd70928b8ba5f7a44c0ac6d70e8dd.jpg',
-      num_of_review: 14,
-      rate: 5
-    },
-    {
-      name: 'Neogara',
-      avatar: 'https://apimg.net/sponsors/circle/9c16011d506ba267fea74ae8b3bcfa53.jpg',
-      num_of_review: 14,
-      rate: 5
-    }
-  ]
-  const globalWebsite = useWebsites()
-  const { isLoading, error, data: websites } = useQuery('allWebsites', () => getAllWebsites())
-  useEffect(() => {
-    // console.log('callback useEffect', allWebsites, isLoading, error)
-  }, [JSON.stringify(globalWebsite)])
-  const [open, setOpen] = useState(true)
+  const [filterValue, setFilterValue] = useState({})
+  const {
+    isLoading,
+    error,
+    data: websites
+  } = useQuery(['allWebsites', filterValue], getAllWebsites)
 
-  const [focusWebsite, setFocusWebsite] = useState(1)
   return (
     <Grid container spacing={1}>
       <Grid item xs={12}>
@@ -69,8 +34,9 @@ function Reels() {
         ) : (
           <BoxWithHeader
             mainColor={baseColor.blue}
-            keyCache={JSON.stringify(globalWebsite.websites)}
-            data={globalWebsite.websites === null ? websites : globalWebsite.websites}
+            data={websites}
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
             title={() => (
               <Grid container>
                 <Grid item xs={6} sx={{ justifyContent: 'center' }}>
@@ -105,7 +71,6 @@ function Reels() {
             )}
             restOfHeader={() => (
               <>
-                <Filter />
                 <img
                   className="block"
                   style={{ width: '100%' }}
@@ -210,7 +175,8 @@ function Reels() {
             mainColor={baseColor.orange}
             heading="Featured Networks"
             Item={FeaturedNetworkItem}
-            callback={getFeaturesNetwork}/>
+            callback={getFeaturesNetwork}
+          />
         </BoxContainer>
         {/* <img
           style={{ width: '100%', height: 'auto' }}

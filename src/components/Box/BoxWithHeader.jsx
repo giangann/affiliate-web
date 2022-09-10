@@ -1,15 +1,10 @@
 import { Grid, Paper, Stack, styled } from '@mui/material'
+import React, { cloneElement, useState } from 'react'
+import { Filter } from '~/screens/Home'
 import { blue } from '~/styles/colors'
-import React, { cloneElement, useEffect } from 'react'
 
-function BoxWithHeader({ elevation, keyCache, children, ...props }) {
-  // console.log('BoxWithHeader', props?.data)
-  const [cache, setCache] = React.useState()
+function BoxWithHeader({ elevation, filterValue, setFilterValue, keyCache = '', children, ...props }) {
 
-  useEffect(() => {
-    // console.log('data', props.data)
-    setCache(keyCache)
-  }, [keyCache])
   return (
     <Paper
       elevation={4}
@@ -38,7 +33,12 @@ function BoxWithHeader({ elevation, keyCache, children, ...props }) {
         </GridWithPadding>
 
         <GridWithPadding item xs={12}>
-          {props.restOfHeader && props.restOfHeader()}
+          {props.restOfHeader && (
+            <>
+              <Filter filterValue={filterValue} handleFilterValue={setFilterValue} />
+              {props.restOfHeader()}
+            </>
+          )}
         </GridWithPadding>
         <StackWithPadding>
           {props.data

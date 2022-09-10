@@ -199,7 +199,6 @@ const ReviewForm = (props) => {
   const onSubmit = async (data) => {
     data['websiteId'] = Number(props.websiteId)
     try {
-      handleClose()
       if (props?.isEditReview) {
         const res = await request.patch(`reviews/${props?.reviewId}`, data)
         if (res.status == 200) {
@@ -217,6 +216,7 @@ const ReviewForm = (props) => {
         handleRefetchComment()
       }
       reset()
+      handleClose()
     } catch (error) {
       console.log(error)
     }

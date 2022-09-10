@@ -33,22 +33,17 @@ import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { useState } from 'react'
 
 const AffiliateNetwork = () => {
-  const [filterValue, setFilterValue] = useState()
-  const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
+  const [filterValue, setFilterValue] = useState({})
+  const {
+    isLoading,
+    error,
+    data: allWebsites
+  } = useQuery(['allWebsites', filterValue], getAllWebsites)
   const {
     isLoading: isLoadingRecentReviews,
     error: errorRecentReviews,
     data: recentReviews
   } = useQuery('recent-reviews', getRecentReviews)
-
-  const handleFilterValue = (value) => {
-    // setFilterValue(value)
-    console.log(12)
-  }
-  useEffect(() => {
-    // console.log('callback useEffect', allWebsites, isLoading, error)
-  }, [allWebsites, isLoading, error])
-
   return (
     <React.Fragment>
       {isLoading ? (
@@ -58,6 +53,8 @@ const AffiliateNetwork = () => {
           <BoxWithHeader
             mainColor={baseColor.blue}
             data={allWebsites}
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
             title={() => (
               <Grid container>
                 <Grid item xs={6} sx={{ justifyContent: 'center' }}>
@@ -92,7 +89,6 @@ const AffiliateNetwork = () => {
             )}
             restOfHeader={() => (
               <>
-                <Filter handleFilterValue={handleFilterValue}/>
                 <img
                   className="block"
                   style={{ width: '100%' }}
@@ -264,7 +260,11 @@ const AffiliateNetwork = () => {
 
           <Hidden mdUp>
             <BoxContainer>
-              <FeaturedNetworkItem heading="Featured Networks" callback={getFeaturesNetwork} Item={FeaturedNetworkItem} />
+              <FeaturedNetworkItem
+                heading="Featured Networks"
+                callback={getFeaturesNetwork}
+                Item={FeaturedNetworkItem}
+              />
             </BoxContainer>
           </Hidden>
 

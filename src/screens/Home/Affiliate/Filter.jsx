@@ -12,16 +12,16 @@ const Filter = (props) => {
   const [trackingSoftware, setTrackingSoftware] = useState()
   const [paymentMethod, setPaymentMethod] = useState()
   const [paymentFrequencies, setPaymentFrequencies] = useState()
+  const [trackingValue, setTrackingValue] = useState(props?.filterValue?.tracking_software)
+  const [pMethodValue, setPMethodValue] = useState(props?.filterValue?.payment_method)
+  const [pFrequencyValue, setPFrequencyValue] = useState(props?.filterValue?.payment_frequency)
+
   useEffect(() => {
     getTrackingSoftware().then((res) => setTrackingSoftware(res))
     getPaymentFrequencies().then((res) => setPaymentFrequencies(res))
     getPaymentMethod().then((res) => setPaymentFrequencies(res))
-    props?.handleFilterValue(123)
   }, [])
 
-  const [trackingValue, setTrackingValue] = useState()
-  const [pMethodValue, setPMethodValue] = useState()
-  const [pFrequencyValue, setPFrequencyValue] = useState()
   return (
     <Stack direction="row" paddingY={3} gap={2} alignItems="center">
       <Stack direction="row" color={grey['text']}>
@@ -42,8 +42,12 @@ const Filter = (props) => {
               trackingSoftware.map((item, index) => (
                 <Dropdown.Item
                   onClick={() => {
-                    setTrackingValue(item)
-                    props?.handleFilterValue(123)
+                    props?.handleFilterValue((pre) => {
+                      return {
+                        ...pre,
+                        tracking_software: item
+                      }
+                    })
                   }}
                   key={index}
                   href="#"
@@ -64,9 +68,11 @@ const Filter = (props) => {
               paymentFrequencies.map((item, index) => (
                 <Dropdown.Item
                   onClick={() => {
-                    setPFrequencyValue(item)
                     props?.handleFilterValue((pre) => {
-                      return { ...pre, paymentFrequency: item.id }
+                      return {
+                        ...pre,
+                        payment_frequency: item
+                      }
                     })
                   }}
                   key={index}
@@ -88,9 +94,11 @@ const Filter = (props) => {
               paymentMethod.map((item, index) => (
                 <Dropdown.Item
                   onClick={() => {
-                    setPMethodValue(item)
                     props?.handleFilterValue((pre) => {
-                      return { ...pre, paymentMethod: item.id }
+                      return {
+                        ...pre,
+                        payment_method: item
+                      }
                     })
                   }}
                   key={index}

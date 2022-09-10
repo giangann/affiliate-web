@@ -25,8 +25,6 @@ export const BoxWithPagination = ({ children, ...props }) => {
     }
   }, [props.refetchBoxComment])
 
-  // console.log('BoxWithPagination', data)
-
   const handleClick = (e) => {
     let value = 0
 

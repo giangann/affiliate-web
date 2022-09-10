@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getWebsitesByCategoryId } from '~/apis'
 import { BoxWithPagination } from '~/components/Pagination'
@@ -14,12 +14,15 @@ import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
 
 export const Category = () => {
   const { category_id } = useParams()
+  const [filterValue, setFilterValue] = useState()
 
   return (
     <>
       <BoxWithPagination api={getWebsitesByCategoryId} id={Number(category_id)}>
         <BoxWithHeader
           mainColor={baseColor.blue}
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
           title={() => (
             <Grid container>
               <Grid item xs={6} sx={{ justifyContent: 'center' }}>
@@ -54,7 +57,6 @@ export const Category = () => {
           )}
           restOfHeader={() => (
             <>
-              <Filter />
               <img
                 className="block"
                 style={{ width: '100%' }}
