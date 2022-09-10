@@ -439,7 +439,6 @@ export const Detail = () => {
               </BoxWithPagination>
             </Stack>
             {/* End Affiliate Reviews */}
-
             {/* Affiliate Offers */}
             {/* <BoxWithPagination pageSize={12}> */}
             <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>

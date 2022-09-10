@@ -15,6 +15,7 @@ import {
   TextareaAutosize,
   Typography
 } from '@mui/material'
+import Firebase from 'firebase'
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
@@ -25,6 +26,22 @@ import axios from 'axios'
 import * as yup from 'yup'
 import { baseURL, request } from '~/apis/request'
 import { getReviewById } from '~/apis'
+import { useState } from 'react'
+
+let app
+if (!Firebase.apps.length) {
+  app = Firebase.initializeApp({
+    apiKey: 'AIzaSyCwT_qfZ_3yEitTzOP3nrZW3CAEiiDpHvo',
+    authDomain: 'techapp-ad995.firebaseapp.com',
+    projectId: 'techapp-ad995',
+    storageBucket: 'techapp-ad995.appspot.com',
+    messagingSenderId: '826332030942',
+    appId: '1:826332030942:web:fc3fe809491bd8bb8f5f4f',
+    measurementId: 'G-FGPNQQSPB8'
+  })
+} else {
+  app = Firebase.app()
+}
 
 const useYupValidationResolver = (validationSchema) =>
   useCallback(
@@ -134,6 +151,7 @@ const StyledRating = styled(Rating)({
 
 const ReviewDetail = (props) => {
   const { onChange, value, label } = props
+
   return (
     <Grid container>
       <Grid item xs={4}>
@@ -160,7 +178,7 @@ const ReviewForm = (props) => {
   const { open, handleClose, title, refetchComment, handleRefetchComment } = props
   const [rating, setRating] = React.useState(2)
   const [image, setImage] = React.useState('')
-
+  const [time, setTime] = useState()
   const {
     handleSubmit,
     control,
@@ -177,6 +195,7 @@ const ReviewForm = (props) => {
 
   const previewImageURL = (file) => {
     setImage(URL.createObjectURL(file))
+    setTime(new Date().getTime())
   }
 
   const statusRating = (rating) => {
@@ -196,17 +215,41 @@ const ReviewForm = (props) => {
     }
   }
 
+  const uploadImage = async (uri) => {
+    const response = await fetch(uri)
+    const blob = await response.blob()
+    var ref = app
+      .storage()
+      .ref()
+      .child('image' + '/' + time)
+    console.log(time)
+    return ref.put(blob)
+  }
+
   const onSubmit = async (data) => {
+    // const uploadImage = async (uri, websiteId, reviewId) => {
+    //   const response = await fetch(uri)
+    //   const blob = await response.blob()
+    //   console.log(uri);
+    //   var ref = app
+    //     .storage()
+    //     .ref()
+    //     .child('image' + '/' + 'websiteId' + websiteId + 'reviewId' + reviewId)
+    //   return ref.put(blob)
+    // }
     data['websiteId'] = Number(props.websiteId)
+    data['image'] = `https://firebasestorage.googleapis.com/v0/b/techapp-ad995.appspot.com/o/image%2F${time}?alt=media&token=4e2a3d8b-7bb9-44f7-8199-2bbb422f263f`
     try {
       if (props?.isEditReview) {
         const res = await request.patch(`reviews/${props?.reviewId}`, data)
         if (res.status == 200) {
+          image && uploadImage(image)
           alert('update thành công')
         }
       } else {
         const res = await request.post('reviews', data)
         if (res.status == 200) {
+          image && uploadImage(image)
           alert('review thành công')
         }
       }
