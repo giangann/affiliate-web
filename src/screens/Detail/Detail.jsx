@@ -51,7 +51,6 @@ const arr = [0, 1, 2, 3]
 const userInfo = getUserLocalStorage()
 
 export const Detail = () => {
-  const user = useAtom(userAtom)
   const [isUserReviewed, setIsUserReviewed] = useState(false)
 
   const [open, setOpen] = React.useState(false)
@@ -63,7 +62,11 @@ export const Detail = () => {
     isLoading,
     error,
     data: dataDetail
-  } = useQuery('website-detail' + id, () => getWebsite(id))
+  } = useQuery('website-detail' + id, () => {
+    const user = useAtom(userAtom)
+    getWebsite(user[0]?.id, id)
+  })
+
   const {
     isLoading: isLoadingComment,
     error: errorComment,
@@ -87,6 +90,12 @@ export const Detail = () => {
   const handleClickOpen = () => {
     if (userInfo) {
       setOpen(true)
+      if (!dataDetail?.reviews_remain) {
+        alert(
+          'Your turn of review for this Network is run out of for this day, please try tomorrow!'
+        )
+        return
+      }
     } else {
       setOpenDialog(true)
     }

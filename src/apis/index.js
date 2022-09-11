@@ -78,8 +78,11 @@ export const getWebsitesByCategoryId = async (id, page, per_page = 10) => {
   }, [])
 }
 
-export const getWebsite = async (id) => {
-  const res = await request.get(`/websites/show/${id}`)
+export const getWebsite = async (userId, id) => {
+  console.log('user id get website', userId)
+  const res = await request.get(`/websites/show/${id}`, {
+    params: { userId: userId }
+  })
   const data = await axios.get(res.data.api)
 
   return {
