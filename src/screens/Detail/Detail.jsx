@@ -51,6 +51,7 @@ const arr = [0, 1, 2, 3]
 const userInfo = getUserLocalStorage()
 
 export const Detail = () => {
+  const user = useAtom(userAtom)
   const [isUserReviewed, setIsUserReviewed] = useState(false)
 
   const [open, setOpen] = React.useState(false)
@@ -63,8 +64,8 @@ export const Detail = () => {
     error,
     data: dataDetail
   } = useQuery('website-detail' + id, () => {
-    const user = useAtom(userAtom)
-    getWebsite(user[0]?.id, id)
+    // const user = useAtom(userAtom)
+    getWebsite(1, id)
   })
 
   const {
@@ -81,7 +82,7 @@ export const Detail = () => {
         return true
       }
     })
-  }, [dataDetail, isLoading, error])
+  }, [])
 
   // useEffect(() => {
   //   console.log('dataComment', dataComment)
@@ -232,12 +233,12 @@ export const Detail = () => {
                         fontWeight: '700'
                       }}
                     >
-                      {dataDetail.name}
+                      {dataDetail?.name}
                     </Typography>
                     <Box sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
                       <Stack direction="row">
-                        <Stars rating={dataDetail.aveScore} />
-                        <TextGrey ml={1}>{dataComment.length} reviews</TextGrey>
+                        <Stars rating={dataDetail?.aveScore} />
+                        <TextGrey ml={1}>{dataComment?.length} reviews</TextGrey>
                       </Stack>
                       <Stack direction="row" gap={0.5}>
                         <Icon src={emailImg} sx={{ width: '12px', height: '12px' }} />
@@ -271,7 +272,7 @@ export const Detail = () => {
                     >
                       Write a Review
                     </Button>
-                    <Button type="button-red" href={dataDetail.link} targer="_blank">
+                    <Button type="button-red" href={dataDetail?.link} targer="_blank">
                       Join now
                     </Button>
                   </Stack>
@@ -281,7 +282,7 @@ export const Detail = () => {
                 </Grid>
               </Grid>
 
-              <BoxDescription desc={dataDetail.data_api.description} isStringToHtml={true} />
+              <BoxDescription desc={dataDetail?.data_api.description} isStringToHtml={true} />
             </Stack>
 
             {/* End Affiliate Network */}
@@ -400,10 +401,10 @@ export const Detail = () => {
 
             {/* End Affiliate Network Details */}
 
-               {/* Affiliate Reviews */}
+            {/* Affiliate Reviews */}
             <Stack sx={{ backgroundColor: 'white' }}>
               <BoxWithPagination
-                removePadding = {true}
+                removePadding={true}
                 api={getListComments}
                 id={Number(id)}
                 user_id={user[0]?.id}

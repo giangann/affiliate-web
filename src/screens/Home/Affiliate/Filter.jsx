@@ -4,23 +4,17 @@ import { grey } from '~/styles/colors'
 import Dropdown from 'react-bootstrap/Dropdown'
 import BootstrapDropdown from 'react-bootstrap/DropdownButton'
 import styled from '@emotion/styled'
-import { getPaymentFrequencies, getPaymentMethod, getTrackingSoftware } from '~/apis'
+import { getAllFilter, getPaymentFrequencies, getPaymentMethod, getTrackingSoftware } from '~/apis'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
 const Filter = (props) => {
-  const [trackingSoftware, setTrackingSoftware] = useState()
-  const [paymentMethod, setPaymentMethod] = useState()
-  const [paymentFrequencies, setPaymentFrequencies] = useState()
+  const trackingSoftware = props?.allFilter?.tracking_software
+  const paymentMethod = props?.allFilter?.payment_method
+  const paymentFrequencies = props?.allFilter?.payment_frequencies
   const [trackingValue, setTrackingValue] = useState(props?.filterValue?.tracking_software)
   const [pMethodValue, setPMethodValue] = useState(props?.filterValue?.payment_method)
   const [pFrequencyValue, setPFrequencyValue] = useState(props?.filterValue?.payment_frequency)
-
-  useEffect(() => {
-    getTrackingSoftware().then((res) => setTrackingSoftware(res))
-    getPaymentFrequencies().then((res) => setPaymentFrequencies(res))
-    getPaymentMethod().then((res) => setPaymentFrequencies(res))
-  }, [])
 
   return (
     <Stack direction="row" paddingY={3} gap={2} alignItems="center">

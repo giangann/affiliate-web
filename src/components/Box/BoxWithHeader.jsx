@@ -3,8 +3,14 @@ import React, { cloneElement, useState } from 'react'
 import { Filter } from '~/screens/Home'
 import { blue } from '~/styles/colors'
 
-function BoxWithHeader({ elevation, filterValue, setFilterValue, keyCache = '', children, ...props }) {
-
+function BoxWithHeader({
+  elevation,
+  filterValue,
+  setFilterValue,
+  keyCache = '',
+  children,
+  ...props
+}) {
   return (
     <Paper
       elevation={4}
@@ -35,7 +41,11 @@ function BoxWithHeader({ elevation, filterValue, setFilterValue, keyCache = '', 
         <GridWithPadding item xs={12}>
           {props.restOfHeader && (
             <>
-              <Filter filterValue={filterValue} handleFilterValue={setFilterValue} />
+              <Filter
+                allFilter={props.allFilter}
+                filterValue={filterValue}
+                handleFilterValue={setFilterValue}
+              />
               {props.restOfHeader()}
             </>
           )}

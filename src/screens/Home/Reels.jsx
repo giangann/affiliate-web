@@ -17,14 +17,24 @@ import { ListSkeleton } from '~/components/Skeleton'
 import { useWebsites } from '~/libs/hooks/useWebsites'
 import { TextContent, TextHeading } from '~/styles'
 import { baseColor } from '~/styles/colors'
+import { useEffect } from 'react'
+import { getAllFilter } from '~/apis'
 
 function Reels() {
   const [filterValue, setFilterValue] = useState({})
+  const [allFilter, setAllFilter] = useState([])
   const {
     isLoading,
     error,
     data: websites
   } = useQuery(['allWebsites', filterValue], getAllWebsites)
+
+  useEffect(() => {
+    getAllFilter().then((res) => {
+      setAllFilter(res)
+    })
+    console.log('use effect call')
+  }, [])
 
   return (
     <Grid container spacing={1}>
@@ -35,6 +45,7 @@ function Reels() {
           <BoxWithHeader
             mainColor={baseColor.blue}
             data={websites}
+            allFilter = {allFilter}
             filterValue={filterValue}
             setFilterValue={setFilterValue}
             title={() => (
@@ -59,11 +70,17 @@ function Reels() {
                     justifyContent="flex-end"
                     className="h-100"
                   >
-                    <Button variant="contained" type="button-blue">
+                    {/* <Button variant="contained" type="button-blue">
                       Top Rated
-                    </Button>
-                    <Button variant="contained" type="button-gray">
-                      Newest
+                    </Button> */}
+                    <Button
+                      variant="contained"
+                      type="button-gray"
+                      onClick={() => {
+                        setFilterValue({})
+                      }}
+                    >
+                      Cancel filter
                     </Button>
                   </Stack>
                 </Grid>

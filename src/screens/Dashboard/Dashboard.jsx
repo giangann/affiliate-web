@@ -15,7 +15,7 @@ import AlertDialog from '~/components/Dialogs/AlertDialog'
 function Dashboard() {
   const globalWebsite = useWebsites()
 
-  const { isLoading, error, data: websites } = useQuery('allWebsites', () => getAllWebsites())
+  const { isLoading, error, data: websites } = useQuery(['allWebsites'], () => getAllWebsites())
 
   const [openAddDialog, setOpenAddDialog] = useState(false)
   const [openAlertDialog, setOpenAlertDialog] = useState(false)

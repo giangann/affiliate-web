@@ -5,13 +5,13 @@ import { baseURL, request } from './request'
 
 export const getAllWebsites = async (query) => {
   const params = new URLSearchParams()
-  if (query.queryKey[1].tracking_software?.id) {
+  if (query?.queryKey[1].tracking_software?.id) {
     params.append('tracking_software_id', query.queryKey[1].tracking_software.id)
   }
-  if (query.queryKey[1].payment_frequency?.id) {
+  if (query?.queryKey[1].payment_frequency?.id) {
     params.append('payment_frequency_id', query.queryKey[1].payment_frequency.id)
   }
-  if (query.queryKey[1].payment_method?.id) {
+  if (query?.queryKey[1].payment_method?.id) {
     params.append('payment_method_id', query.queryKey[1].payment_method.id)
   }
   const response = await request.get(`websites`, { params })
@@ -213,5 +213,10 @@ export const getPaymentMethod = async () => {
 
 export const getPaymentFrequencies = async () => {
   const res = await request.get('payment_frequencies')
+  return res.data
+}
+
+export const getAllFilter = async () =>{
+  const res = await request.get('all_filter')
   return res.data
 }

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-query'
+import { getAllFilter } from '~/apis'
+
 import { Avatar, Box, Grid, Hidden, Link, Stack, Typography } from '@mui/material'
 import { Button, Button as MyButton } from '~/components/Buttons'
 import {
@@ -33,6 +35,7 @@ import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { useState } from 'react'
 
 const AffiliateNetwork = () => {
+  const [allFilter, setAllFilter] = useState([])
   const [filterValue, setFilterValue] = useState({})
   const {
     isLoading,
@@ -44,6 +47,12 @@ const AffiliateNetwork = () => {
     error: errorRecentReviews,
     data: recentReviews
   } = useQuery('recent-reviews', getRecentReviews)
+
+  useEffect(() => {
+    getAllFilter().then((res) => {
+      setAllFilter(res)
+    })
+  }, [])
   return (
     <React.Fragment>
       {isLoading ? (
@@ -53,6 +62,7 @@ const AffiliateNetwork = () => {
           <BoxWithHeader
             mainColor={baseColor.blue}
             data={allWebsites}
+            allFilter={allFilter}
             filterValue={filterValue}
             setFilterValue={setFilterValue}
             title={() => (
@@ -77,11 +87,11 @@ const AffiliateNetwork = () => {
                     justifyContent="flex-end"
                     className="h-100"
                   >
-                    <Button variant="contained" type="button-blue">
+                    {/* <Button variant="contained" type="button-blue">
                       Top Rated
-                    </Button>
+                    </Button> */}
                     <Button variant="contained" type="button-gray">
-                      Newest
+                      Reset filter
                     </Button>
                   </Stack>
                 </Grid>
