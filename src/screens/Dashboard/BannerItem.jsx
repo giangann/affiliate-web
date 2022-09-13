@@ -10,8 +10,9 @@ import { Button, Grid, Hidden, TextField, Typography } from '@mui/material'
 import { Stars } from '~/components/Star'
 import { Link } from 'react-router-dom'
 import { BootstrapButton } from '~/components/Layouts/Header/Navbar'
-import { deleteNetWork } from '~/apis'
+import { deleteNetWork, editBanner } from '~/apis'
 import { useEffect } from 'react'
+import { request } from '~/apis/request'
 const webkitBox = {
   WebkitBoxOrient: 'vertical',
   display: '-webkit-box',
@@ -35,22 +36,31 @@ export const BannerItem = ({ data, ...props }) => {
 
   const onSubmit = async (data) => {
     console.log('data for submit', data)
+    try {
+      const res = await editBanner(watch('banner_id'), data)
+
+      if (res.status === 200) {
+        alert('sửa thành công')
+        handleClose()
+      }
+      console.log('res of edit', res)
+    } catch (error) {
+      alert(error)
+    }
   }
 
   const handleDelete = async (id) => {
-    // alert('Xác nhận xóa ?')
-    console.log('delete: ', id)
+    handleClose()
+    try {
+      const res = await request.delete(`banners/${id}`)
+      console.log('res', res)
 
-    // try {
-    //   const res = await deleteNetWork(parseInt(id))
-    //   console.log('res', res)
-
-    //   if (res.status === 200 || res.status === 201) {
-    //     alert('Xóa thành công')
-    //   }
-    // } catch (error) {
-    //   alert(error)
-    // }
+      if (res.status === 200 || res.status === 201) {
+        alert('Xóa thành công')
+      }
+    } catch (error) {
+      alert(error)
+    }
   }
   useEffect(() => {
     setValue('banner_id', data?.id)

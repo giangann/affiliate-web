@@ -233,3 +233,8 @@ export const getBanners = async () =>{
   const res = await request.get('banners')
   return res.data
 }
+
+export const editBanner = async (id, data) => {
+  const res = await request.patch(`banners/${id}`, data)
+  return res
+}

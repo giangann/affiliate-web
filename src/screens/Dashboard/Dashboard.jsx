@@ -16,6 +16,7 @@ import AddNetworkDialog from './AddNetworkDialog'
 import { useNavigate } from 'react-router-dom'
 import { useWebsites } from '~/libs/hooks/useWebsites'
 import { BannerItem } from './BannerItem'
+import { request } from '~/apis/request'
 
 function Dashboard() {
   const globalWebsite = useWebsites()
@@ -24,15 +25,25 @@ function Dashboard() {
   const { data: banners } = useQuery(['allBanners'], () => getBanners())
   const [openAddDialog, setOpenAddDialog] = useState(false)
   const [openAlertDialog, setOpenAlertDialog] = useState(false)
+  const navigate = useNavigate()
 
   const { setValue, handleSubmit, control, watch } = useForm({
     defaultValues: {}
   })
 
-  const navigate = useNavigate()
-
   const onSubmit = async (data) => {
     console.log('data for submit', data)
+    try {
+      const res = await request.post('banners', data)
+
+      if (res.status === 200) {
+        alert('Thêm mới thành công')
+        setOpenAddDialog(false)
+      }
+      console.log('res of edit', res)
+    } catch (error) {
+      alert(error)
+    }
   }
   const handleCloseAddDialog = () => {
     setOpenAddDialog(false)
@@ -40,6 +51,10 @@ function Dashboard() {
 
   const handleOpenAlertDialog = () => {
     setOpenAlertDialog(true)
+  }
+
+  const handleClickAddNetworkBtn = () => {
+    navigate('add-network')
   }
 
   const handleClickAddBtn = () => {
@@ -75,7 +90,7 @@ function Dashboard() {
                 >
                   All current networks
                 </Typography>
-                <Button variant="contained" onClick={handleClickAddBtn}>
+                <Button variant="contained" onClick={handleClickAddNetworkBtn}>
                   Add network
                 </Button>
               </Stack>
