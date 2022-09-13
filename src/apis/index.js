@@ -59,7 +59,6 @@ export const getWebsitesByCategoryId = async (id, page, per_page = 10) => {
       params: { category_id: id, page, per_page }
     })
   }
-  console.log(response.data.data)
   const responses = await Promise.all(response.data.data.map((website) => axios.get(website.api)))
 
   return response.data.data.reduce((total, item) => {
@@ -78,16 +77,25 @@ export const getWebsitesByCategoryId = async (id, page, per_page = 10) => {
   }, [])
 }
 
-export const getWebsite = async (userId, id) => {
-  console.log('user id get website', userId)
-  const res = await request.get(`/websites/show/${id}`, {
-    params: { userId: userId }
-  })
-  const data = await axios.get(res.data.api)
+export const getWebsite = async (id, userId = null) => {
+  if (userId) {
+    const res = await request.get(`/websites/show/${id}`, {
+      params: { userId: userId }
+    })
+    const data = await axios.get(res.data.api)
 
-  return {
-    ...res.data,
-    data_api: data.data.data
+    return {
+      ...res.data,
+      data_api: data.data.data
+    }
+  } else {
+    const res = await request.get(`/websites/show/${id}`)
+    const data = await axios.get(res.data.api)
+
+    return {
+      ...res.data,
+      data_api: data.data.data
+    }
   }
 }
 
@@ -216,7 +224,7 @@ export const getPaymentFrequencies = async () => {
   return res.data
 }
 
-export const getAllFilter = async () =>{
+export const getAllFilter = async () => {
   const res = await request.get('all_filter')
   return res.data
 }

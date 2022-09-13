@@ -4,7 +4,7 @@ import { Tag } from './Tag'
 
 export const TagScore = ({ label, score, ...props }) => {
   return (
-    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+    <span style={{ display: 'flex', alignItems: 'center', spacing: '4px' }}>
       <TextContent
         sx={{
           textTransform: 'uppercase',

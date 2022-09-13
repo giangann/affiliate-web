@@ -59,14 +59,12 @@ export const Detail = () => {
   const [refetchBoxComment, setRefetchBoxComment] = React.useState(false)
 
   const { slug, id } = useParams()
+  const userID = user[0]?.id
   const {
     isLoading,
     error,
     data: dataDetail
-  } = useQuery('website-detail' + id, () => {
-    // const user = useAtom(userAtom)
-    getWebsite(1, id)
-  })
+  } = useQuery('website-detail' + id + userID, () => getWebsite(id, userID))
 
   const {
     isLoading: isLoadingComment,
@@ -75,6 +73,8 @@ export const Detail = () => {
     refetch: refetchComment
   } = useQuery('list-comment', () => getListComments(id))
 
+  console.log('data comment', dataComment)
+  
   useEffect(() => {
     dataDetail?.reviews.forEach((review) => {
       if (review.user_id === user[0]?.id) {
@@ -248,7 +248,7 @@ export const Detail = () => {
                       </Stack>
                     </Box>
 
-                    <Stack direction="row" gap="12px" mt="12px">
+                    <Stack direction="row" spacing="12px" mt="12px" sx={{ width: '100%' }}>
                       <TagScore label="offers" score={financial(dataDetail?.avg_offer)} />
                       <TagScore label="tracking" score={financial(dataDetail?.avg_tracking)} />
                       <TagScore label="support" score={financial(dataDetail?.avg_support)} />

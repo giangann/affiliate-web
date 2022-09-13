@@ -45,7 +45,7 @@ function Reels() {
           <BoxWithHeader
             mainColor={baseColor.blue}
             data={websites}
-            allFilter = {allFilter}
+            allFilter={allFilter}
             filterValue={filterValue}
             setFilterValue={setFilterValue}
             title={() => (
@@ -80,7 +80,7 @@ function Reels() {
                         setFilterValue({})
                       }}
                     >
-                      Cancel filter
+                      Reset filter
                     </Button>
                   </Stack>
                 </Grid>

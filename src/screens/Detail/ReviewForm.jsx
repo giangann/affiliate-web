@@ -185,7 +185,7 @@ const ReviewForm = (props) => {
     register,
     formState: { errors },
     reset,
-    setValue
+    setValue,
   } = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
@@ -237,8 +237,11 @@ const ReviewForm = (props) => {
     //     .child('image' + '/' + 'websiteId' + websiteId + 'reviewId' + reviewId)
     //   return ref.put(blob)
     // }
+
     data['websiteId'] = Number(props.websiteId)
-    data['image'] = `https://firebasestorage.googleapis.com/v0/b/techapp-ad995.appspot.com/o/image%2F${time}?alt=media&token=4e2a3d8b-7bb9-44f7-8199-2bbb422f263f`
+    data['image'] = image
+      ? `https://firebasestorage.googleapis.com/v0/b/techapp-ad995.appspot.com/o/image%2F${time}?alt=media&token=4e2a3d8b-7bb9-44f7-8199-2bbb422f263f`
+      : null
     try {
       if (props?.isEditReview) {
         const res = await request.patch(`reviews/${props?.reviewId}`, data)

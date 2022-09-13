@@ -90,7 +90,13 @@ const AffiliateNetwork = () => {
                     {/* <Button variant="contained" type="button-blue">
                       Top Rated
                     </Button> */}
-                    <Button variant="contained" type="button-gray">
+                    <Button
+                      variant="contained"
+                      type="button-gray"
+                      onClick={() => {
+                        setFilterValue({})
+                      }}
+                    >
                       Reset filter
                     </Button>
                   </Stack>

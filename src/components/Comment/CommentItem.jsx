@@ -175,7 +175,11 @@ export const CommentItem = ({ item, handleOpenEditReview, ...props }) => {
 
         <TextComment width="85%">{item?.content}</TextComment>
         {item?.image && (
-          <img style={{ maxWidth: '300px', maxHeight: '300px' }} src={item?.image} alt="image" />
+          <img
+            style={{ maxWidth: '300px', maxHeight: '300px' }}
+            src={item?.image}
+            alt="success screen"
+          />
         )}
 
         <FlexBoxAlignCenter gap="12px">
