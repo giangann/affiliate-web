@@ -17,15 +17,17 @@ const Filter = (props) => {
   const [pFrequencyValue, setPFrequencyValue] = useState(props?.filterValue?.payment_frequency)
 
   return (
-    <Stack direction="row" paddingY={3} gap={2} alignItems="center">
-      <Stack direction="row" color={grey['text']}>
-        <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
-          <FilterIcon />
-        </Avatar>
-        <Typography>Filter</Typography>
-      </Stack>
-      <Grid container gap={3.6}>
-        <Grid item xs={3.5}>
+    <Stack direction={{ xs: 'column', sm: 'row' }} paddingY={3} gap={2} alignItems="center">
+      <Grid container spacing={4} sx={{ width: '100%' }}>
+        <Grid item xs={6} sm={3}>
+          <Stack direction="row" color={grey['text']}>
+            <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
+              <FilterIcon />
+            </Avatar>
+            <Typography>Filter</Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={6} sm={3}>
           <DropdownButton
             title={trackingValue ? trackingValue.name : 'Tracking Software'}
             id="dropdown-basic-button"
@@ -51,7 +53,7 @@ const Filter = (props) => {
               ))}
           </DropdownButton>
         </Grid>
-        <Grid item xs={3.5}>
+        <Grid item xs={6} sm={3}>
           <DropdownButton
             id="dropdown-basic-button"
             title={pFrequencyValue ? pFrequencyValue.name : 'Payment Frequency'}
@@ -77,7 +79,7 @@ const Filter = (props) => {
               ))}
           </DropdownButton>
         </Grid>
-        <Grid item xs={3.5}>
+        <Grid item xs={6} sm={3}>
           <DropdownButton
             id="dropdown-basic-button"
             title={pMethodValue ? pMethodValue.name : 'Payment Method'}
