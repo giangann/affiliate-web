@@ -14,7 +14,7 @@ import EditNetWork from '~/screens/Dashboard/EditNetWork'
 
 export const Router = () => {
   const userInfo = getUserLocalStorage()
-  const isAdmin = userInfo?.email === ADMIN_EMAIL
+  const isAdmin = ADMIN_EMAIL.includes(userInfo?.email)
   return (
     <Routes>
       <Route path="/" element={<Home />} />

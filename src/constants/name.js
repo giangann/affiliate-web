@@ -1,5 +1,5 @@
 export const BRAND_NAME = 'Affiliate'
-export const ADMIN_EMAIL = 'anmivnt32@gmail.com'
+export const ADMIN_EMAIL = ['anmivnt32@gmail.com','gta007md@gmail.com']
 
 export const STATUS = {
   IS_LIKE: 1,
