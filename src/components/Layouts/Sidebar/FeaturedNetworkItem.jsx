@@ -6,7 +6,7 @@ import AvatarImg from '~/assets/images/sidebar/pulsar-ads-circle.png'
 import { TextHeading } from './Sidebar'
 import { Tag } from '~/components/Tag'
 
-export const FeaturedNetworkItem = ({ ...props }) => {
+export const FeaturedNetworkItem = ({ item, ...props }) => {
   return (
     <Box
       sx={{
@@ -21,7 +21,7 @@ export const FeaturedNetworkItem = ({ ...props }) => {
       }}
     >
       <Avatar
-        src={AvatarImg}
+        src={item?.link_banner}
         sx={{
           width: '36px',
           height: '36px',
@@ -33,7 +33,7 @@ export const FeaturedNetworkItem = ({ ...props }) => {
       />
       <Stack sx={{ flex: 1 }}>
         <Box sx={{ display: 'flex' }}>
-          <TextHeading sx={{ color: props.mainColor }}>Pulsar Ads</TextHeading>
+          <TextHeading sx={{ color: props.mainColor }}>{item?.name}</TextHeading>
           <Avatar sx={{ bgcolor: 'unset', width: '1.25rem', height: '1.25rem' }}>
             <DocIcon />
           </Avatar>

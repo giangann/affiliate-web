@@ -2,16 +2,11 @@ import { Button, Grid, Input, MenuItem, Select, Stack, styled, Typography } from
 import React, { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
-import { ResponsiveContainer } from '~/components/Layouts'
 import { baseColor } from '~/styles'
 import { makeStyles } from '@material-ui/core/styles'
 import {
   addNetWork,
   getApiResource,
-  getDataDetail,
-  getGoogleLoginUrl,
-  login,
-  loginWithGG
 } from '~/apis'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'

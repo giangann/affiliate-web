@@ -59,11 +59,13 @@ export const Detail = () => {
   const [refetchBoxComment, setRefetchBoxComment] = React.useState(false)
 
   const { slug, id } = useParams()
+  const userID = user[0]?.id
   const {
     isLoading,
     error,
     data: dataDetail
-  } = useQuery('website-detail' + id, () => getWebsite(id))
+  } = useQuery('website-detail' + id + userID, () => getWebsite(id, userID))
+
   const {
     isLoading: isLoadingComment,
     error: errorComment,
@@ -71,6 +73,8 @@ export const Detail = () => {
     refetch: refetchComment
   } = useQuery('list-comment', () => getListComments(id))
 
+  console.log('data comment', dataComment)
+  
   useEffect(() => {
     dataDetail?.reviews.forEach((review) => {
       if (review.user_id === user[0]?.id) {
@@ -78,7 +82,7 @@ export const Detail = () => {
         return true
       }
     })
-  }, [dataDetail, isLoading, error])
+  }, [])
 
   // useEffect(() => {
   //   console.log('dataComment', dataComment)
@@ -87,6 +91,12 @@ export const Detail = () => {
   const handleClickOpen = () => {
     if (userInfo) {
       setOpen(true)
+      if (!dataDetail?.reviews_remain) {
+        alert(
+          'Your turn of review for this Network is run out of for this day, please try tomorrow!'
+        )
+        return
+      }
     } else {
       setOpenDialog(true)
     }
@@ -223,12 +233,12 @@ export const Detail = () => {
                         fontWeight: '700'
                       }}
                     >
-                      {dataDetail.name}
+                      {dataDetail?.name}
                     </Typography>
                     <Box sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
                       <Stack direction="row">
-                        <Stars rating={dataDetail.aveScore} />
-                        <TextGrey ml={1}>{dataComment.length} reviews</TextGrey>
+                        <Stars rating={dataDetail?.aveScore} />
+                        <TextGrey ml={1}>{dataComment?.length} reviews</TextGrey>
                       </Stack>
                       <Stack direction="row" gap={0.5}>
                         <Icon src={emailImg} sx={{ width: '12px', height: '12px' }} />
@@ -238,7 +248,7 @@ export const Detail = () => {
                       </Stack>
                     </Box>
 
-                    <Stack direction="row" gap="12px" mt="12px">
+                    <Stack direction="row" spacing="12px" mt="12px" sx={{ width: '100%' }}>
                       <TagScore label="offers" score={financial(dataDetail?.avg_offer)} />
                       <TagScore label="tracking" score={financial(dataDetail?.avg_tracking)} />
                       <TagScore label="support" score={financial(dataDetail?.avg_support)} />
@@ -262,7 +272,7 @@ export const Detail = () => {
                     >
                       Write a Review
                     </Button>
-                    <Button type="button-red" href={dataDetail.link} targer="_blank">
+                    <Button type="button-red" href={dataDetail?.link} targer="_blank">
                       Join now
                     </Button>
                   </Stack>
@@ -272,7 +282,7 @@ export const Detail = () => {
                 </Grid>
               </Grid>
 
-              <BoxDescription desc={dataDetail.data_api.description} isStringToHtml={true} />
+              <BoxDescription desc={dataDetail?.data_api.description} isStringToHtml={true} />
             </Stack>
 
             {/* End Affiliate Network */}
@@ -391,6 +401,54 @@ export const Detail = () => {
 
             {/* End Affiliate Network Details */}
 
+            {/* Affiliate Reviews */}
+            <Stack sx={{ backgroundColor: 'white' }}>
+              <BoxWithPagination
+                removePadding={true}
+                api={getListComments}
+                id={Number(id)}
+                user_id={user[0]?.id}
+                refetchBoxComment={refetchBoxComment}
+              >
+                <List
+                  networkName={dataDetail?.name}
+                  refetchComment={refetchComment}
+                  handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
+                  handleOpenEditReview={handleOpenEditReview}
+                  sx={{ px: 3, pb: 2 }}
+                  // data={dataComment?.data}
+                  header={() => (
+                    <FlexBoxAlignCenterJustifyBetween
+                      sx={{
+                        flexDirection: {
+                          xs: 'column',
+                          md: 'row'
+                        }
+                      }}
+                      py="16px"
+                      borderBottom="1px solid #d6eaff"
+                    >
+                      <FlexBoxAlignCenter gap="1.25rem">
+                        <Button type="button-blue"> All Reviews ({dataComment.length})</Button>
+                        <Button type="button-grey">Payment Proofs</Button>
+                        <Button type="button-grey">Questions</Button>
+                      </FlexBoxAlignCenter>
+                      <FlexBoxAlignCenter gap="8px">
+                        <TextGrey>Sort:</TextGrey>
+                        <select style={{ minWidth: '128px' }}>
+                          <option value="1">Most recent</option>
+                          <option value="2">Popular</option>
+                          <option value="3">Oldest first</option>
+                        </select>
+                      </FlexBoxAlignCenter>
+                    </FlexBoxAlignCenterJustifyBetween>
+                  )}
+                  Item={CommentItem}
+                  footer={() => <>{/* <button>write a review</button> */}</>}
+                />
+              </BoxWithPagination>
+            </Stack>
+            {/* End Affiliate Reviews */}
             {/* Affiliate Offers */}
             {/* <BoxWithPagination pageSize={12}> */}
             <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
@@ -457,55 +515,6 @@ export const Detail = () => {
             </Stack>
             {/* </BoxWithPagination> */}
             {/* End Affiliate Offers */}
-
-            {/* Affiliate Reviews */}
-            <Stack sx={{ backgroundColor: 'white' }}>
-              <BoxWithPagination
-                removePadding = {true}
-                api={getListComments}
-                id={Number(id)}
-                user_id={user[0]?.id}
-                refetchBoxComment={refetchBoxComment}
-              >
-                <List
-                  networkName={dataDetail?.name}
-                  refetchComment={refetchComment}
-                  handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
-                  handleOpenEditReview={handleOpenEditReview}
-                  sx={{ px: 3, pb: 2 }}
-                  // data={dataComment?.data}
-                  header={() => (
-                    <FlexBoxAlignCenterJustifyBetween
-                      sx={{
-                        flexDirection: {
-                          xs: 'column',
-                          md: 'row'
-                        }
-                      }}
-                      py="16px"
-                      borderBottom="1px solid #d6eaff"
-                    >
-                      <FlexBoxAlignCenter gap="1.25rem">
-                        <Button type="button-blue"> All Reviews ({dataComment.length})</Button>
-                        <Button type="button-grey">Payment Proofs</Button>
-                        <Button type="button-grey">Questions</Button>
-                      </FlexBoxAlignCenter>
-                      <FlexBoxAlignCenter gap="8px">
-                        <TextGrey>Sort:</TextGrey>
-                        <select style={{ minWidth: '128px' }}>
-                          <option value="1">Most recent</option>
-                          <option value="2">Popular</option>
-                          <option value="3">Oldest first</option>
-                        </select>
-                      </FlexBoxAlignCenter>
-                    </FlexBoxAlignCenterJustifyBetween>
-                  )}
-                  Item={CommentItem}
-                  footer={() => <>{/* <button>write a review</button> */}</>}
-                />
-              </BoxWithPagination>
-            </Stack>
-            {/* End Affiliate Reviews */}
           </Stack>
         </>
       )}

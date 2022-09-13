@@ -24,8 +24,9 @@ import c3pa from '~/assets/gifs/sidebar/c3pa-300.gif'
 import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
 import { baseColor, blue, grey, red } from '~/styles/colors'
 import { useQuery } from 'react-query'
-import { getTop10Networks, getRecentReviews } from '~/apis'
+import { getTop10Networks, getRecentReviews, getFeaturesNetwork } from '~/apis'
 import { ListSkeleton } from '~/components/Skeleton'
+import { FeaturedNetwork } from './FeaturedNetwork'
 
 const Sidebar = () => {
   const { isLoading, error, data: top10Networks } = useQuery('top-10-networks', getTop10Networks)
@@ -122,7 +123,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List mainColor={baseColor.blue} heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <FeaturedNetwork mainColor={baseColor.blue} callback={getFeaturesNetwork} heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>
@@ -134,7 +135,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List mainColor={baseColor.yellow} heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <FeaturedNetwork mainColor={baseColor.yellow} callback={getFeaturesNetwork} heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>
@@ -146,7 +147,7 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <List mainColor={baseColor.orange} heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <FeaturedNetwork mainColor={baseColor.orange} callback={getFeaturesNetwork} heading="Featured Networks" Item={FeaturedNetworkItem} />
       </BoxContainer>
 
       <BoxContainer>

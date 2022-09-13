@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import { useQuery } from 'react-query'
+import { getAllFilter } from '~/apis'
+
 import { Avatar, Box, Grid, Hidden, Link, Stack, Typography } from '@mui/material'
 import { Button, Button as MyButton } from '~/components/Buttons'
 import {
@@ -9,7 +11,7 @@ import {
   TextContent,
   TextHeading
 } from '~/components/Layouts/Sidebar'
-import { getAllWebsites, getTop10Networks, getRecentReviews } from '~/apis'
+import { getAllWebsites, getTop10Networks, getRecentReviews, getFeaturesNetwork } from '~/apis'
 import { List } from '~/components/List'
 import { Stars } from '~/components/Star'
 import {
@@ -30,10 +32,16 @@ import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
+import { useState } from 'react'
 
 const AffiliateNetwork = () => {
-  const { isLoading, error, data: allWebsites } = useQuery('allWebsites', () => getAllWebsites())
-
+  const [allFilter, setAllFilter] = useState([])
+  const [filterValue, setFilterValue] = useState({})
+  const {
+    isLoading,
+    error,
+    data: allWebsites
+  } = useQuery(['allWebsites', filterValue], getAllWebsites)
   const {
     isLoading: isLoadingRecentReviews,
     error: errorRecentReviews,
@@ -41,10 +49,10 @@ const AffiliateNetwork = () => {
   } = useQuery('recent-reviews', getRecentReviews)
 
   useEffect(() => {
-    // console.log('callback useEffect', allWebsites, isLoading, error)
-  }, [allWebsites, isLoading, error])
-
-  console.log('all websites', allWebsites)
+    getAllFilter().then((res) => {
+      setAllFilter(res)
+    })
+  }, [])
   return (
     <React.Fragment>
       {isLoading ? (
@@ -54,6 +62,9 @@ const AffiliateNetwork = () => {
           <BoxWithHeader
             mainColor={baseColor.blue}
             data={allWebsites}
+            allFilter={allFilter}
+            filterValue={filterValue}
+            setFilterValue={setFilterValue}
             title={() => (
               <Grid container>
                 <Grid item xs={6} sx={{ justifyContent: 'center' }}>
@@ -76,11 +87,17 @@ const AffiliateNetwork = () => {
                     justifyContent="flex-end"
                     className="h-100"
                   >
-                    <Button variant="contained" type="button-blue">
+                    {/* <Button variant="contained" type="button-blue">
                       Top Rated
-                    </Button>
-                    <Button variant="contained" type="button-gray">
-                      Newest
+                    </Button> */}
+                    <Button
+                      variant="contained"
+                      type="button-gray"
+                      onClick={() => {
+                        setFilterValue({})
+                      }}
+                    >
+                      Reset filter
                     </Button>
                   </Stack>
                 </Grid>
@@ -88,7 +105,6 @@ const AffiliateNetwork = () => {
             )}
             restOfHeader={() => (
               <>
-                <Filter />
                 <img
                   className="block"
                   style={{ width: '100%' }}
@@ -260,7 +276,11 @@ const AffiliateNetwork = () => {
 
           <Hidden mdUp>
             <BoxContainer>
-              <List heading="Featured Networks" Item={FeaturedNetworkItem} />
+              <FeaturedNetworkItem
+                heading="Featured Networks"
+                callback={getFeaturesNetwork}
+                Item={FeaturedNetworkItem}
+              />
             </BoxContainer>
           </Hidden>
 
