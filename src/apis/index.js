@@ -228,3 +228,8 @@ export const getAllFilter = async () => {
   const res = await request.get('all_filter')
   return res.data
 }
+
+export const getBanners = async () =>{
+  const res = await request.get('banners')
+  return res.data
+}

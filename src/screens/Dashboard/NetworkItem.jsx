@@ -1,4 +1,9 @@
-import React from 'react'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import React, { useState } from 'react'
 import { Grid, Hidden, Typography } from '@mui/material'
 import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
@@ -14,6 +19,7 @@ const webkitBox = {
 }
 
 export const NetworkItem = ({ data, ...props }) => {
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const navigate = useNavigate()
 
   const { data_api } = data ?? {}
@@ -35,6 +41,14 @@ export const NetworkItem = ({ data, ...props }) => {
     navigate('/dashboard/edit-network/' + id)
   }
 
+  const handleClose = () => {
+    setOpenDeleteDialog(false)
+  }
+
+  const handleClickOpenDeleteDialog = () => {
+    setOpenDeleteDialog(true)
+  }
+
   // console.log(data)
   // console.log({ data_api })
   return (
@@ -52,7 +66,7 @@ export const NetworkItem = ({ data, ...props }) => {
           alt="1"
         />
         <Hidden mdUp>
-          <BootstrapButton onClick={() => handleDelete(data?.id)}>Delete</BootstrapButton>
+          {/* <BootstrapButton onClick={() => handleDelete(data?.id)}>Delete</BootstrapButton> */}
           <BootstrapButton onClick={() => handleEdit(data?.id)}>Edit</BootstrapButton>
         </Hidden>
       </Grid>
@@ -103,14 +117,44 @@ export const NetworkItem = ({ data, ...props }) => {
               {data_api?.payment_freq && `/ ${data_api?.payment_freq}`}
             </Typography>
           </Grid>
+          <Hidden mdUp>
+            <Grid item xs={4} className="d-flex align-items-center justify-content-end">
+              <BootstrapButton onClick={() => handleClickOpenDeleteDialog(data?.id)}>
+                Delete
+              </BootstrapButton>
+            </Grid>
+          </Hidden>
           <Hidden mdDown>
             <Grid item xs={4} className="d-flex align-items-center justify-content-end">
-              <BootstrapButton onClick={() => handleDelete(data?.id)}>Delete</BootstrapButton>
+              <BootstrapButton onClick={() => handleClickOpenDeleteDialog(data?.id)}>
+                Delete
+              </BootstrapButton>
               <BootstrapButton onClick={() => handleEdit(data?.id)}>Edit</BootstrapButton>
             </Grid>
           </Hidden>
         </Grid>
       </Grid>
+
+      {/* Delete dialog */}
+      <Dialog
+        open={openDeleteDialog}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{'Confirm delete?'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure to permantly delete this network?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>No</Button>
+          <Button onClick={() => handleDelete(data?.id)} autoFocus>
+            Yes, delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   )
 }

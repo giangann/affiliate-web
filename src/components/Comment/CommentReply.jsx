@@ -41,9 +41,6 @@ export const CommentReply = memo(({ comment, first, ...props }) => {
     return <CommentReply key={comment.id} comment={comment} type="child" first={false} />
   })
 
-  const handleEditReply = async () => {
-    console.log('edit')
-  }
   const handleDeleteReply = async () => {
     if (comment.author === me.name) {
       const res = await deleteReply(comment.id)
