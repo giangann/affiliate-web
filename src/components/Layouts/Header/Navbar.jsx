@@ -49,7 +49,7 @@ import { validURL, validUrlRegex } from '~/libs/regex'
 
 export const Navbar = () => {
   const userInfo = getUserLocalStorage()
-  const isAdmin = userInfo?.email === ADMIN_EMAIL
+  const isAdmin = ADMIN_EMAIL.includes(userInfo?.email)
   const isLoginned = userInfo
 
   const settings = isLoginned ? (isAdmin ? ['Dashboard', 'Logout'] : ['Logout']) : ['Login']
