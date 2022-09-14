@@ -23,6 +23,7 @@ export const NetworkItem = ({ data, ...props }) => {
   const navigate = useNavigate()
 
   const { data_api } = data ?? {}
+  console.log('data_api', data_api)
   const handleDelete = async (id) => {
     // alert('Xác nhận xóa ?')
     try {

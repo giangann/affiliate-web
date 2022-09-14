@@ -1,6 +1,9 @@
 import Axios from 'axios'
 
 export const baseURL = 'http://127.0.0.1:8000/api/'
+export const baseUrlCrawData = 'https://api.affplus.com/v1/'
+export const entitySuffix = 'entity/'
+export const initSuffix = 'init/'
 
 // const refetchTokenURL = ${baseURL}/${V1}/user/refresh-token
 

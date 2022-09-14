@@ -37,7 +37,7 @@ function AddNetworkForm() {
         setValue('link_banner', data?.link_banner)
         setValue('link_offer', data?.link_offer)
         setValue('api', data?.api)
-        setValue('referral_commissione', data?.referral_commissione)
+        setValue('referral_commission', data?.referral_commission)
         setValue('minimum_payment', data?.minimum_payment)
         setValue('payment_method_id', data?.payment_method_id)
         setValue('payment_frequency_id', data?.payment_frequency_id)
@@ -184,12 +184,12 @@ function AddNetworkForm() {
               <Grid item {...grid}>
                 <Controller
                   control={control}
-                  name="referral_commissione"
+                  name="referral_commission"
                   render={({ field: { onChange, value } }) => (
                     <CustomInput
                       type="number"
                       disableUnderline={true}
-                      placeholder="Referral commissione"
+                      placeholder="Referral commission"
                       onChange={onChange}
                       value={value}
                     />

@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom'
 import { useWebsites } from '~/libs/hooks/useWebsites'
 import { BannerItem } from './BannerItem'
 import { request } from '~/apis/request'
+import { camelToSnakeCase } from '~/libs'
 
 function Dashboard() {
   const globalWebsite = useWebsites()

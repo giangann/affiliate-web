@@ -4,12 +4,11 @@ import { Controller, useForm } from 'react-hook-form'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { baseColor } from '~/styles'
 import { makeStyles } from '@material-ui/core/styles'
-import {
-  addNetWork,
-  getApiResource,
-} from '~/apis'
+import { addNetWork, getApiResource } from '~/apis'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { camelToSnakeCase } from '~/libs'
+import { baseURL, baseUrlCrawData, entitySuffix, initSuffix } from '~/apis/request'
 
 function AddNetworkForm() {
   const [categories, setCategories] = React.useState([])
@@ -24,6 +23,28 @@ function AddNetworkForm() {
   })
 
   const navigate = useNavigate()
+
+  const handleStartCraw = async () => {
+    console.log('start craw')
+
+    // get array of slug
+    const initCrawRes = await axios.get(baseUrlCrawData + initSuffix)
+    console.log('init craw result', initCrawRes.data)
+
+    // loop through array, get data from slug and push to db
+    initCrawRes.data.networks.forEach(async element => {
+      console.log('element', element)
+      const networkCrawRes = await axios.get(baseUrlCrawData+entitySuffix+element.slug)
+
+      const networkData = networkCrawRes.data.data
+
+      console.log('networkCraw Result', networkCrawRes.data.data)
+    });
+  }
+
+  const handleStopCraw = () => {
+    console.log('stop craw')
+  }
 
   const onSubmit = async (data) => {
     try {
@@ -72,6 +93,7 @@ function AddNetworkForm() {
 
   const grid = { xs: 12, md: 6 }
   const gridFull = { xs: 12, md: 12 }
+
   return (
     <BoxWithHeader
       mainColor={baseColor.blue}
@@ -86,6 +108,19 @@ function AddNetworkForm() {
       )}
       footer={() => (
         <Grid container component="form" spacing={2} onSubmit={handleSubmit(onSubmit)}>
+          {/* craw area */}
+          <Grid item {...grid}>
+            <Button variant="contained" onClick={handleStartCraw}>
+              Start craw
+            </Button>
+          </Grid>
+          <Grid item {...grid}>
+            <Button variant="outlined" onClick={handleStopCraw}>
+              Stop
+            </Button>
+          </Grid>
+          {/* end */}
+
           <Grid item {...gridFull}>
             <Typography variant="caption">
               Nếu đã điền đủ thông tin mà vẫn hiện lỗi 404 là do đường dẫn API bạn nhập bị sai và
@@ -168,12 +203,12 @@ function AddNetworkForm() {
           <Grid item {...grid}>
             <Controller
               control={control}
-              name="referral_commissione"
+              name="referral_commission"
               render={({ field: { onChange, value } }) => (
                 <CustomInput
                   type="number"
                   disableUnderline={true}
-                  placeholder="Referral commissione"
+                  placeholder="Referral commission"
                   onChange={onChange}
                   value={value}
                 />
