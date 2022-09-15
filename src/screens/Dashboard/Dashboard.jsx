@@ -19,8 +19,6 @@ import { BannerItem } from './BannerItem'
 import { request } from '~/apis/request'
 
 function Dashboard() {
-  const globalWebsite = useWebsites()
-
   const { isLoading, error, data: websites } = useQuery(['allWebsites'], () => getAllWebsites())
   const { data: banners } = useQuery(['allBanners'], () => getBanners())
   const [openAddDialog, setOpenAddDialog] = useState(false)
@@ -61,11 +59,7 @@ function Dashboard() {
     setOpenAddDialog(true)
   }
   let allWebsites
-  globalWebsite === null ? (allWebsites = globalWebsite) : (allWebsites = websites)
 
-  // useEffect(() => {
-  //   console.log('callback useEffect', websites, isLoading, error)
-  // }, [allWebsites, isLoading, error, banners])
   const gridFull = { xs: 12, md: 12 }
 
   return (

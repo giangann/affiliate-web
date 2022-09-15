@@ -6,51 +6,23 @@ import { baseURL, request } from './request'
 export const getAllWebsites = async (query) => {
   const params = new URLSearchParams()
   if (query?.queryKey[1].tracking_software?.id) {
-    params.append('tracking_software_id', query.queryKey[1].tracking_software.id)
+    params.append('tracking_software', query.queryKey[1].tracking_software.name)
   }
   if (query?.queryKey[1].payment_frequency?.id) {
-    params.append('payment_frequency_id', query.queryKey[1].payment_frequency.id)
+    params.append('payment_frequency', query.queryKey[1].payment_frequency.name)
   }
   if (query?.queryKey[1].payment_method?.id) {
-    params.append('payment_method_id', query.queryKey[1].payment_method.id)
+    params.append('payment_method', query.queryKey[1].payment_method.name)
   }
   const response = await request.get(`websites`, { params })
-  const responses = await Promise.all(response.data.map((website) => axios.get(website.api)))
 
-  return response.data.reduce((total, item) => {
-    const data_web = responses.find(
-      (res) => res.data.data.title.toLowerCase() === item.name.toLowerCase()
-    )
-
-    return [
-      ...total,
-
-      {
-        ...item,
-        data_api: data_web ? data_web?.data?.data : null
-      }
-    ]
-  }, [])
+  return response.data
 }
 
 export const getFeaturesNetwork = async () => {
   const response = await request.get(`websites-feature-network`)
-  const responses = await Promise.all(response.data.map((website) => axios.get(website.api)))
 
-  return response.data.reduce((total, item) => {
-    const data_web = responses.find(
-      (res) => res.data.data.title.toLowerCase() === item.name.toLowerCase()
-    )
-
-    return [
-      ...total,
-
-      {
-        ...item,
-        data_api: data_web ? data_web?.data?.data : null
-      }
-    ]
-  }, [])
+  return response.data
 }
 
 export const getWebsitesByCategoryId = async (id, page, per_page = 10) => {
@@ -59,44 +31,20 @@ export const getWebsitesByCategoryId = async (id, page, per_page = 10) => {
       params: { category_id: id, page, per_page }
     })
   }
-  const responses = await Promise.all(response.data.data.map((website) => axios.get(website.api)))
 
-  return response.data.data.reduce((total, item) => {
-    const data_web = responses.find(
-      (res) => res.data.data.title.toLowerCase() === item.name.toLowerCase()
-    )
-
-    return [
-      ...total,
-
-      {
-        ...item,
-        data_api: data_web ? data_web?.data?.data : null
-      }
-    ]
-  }, [])
+  return response.data.data
 }
 
 export const getWebsite = async (id, userId = null) => {
+  let res
   if (userId) {
-    const res = await request.get(`/websites/show/${id}`, {
+    res = await request.get(`/websites/show/${id}`, {
       params: { userId: userId }
     })
-    const data = await axios.get(res.data.api)
-
-    return {
-      ...res.data,
-      data_api: data.data.data
-    }
   } else {
-    const res = await request.get(`/websites/show/${id}`)
-    const data = await axios.get(res.data.api)
-
-    return {
-      ...res.data,
-      data_api: data.data.data
-    }
+    res = await request.get(`/websites/show/${id}`)
   }
+  return res.data
 }
 
 export const getDataDetail = async (slug) => {
@@ -229,7 +177,7 @@ export const getAllFilter = async () => {
   return res.data
 }
 
-export const getBanners = async () =>{
+export const getBanners = async () => {
   const res = await request.get('banners')
   return res.data
 }

@@ -23,13 +23,14 @@ import DynulnMedia from '~/assets/gifs/sidebar/DynuInMedia.gif'
 import c3pa from '~/assets/gifs/sidebar/c3pa-300.gif'
 import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
 import { baseColor, blue, grey, red } from '~/styles/colors'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { getTop10Networks, getRecentReviews, getFeaturesNetwork } from '~/apis'
 import { ListSkeleton } from '~/components/Skeleton'
 import { FeaturedNetwork } from './FeaturedNetwork'
 
 const Sidebar = () => {
   const { isLoading, error, data: top10Networks } = useQuery('top-10-networks', getTop10Networks)
+  
   const {
     isLoading: isLoadingRecentReviews,
     error: errorRecentReviews,
