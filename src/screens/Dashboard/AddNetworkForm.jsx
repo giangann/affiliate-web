@@ -16,6 +16,11 @@ function AddNetworkForm() {
   const [paymentMethods, setPaymentMethod] = React.useState([])
   const [paymentFrequencies, setPaymentFrequencies] = React.useState([])
 
+  // console.log('paymentFrequencies', paymentFrequencies)
+  const paymentFrequenciesList = paymentFrequencies.map((obj) => obj.name)
+  const paymentMethodsList = paymentMethods.map((obj) => obj.name)
+  const trackingSoftwaresList = trackingSoftwares.map((obj) => obj.name)
+
   const { handleSubmit, control, watch, setValue } = useForm({
     email: 'onSubmit',
     reValidateMode: 'onChange',
@@ -23,6 +28,18 @@ function AddNetworkForm() {
   })
 
   const navigate = useNavigate()
+
+  const splitString = (str) => {
+    let array = str.split(',')
+    if (array.length === 1) {
+      array = str.split('/')
+    }
+
+    array = array.map((item) => item.trim())
+    return array
+  }
+
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
   const handleStartCraw = async () => {
     console.log('start craw')
@@ -32,14 +49,34 @@ function AddNetworkForm() {
     console.log('init craw result', initCrawRes.data)
 
     // loop through array, get data from slug and push to db
-    initCrawRes.data.networks.forEach(async element => {
-      console.log('element', element)
-      const networkCrawRes = await axios.get(baseUrlCrawData+entitySuffix+element.slug)
+    initCrawRes.data.networks.forEach(async (element, index) => {
+      console.log('index = ', index)
 
-      const networkData = networkCrawRes.data.data
+      const networkGetDataRes = await axios.get(baseUrlCrawData + entitySuffix + element.slug)
+      const networkCrawData = networkGetDataRes.data.data
+      const networkData = {
+        ...networkCrawData,
+        name: networkCrawData.title,
+        payment_frequency_arr: splitString(networkCrawData.payment_freq),
+        tracking_software_arr: splitString(networkCrawData.platform),
+        payment_method_arr: splitString(paymentMethodsList[Math.floor(Math.random() * 3)]),
+        payment_frequency: networkCrawData.payment_freq,
+        tracking_software: networkCrawData.platform,
+        payment_method: paymentMethodsList[Math.floor(Math.random() * 3)],
 
-      console.log('networkCraw Result', networkCrawRes.data.data)
-    });
+        link: networkCrawData.website_link,
+        link_banner: networkCrawData.profile_banner,
+        link_offer: networkCrawData.join_link,
+        category_id: Math.floor(Math.random() * 4),
+        offer_count: networkCrawData.offer_count,
+        referral_commission: Math.floor(Math.random() * 10),
+        minimum_payment: Math.floor(Math.random() * 250)
+      }
+      const createNetworkRes = await addNetWork(networkData)
+      console.log('add network to database', createNetworkRes)
+      await sleep(5000)
+
+    })
   }
 
   const handleStopCraw = () => {
