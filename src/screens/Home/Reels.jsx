@@ -21,7 +21,7 @@ import { useEffect } from 'react'
 import { getAllFilter } from '~/apis'
 
 function Reels() {
-  const [filterValue, setFilterValue] = useState({})
+  const [filterValue, setFilterValue] = useState({type: 2})
   const [allFilter, setAllFilter] = useState([])
   const {
     isLoading,

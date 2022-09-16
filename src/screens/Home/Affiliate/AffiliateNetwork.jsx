@@ -36,7 +36,7 @@ import { useState } from 'react'
 
 const AffiliateNetwork = () => {
   const [allFilter, setAllFilter] = useState([])
-  const [filterValue, setFilterValue] = useState({})
+  const [filterValue, setFilterValue] = useState({ type: 2 })
   const {
     isLoading,
     error,

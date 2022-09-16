@@ -19,7 +19,11 @@ import { BannerItem } from './BannerItem'
 import { request } from '~/apis/request'
 
 function Dashboard() {
-  const { isLoading, error, data: websites } = useQuery(['allWebsites'], () => getAllWebsites())
+  const {
+    isLoading,
+    error,
+    data: websites
+  } = useQuery(['allWebsites', { type: 1 }], () => getAllWebsites())
   const { data: banners } = useQuery(['allBanners'], () => getBanners())
   const [openAddDialog, setOpenAddDialog] = useState(false)
   const [openAlertDialog, setOpenAlertDialog] = useState(false)

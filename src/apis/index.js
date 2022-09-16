@@ -14,6 +14,9 @@ export const getAllWebsites = async (query) => {
   if (query?.queryKey[1].payment_method?.id) {
     params.append('payment_method', query.queryKey[1].payment_method.name)
   }
+  if (query?.queryKey[1]?.type) {
+    params.append('type', query?.queryKey[1]?.type)
+  }
   const response = await request.get(`websites`, { params })
 
   return response.data
