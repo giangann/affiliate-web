@@ -36,7 +36,7 @@ import { useState } from 'react'
 
 const AffiliateNetwork = () => {
   const [allFilter, setAllFilter] = useState([])
-  const [filterValue, setFilterValue] = useState({ type: 2 })
+  const [filterValue, setFilterValue] = useState({ type: 3 })
   const {
     isLoading,
     error,
@@ -214,66 +214,6 @@ const AffiliateNetwork = () => {
             </BoxContainer>
           </Hidden>
 
-          <BoxWithHeader
-            mainColor={baseColor.blue}
-            title={() => (
-              <Grid container mb={{ xs: 2, sm: 0 }}>
-                <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
-                  <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                    <Typography
-                      variant="h1"
-                      sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                    >
-                      Affiliate Offers
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontStyle: 'italic',
-                        color: '#b8c2cc',
-                        fontSize: '.75rem',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      Data Provided by Affplus.com
-                    </Typography>
-                  </Stack>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="flex-end"
-                    className="h-100"
-                    spacing={2}
-                  >
-                    <Button variant="contained" type="button-blue">
-                      Top Converting
-                    </Button>
-                    <Button variant="contained" type="button-gray">
-                      Lastest
-                    </Button>
-                  </Stack>
-                </Grid>
-              </Grid>
-            )}
-            footer={() => (
-              <div className="d-flex justify-content-center pt-3">
-                <Button
-                  sx={{
-                    color: '#2779bd',
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold'
-                  }}
-                  className="ml-3 rounded px-1"
-                >
-                  See more offers on affplus
-                </Button>
-              </div>
-            )}
-          >
-            <AffiliateOfferItem />
-          </BoxWithHeader>
-
           <Hidden mdUp>
             <BoxContainer>
               <FeaturedNetworkItem
@@ -285,7 +225,7 @@ const AffiliateNetwork = () => {
           </Hidden>
 
           <BoxWithHeader
-            mainColor={baseColor.yellow}
+            mainColor={baseColor.orange}
             data={allWebsites}
             title={() => (
               <Grid container>

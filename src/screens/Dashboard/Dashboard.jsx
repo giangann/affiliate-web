@@ -71,7 +71,7 @@ function Dashboard() {
       <BoxWithHeader
         sx={{ marginBottom: '32px !important' }}
         mainColor={baseColor.blue}
-        data={allWebsites}
+        data={websites}
         title={() => (
           <Grid container>
             <Grid item xs={12} sx={{ justifyContent: 'flex-start' }}>
