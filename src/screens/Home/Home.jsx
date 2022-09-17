@@ -3,11 +3,11 @@ import { styled, Typography, Stack } from '@mui/material'
 import { Affiliate } from './Affiliate'
 import Reels from './Reels'
 
-function Home() {
+function Home(props) {
   return (
     <Stack spacing={3}>
       <Reels />
-      <Affiliate />
+      <Affiliate listBanner={props?.listBanner} />
     </Stack>
   )
 }

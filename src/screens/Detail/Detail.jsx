@@ -46,8 +46,6 @@ const data1 = [
   }
 ]
 
-const arr = [0, 1, 2, 3]
-
 const userInfo = getUserLocalStorage()
 
 export const Detail = () => {
@@ -73,8 +71,6 @@ export const Detail = () => {
     refetch: refetchComment
   } = useQuery('list-comment', () => getListComments(id))
 
-  console.log('data comment', dataComment)
-  
   useEffect(() => {
     dataDetail?.reviews.forEach((review) => {
       if (review.user_id === user[0]?.id) {
@@ -120,7 +116,7 @@ export const Detail = () => {
       {
         id: 1,
         title: 'Number of Offers',
-        content: dataDetail?.data_api?.offer_count
+        content: dataDetail?.offer_count
       },
       {
         id: 2,
@@ -135,7 +131,7 @@ export const Detail = () => {
       {
         id: 4,
         title: 'Payment Frequency',
-        content: dataDetail?.data_api?.payment_freq
+        content: dataDetail?.payment_freq
       }
       // {
       //   id: 5,
@@ -150,6 +146,20 @@ export const Detail = () => {
     ],
     [dataDetail, isLoading, error]
   )
+  const approciateName = ['Excellent', 'Very Good', 'Averge', 'Poor', 'Terrible']
+  let approciateArray = []
+  approciateName.map((name, index) => {
+    let countScoreReview = 0
+    dataDetail?.reviews.map((review) => {
+      if (review?.score == 5 - index) {
+        countScoreReview++
+      }
+    })
+    approciateArray.push({
+      name: name,
+      value: countScoreReview
+    })
+  })
 
   return (
     <>
@@ -281,8 +291,7 @@ export const Detail = () => {
                   <Box component="img" src={detailImg} width="100%" />
                 </Grid>
               </Grid>
-
-              <BoxDescription desc={dataDetail?.data_api.description} isStringToHtml={true} />
+              <BoxDescription desc={dataDetail?.description} isStringToHtml={true} />
             </Stack>
 
             {/* End Affiliate Network */}
@@ -347,12 +356,12 @@ export const Detail = () => {
                         }
                       }}
                     >
-                      {dataDetail?.data_api?.rating}
+                      {dataDetail?.rating}
                     </TextGrey>
                   </Box>
 
                   <Box>
-                    {arr.map((item, index) => (
+                    {approciateArray.map((item, index) => (
                       <Box
                         key={index}
                         sx={{
@@ -372,9 +381,9 @@ export const Detail = () => {
                               borderRadius: '2px'
                             }}
                           ></span>
-                          <TextGrey>Excellent</TextGrey>
+                          <TextGrey>{item.name}</TextGrey>
                         </Stack>
-                        <TextHeading>22</TextHeading>
+                        <TextHeading>{item.value}</TextHeading>
                       </Box>
                     ))}
                   </Box>
@@ -406,8 +415,7 @@ export const Detail = () => {
               <BoxWithPagination
                 removePadding={true}
                 api={getListComments}
-                id={Number(id)}
-                user_id={user[0]?.id}
+                paramsApi={{ id: Number(id), user_id: user[0]?.id }}
                 refetchBoxComment={refetchBoxComment}
               >
                 <List

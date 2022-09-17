@@ -15,7 +15,7 @@ const Filter = (props) => {
   const [trackingValue, setTrackingValue] = useState(props?.filterValue?.tracking_software)
   const [pMethodValue, setPMethodValue] = useState(props?.filterValue?.payment_method)
   const [pFrequencyValue, setPFrequencyValue] = useState(props?.filterValue?.payment_frequency)
-
+  // console.log(123, trackingSoftware)
   return (
     <Stack direction={{ xs: 'column', sm: 'row' }} paddingY={3} gap={2} alignItems="center">
       <Grid container spacing={4} sx={{ width: '100%' }}>

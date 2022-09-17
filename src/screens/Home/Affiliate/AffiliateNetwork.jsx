@@ -33,10 +33,12 @@ import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { useState } from 'react'
-
-const AffiliateNetwork = () => {
+import { useNavigate } from 'react-router-dom'
+import { BANNER } from '~/constants/name'
+const AffiliateNetwork = (props) => {
+  const navigate = useNavigate()
   const [allFilter, setAllFilter] = useState([])
-  const [filterValue, setFilterValue] = useState({})
+  const [filterValue, setFilterValue] = useState({ type: 3 })
   const {
     isLoading,
     error,
@@ -48,11 +50,16 @@ const AffiliateNetwork = () => {
     data: recentReviews
   } = useQuery('recent-reviews', getRecentReviews)
 
+  const listBannerSmall = props?.listBanner.filter((item) => item.type === BANNER['SIDEBAR'])
+  const listBannerBig = props?.listBanner.filter((item) => item.type === BANNER['MAIN'])
+  const defaultBannerBig = listBannerBig[0]
+
   useEffect(() => {
     getAllFilter().then((res) => {
       setAllFilter(res)
     })
   }, [])
+
   return (
     <React.Fragment>
       {isLoading ? (
@@ -61,7 +68,7 @@ const AffiliateNetwork = () => {
         <>
           <BoxWithHeader
             mainColor={baseColor.blue}
-            data={allWebsites}
+            data={allWebsites?.slice(0, 10)}
             allFilter={allFilter}
             filterValue={filterValue}
             setFilterValue={setFilterValue}
@@ -123,6 +130,7 @@ const AffiliateNetwork = () => {
                     fontWeight: 'bold'
                   }}
                   className="scale-sm ml-3 rounded px-1"
+                  onClick={() => navigate('/affiliate-networks')}
                 >
                   See more affiliate networks
                 </Button>
@@ -199,80 +207,27 @@ const AffiliateNetwork = () => {
               <Box sx={{ px: '0.75rem', py: 2 }}>
                 <Box
                   component="img"
-                  src={clickdealerImg}
+                  src={listBannerBig[0]?.link_of_image}
                   sx={{ display: 'block', width: '100%', mb: 2 }}
                 />
 
                 <Grid container gap={1} justifyContent="space-between">
-                  {listGifs.map((item, index) => (
-                    <Grid key={index} item xs={5.6}>
-                      <Box component="img" src={item} alt="gif" sx={{ width: '100%' }} />
-                    </Grid>
-                  ))}
+                  {listBannerSmall.map((item, index) =>
+                    index > 5 ? null : (
+                      <Grid key={index} item xs={5.85}>
+                        <Box
+                          component="img"
+                          src={item.link_of_image}
+                          alt="gif"
+                          sx={{ width: '100%' }}
+                        />
+                      </Grid>
+                    )
+                  )}
                 </Grid>
               </Box>
             </BoxContainer>
           </Hidden>
-
-          <BoxWithHeader
-            mainColor={baseColor.blue}
-            title={() => (
-              <Grid container mb={{ xs: 2, sm: 0 }}>
-                <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
-                  <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                    <Typography
-                      variant="h1"
-                      sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                    >
-                      Affiliate Offers
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontStyle: 'italic',
-                        color: '#b8c2cc',
-                        fontSize: '.75rem',
-                        fontWeight: 'bold'
-                      }}
-                    >
-                      Data Provided by Affplus.com
-                    </Typography>
-                  </Stack>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Stack
-                    direction="row"
-                    alignItems="center"
-                    justifyContent="flex-end"
-                    className="h-100"
-                    spacing={2}
-                  >
-                    <Button variant="contained" type="button-blue">
-                      Top Converting
-                    </Button>
-                    <Button variant="contained" type="button-gray">
-                      Lastest
-                    </Button>
-                  </Stack>
-                </Grid>
-              </Grid>
-            )}
-            footer={() => (
-              <div className="d-flex justify-content-center pt-3">
-                <Button
-                  sx={{
-                    color: '#2779bd',
-                    fontSize: '0.75rem',
-                    fontWeight: 'bold'
-                  }}
-                  className="ml-3 rounded px-1"
-                >
-                  See more offers on affplus
-                </Button>
-              </div>
-            )}
-          >
-            <AffiliateOfferItem />
-          </BoxWithHeader>
 
           <Hidden mdUp>
             <BoxContainer>
@@ -285,8 +240,8 @@ const AffiliateNetwork = () => {
           </Hidden>
 
           <BoxWithHeader
-            mainColor={baseColor.yellow}
-            data={allWebsites}
+            mainColor={baseColor.orange}
+            data={allWebsites?.slice(0, 5)}
             title={() => (
               <Grid container>
                 <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
@@ -308,6 +263,7 @@ const AffiliateNetwork = () => {
                     fontWeight: 'bold'
                   }}
                   className="ml-3 rounded px-1"
+                  onClick={() => navigate('/advertising-networks')}
                 >
                   See more offers on affplus
                 </Button>
@@ -350,7 +306,7 @@ const AffiliateNetwork = () => {
 
           <BoxWithHeader
             mainColor={baseColor.yellow}
-            data={allWebsites}
+            data={allWebsites?.slice(0, 5)}
             title={() => (
               <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
                 <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
@@ -372,6 +328,7 @@ const AffiliateNetwork = () => {
                     fontWeight: 'bold'
                   }}
                   className="ml-3 rounded px-1"
+                  onClick={() => navigate('/affiliate-programs')}
                 >
                   See more offers on affplus
                 </Button>
