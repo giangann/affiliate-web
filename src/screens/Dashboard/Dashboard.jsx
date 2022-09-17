@@ -22,7 +22,7 @@ function Dashboard() {
   const {
     isLoading,
     error,
-    data: websites
+    data: allWebsites
   } = useQuery(['allWebsites', { type: NETWORK_TYPE['ADVERTISER'] }], () => getAllWebsites())
   const { data: banners } = useQuery(['allBanners'], () => getBanners())
   const [openAddDialog, setOpenAddDialog] = useState(false)
@@ -62,7 +62,6 @@ function Dashboard() {
   const handleClickAddBtn = () => {
     setOpenAddDialog(true)
   }
-  let allWebsites
 
   const gridFull = { xs: 12, md: 12 }
 

@@ -15,7 +15,7 @@ const webkitBox = {
 export const AffiliateNetworkItem = ({ data, ...props }) => {
   const { data_api } = data ?? {}
 
-  console.log(data)
+  // console.log(data)
   // console.log({ data_api })
   return (
     <Grid container columnSpacing={2} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>

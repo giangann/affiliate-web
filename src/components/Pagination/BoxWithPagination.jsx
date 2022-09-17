@@ -8,15 +8,19 @@ import { ContactSupport } from '@mui/icons-material'
 import { isArray } from 'lodash'
 
 export const BoxWithPagination = ({ children, ...props }) => {
-  const [pageIndex, setPageIndex] = useState(3)
+  const [pageIndex, setPageIndex] = useState(1)
   const [_params, setParams] = useState(props.paramsApi)
 
   const [paginationData, setPaginationData] = useState([])
   // useQuery to call api here: (with pageSize and pageIndex)
   const { data, isLoading, isError, refetch } = useQuery('pagination' + pageIndex, () =>
-    props.api({ page: pageIndex, per_page: 1, ..._params })
+    props.api({ page: pageIndex, per_page: 20, ..._params })
   )
   //
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pageIndex])
 
   useEffect(() => {
     if (!isLoading) {
@@ -90,7 +94,11 @@ export const BoxWithPagination = ({ children, ...props }) => {
               )
               break
             case item === pageIndex + 2 || item === pageIndex - 4:
-              items.push(<span key={item}>...</span>)
+              items.push(
+                <span key={item} className="dot">
+                  ...
+                </span>
+              )
               break
             default:
               break
@@ -120,10 +128,11 @@ export const BoxWithPagination = ({ children, ...props }) => {
         sx={{
           marginTop: '16px',
           justifyContent: 'center',
-          flex: 1
+          flex: 1,
+          paddingBottom: '4px'
         }}
       >
-        <Pagination className="d-flex justify-content-center align-items-end">
+        <Pagination className="d-flex justify-content-center align-items-end pagination-sm">
           {/* <Pagination.First onClick={(e) => handleClick(e)} />
           <Pagination.Prev onClick={(e) => handleClick(e)} /> */}
           {paginationItems}
@@ -137,7 +146,7 @@ export const BoxWithPagination = ({ children, ...props }) => {
 
 const PaginationItem = ({ onClick, active, index }) => {
   return (
-    <Pagination.Item className="border-none" onClick={onClick} active={active}>
+    <Pagination.Item className="" onClick={onClick} active={active}>
       {index}
     </Pagination.Item>
   )

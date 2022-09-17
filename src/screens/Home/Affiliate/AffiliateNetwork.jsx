@@ -288,7 +288,7 @@ const AffiliateNetwork = () => {
           </Hidden>
 
           <BoxWithHeader
-            mainColor={baseColor.yellow}
+            mainColor={baseColor.orange}
             data={allWebsites?.slice(0, 5)}
             title={() => (
               <Grid container>

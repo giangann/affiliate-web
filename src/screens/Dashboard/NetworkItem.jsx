@@ -23,7 +23,7 @@ export const NetworkItem = ({ data, ...props }) => {
   const navigate = useNavigate()
 
   const { data_api } = data ?? {}
-  console.log(data)
+  // console.log(data)
   const handleDelete = async (id) => {
     // alert('Xác nhận xóa ?')
     try {
@@ -50,8 +50,6 @@ export const NetworkItem = ({ data, ...props }) => {
     setOpenDeleteDialog(true)
   }
 
-  // console.log(data)
-  // console.log({ data_api })
   return (
     <Grid container columnSpacing={2} sx={{ borderBottom: '1px solid #ccc' }} paddingY={3}>
       <Grid

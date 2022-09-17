@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getWebsitesByCategoryId, getWebsiteByType } from '~/apis'
+import { getWebsiteByType } from '~/apis'
 import { BoxWithPagination } from '~/components/Pagination'
 import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
 import { AffiliateNetworkItem } from '~/screens/Home'
@@ -20,7 +20,7 @@ export const PremiumNetworks = () => {
     <>
       <BoxWithPagination
         api={getWebsiteByType}
-        paramsApi={{ type: NETWORK_TYPE['ADVERTISER'] }}
+        paramsApi={{ type: NETWORK_TYPE['AFFILIATE'] }}
         removePadding={true}
       >
         <BoxWithHeader
@@ -60,14 +60,12 @@ export const PremiumNetworks = () => {
             </Grid>
           )}
           restOfHeader={() => (
-            <>
-              <img
-                className="block"
-                style={{ width: '100%' }}
-                src={AlgoAffiliatesImg}
-                alt="Algo Affiliates"
-              ></img>
-            </>
+            <img
+              className="block"
+              style={{ width: '100%', marginTop: '1rem' }}
+              src={AlgoAffiliatesImg}
+              alt="Algo Affiliates"
+            />
           )}
         >
           <AffiliateNetworkItem mainColor={baseColor.blue} />
