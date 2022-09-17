@@ -149,7 +149,7 @@ export const Detail = () => {
   const approciateName = ['Excellent', 'Very Good', 'Averge', 'Poor', 'Terrible']
   let approciateArray = []
   approciateName.map((name, index) => {
-    let countScoreReview=0
+    let countScoreReview = 0
     dataDetail?.reviews.map((review) => {
       if (review?.score == 5 - index) {
         countScoreReview++
@@ -415,8 +415,7 @@ export const Detail = () => {
               <BoxWithPagination
                 removePadding={true}
                 api={getListComments}
-                id={Number(id)}
-                user_id={user[0]?.id}
+                paramsApi={{ id: Number(id), user_id: user[0]?.id }}
                 refetchBoxComment={refetchBoxComment}
               >
                 <List
