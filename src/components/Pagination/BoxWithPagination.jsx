@@ -1,4 +1,4 @@
-import React, { useState, cloneElement, useEffect } from 'react'
+import React, { useState, cloneElement, useEffect, useMemo } from 'react'
 import { Stack, Box, Paper, Container } from '@mui/material'
 import { useQuery } from 'react-query'
 import { Pagination } from 'react-bootstrap'
@@ -8,16 +8,19 @@ import { ContactSupport } from '@mui/icons-material'
 import { isArray } from 'lodash'
 
 export const BoxWithPagination = ({ children, ...props }) => {
-  const { pageSize } = props
   const [pageIndex, setPageIndex] = useState(1)
+  const [_params, setParams] = useState(props.paramsApi)
 
   const [paginationData, setPaginationData] = useState([])
   // useQuery to call api here: (with pageSize and pageIndex)
-  const { data, isLoading, isError, refetch } = useQuery(
-    'pagination' + props?.id + props?.user_id + pageIndex,
-    () => props.api(Number(props?.id), props?.user_id, pageIndex)
+  const { data, isLoading, isError, refetch } = useQuery('pagination' + pageIndex, () =>
+    props.api({ page: pageIndex, per_page: 20, ..._params })
   )
   //
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pageIndex])
 
   useEffect(() => {
     if (!isLoading) {
@@ -25,8 +28,10 @@ export const BoxWithPagination = ({ children, ...props }) => {
     }
   }, [props.refetchBoxComment])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleClick = (e) => {
     let value = 0
+    if (!e.target.text) return
 
     switch (e.target.text) {
       case '»Last':
@@ -52,18 +57,63 @@ export const BoxWithPagination = ({ children, ...props }) => {
     refetch()
   }, [pageIndex])
 
-  let items = []
-
-  const total_pages = data?.meta?.pagination?.total_pages
-  if (total_pages !== 1) {
-    for (let item = 0; item < total_pages; item++) {
-      items.push(
-        <Pagination.Item key={item} onClick={(e) => handleClick(e)} active={item === pageIndex - 1}>
-          {item + 1}
-        </Pagination.Item>
-      )
+  const paginationItems = useMemo(() => {
+    let items = []
+    const total_pages = data?.meta?.pagination?.total_pages
+    if (total_pages !== 1) {
+      for (let item = 0; item < total_pages; item++) {
+        if (total_pages < 5) {
+          items.push(
+            <PaginationItem
+              key={item}
+              onClick={handleClick}
+              active={item === pageIndex - 1}
+              index={item + 1}
+            />
+          )
+        } else {
+          switch (true) {
+            case item === 0 || item === total_pages - 1:
+              items.push(
+                <PaginationItem
+                  key={item}
+                  onClick={handleClick}
+                  active={item === pageIndex - 1}
+                  index={item + 1}
+                />
+              )
+              break
+            case item <= pageIndex + 1 && item >= pageIndex - 3:
+              items.push(
+                <PaginationItem
+                  key={item}
+                  onClick={handleClick}
+                  active={item === pageIndex - 1}
+                  index={item + 1}
+                />
+              )
+              break
+            case item === pageIndex + 2 || item === pageIndex - 4:
+              items.push(
+                <span key={item} className="dot">
+                  ...
+                </span>
+              )
+              break
+            default:
+              break
+          }
+        }
+      }
     }
-  }
+
+    return items
+  }, [data?.meta?.pagination?.total_pages, handleClick, pageIndex])
+
+  // useEffect(() => {
+  //   console.log(paginationItems)
+  // }, [paginationItems])
+
   return (
     <Paper elevation={4} sx={{ padding: props.removePadding ? '0px' : '16px' }}>
       {isLoading ? (
@@ -78,17 +128,26 @@ export const BoxWithPagination = ({ children, ...props }) => {
         sx={{
           marginTop: '16px',
           justifyContent: 'center',
-          flex: 1
+          flex: 1,
+          paddingBottom: '4px'
         }}
       >
-        <Pagination className="d-flex justify-content-center">
+        <Pagination className="d-flex justify-content-center align-items-end pagination-sm">
           {/* <Pagination.First onClick={(e) => handleClick(e)} />
           <Pagination.Prev onClick={(e) => handleClick(e)} /> */}
-          {items}
+          {paginationItems}
           {/* <Pagination.Next onClick={(e) => handleClick(e)} />
           <Pagination.Last onClick={(e) => handleClick(e)} /> */}
         </Pagination>
       </Box>
     </Paper>
+  )
+}
+
+const PaginationItem = ({ onClick, active, index }) => {
+  return (
+    <Pagination.Item className="" onClick={onClick} active={active}>
+      {index}
+    </Pagination.Item>
   )
 }

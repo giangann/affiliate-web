@@ -21,6 +21,12 @@ export const getAllWebsites = async (query) => {
 
   return response.data
 }
+// paginate
+export const getWebsiteByType = async (params) => {
+  const response = await request.get(`websites`, { params })
+
+  return response.data
+}
 
 export const getFeaturesNetwork = async () => {
   const response = await request.get(`websites-feature-network`)
@@ -28,10 +34,10 @@ export const getFeaturesNetwork = async () => {
   return response.data
 }
 
-export const getWebsitesByCategoryId = async (id, page, per_page = 10) => {
+export const getWebsitesByCategoryId = async ({ id, page, per_page }) => {
   const response = {
     data: await request.get(`websites/getByCategoryId`, {
-      params: { category_id: id, page, per_page }
+      params: { category_id: id, page, per_page: per_page || 10 }
     })
   }
 
@@ -61,9 +67,9 @@ export const getApiResource = async (name) => {
   return res.data
 }
 
-export const getListComments = async (id, user_id, page, per_page = 10) => {
+export const getListComments = async ({ id, user_id, page, per_page }) => {
   const res = await request.get(`reviews`, {
-    params: { websiteId: id, user_id: user_id, page, per_page }
+    params: { websiteId: id, user_id: user_id, page, per_page: per_page || 10 }
   })
   return res.data
 }
@@ -115,6 +121,7 @@ export const getCategories = async () => {
   const res = await request.get('categories')
   return res
 }
+
 export const searchNetworks = async (keyword) => {
   const res = await request.get(`websites`, {
     params: { keyword }

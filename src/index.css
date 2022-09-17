@@ -1,48 +1,68 @@
 .button-blue {
-    background-color: #3490dc !important;
-    color: #ffffff !important;
+  background-color: #3490dc !important;
+  color: #ffffff !important;
 }
 
 .button-red {
-    background-color: #f60 !important;
-    color: #ffffff !important;
+  background-color: #f60 !important;
+  color: #ffffff !important;
 }
 
 .button-gray {
-    background-color: #f1f5f8 !important;
-    color: hsl(208, 12%, 58%) !important;
+  background-color: #f1f5f8 !important;
+  color: hsl(208, 12%, 58%) !important;
 }
 
 .dropdown-basic-button button {
-    background-color: #dae1e7;
-    color: hsl(208, 12%, 58%);
-    font-weight: 600;
-    font-size: .75rem;
-    border: 0 solid #dae1e7;
+  background-color: #dae1e7;
+  color: hsl(208, 12%, 58%);
+  font-weight: 600;
+  font-size: 0.75rem;
+  border: 0 solid #dae1e7;
 }
 
 .dropdown-basic-button button:hover {
-    background-color: #dae1e7;
+  background-color: #dae1e7;
 }
 
-.dropdown-basic-button a{
+.dropdown-basic-button a {
   padding: 0.75rem 1rem 0.75rem 1rem;
   text-transform: uppercase;
   line-height: 1;
   color: hsl(208, 12%, 58%);
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-weight: bold;
 }
 
-.dropdown-basic-button a:hover{
-   
-    color: #3d4852;
-  }
+.dropdown-basic-button a:hover {
+  color: #3d4852;
+}
 
 .dropdown-basic-button button:focus {
-    box-shadow: none;
+  box-shadow: none;
 }
+
 body {
-    margin: 0;
-  }
-  
+  margin: 0;
+}
+
+.pagination .page-item {
+  margin-right: 8px;
+}
+
+.pagination .dot {
+  color: #b8c2cc;
+  margin-right: 8px;
+}
+
+.pagination .page-item .page-link {
+  border: none;
+  color: #3490dc !important;
+  border-radius: 4px;
+  padding: 1px 5px !important;
+}
+
+.pagination .page-item.active > .page-link {
+  background-color: #3490dc !important;
+  color: #fff !important;
+}

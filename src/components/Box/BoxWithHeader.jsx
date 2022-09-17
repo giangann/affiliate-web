@@ -1,16 +1,9 @@
 import { Grid, Paper, Stack, styled } from '@mui/material'
-import React, { cloneElement, useState } from 'react'
+import React, { cloneElement } from 'react'
 import { Filter } from '~/screens/Home'
 import { blue } from '~/styles/colors'
 
-function BoxWithHeader({
-  elevation,
-  filterValue,
-  setFilterValue,
-  keyCache = '',
-  children,
-  ...props
-}) {
+function BoxWithHeader({ elevation, filterValue, setFilterValue, children, ...props }) {
   return (
     <Paper
       elevation={4}
@@ -41,11 +34,14 @@ function BoxWithHeader({
         <GridWithPadding item xs={12}>
           {props.restOfHeader && (
             <>
-              <Filter
-                allFilter={props.allFilter}
-                filterValue={filterValue}
-                handleFilterValue={setFilterValue}
-              />
+              {props.allFilter && (
+                <Filter
+                  allFilter={props.allFilter}
+                  filterValue={filterValue}
+                  handleFilterValue={setFilterValue}
+                />
+              )}
+
               {props.restOfHeader()}
             </>
           )}
