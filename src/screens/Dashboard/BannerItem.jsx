@@ -10,7 +10,7 @@ import { Button, Grid, Hidden, TextField, Typography } from '@mui/material'
 import { Stars } from '~/components/Star'
 import { Link } from 'react-router-dom'
 import { BootstrapButton } from '~/components/Layouts/Header/Navbar'
-import { deleteNetWork, editBanner } from '~/apis'
+import { editBanner } from '~/apis'
 import { useEffect } from 'react'
 import { request } from '~/apis/request'
 const webkitBox = {
@@ -103,7 +103,7 @@ export const BannerItem = ({ data, ...props }) => {
         </BootstrapButton>
       </Grid>
 
-      {/* Edit/Add dialog */}
+      {/* Edit dialog */}
       <Dialog
         open={openEditDialog}
         onClose={handleClose}

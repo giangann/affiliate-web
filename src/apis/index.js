@@ -187,8 +187,8 @@ export const getAllFilter = async () => {
   return res.data
 }
 
-export const getBanners = async () => {
-  const res = await request.get('banners')
+export const getBanners = async (params) => {
+  const res = await request.get('banners', { params })
   return res.data
 }
 

@@ -43,17 +43,18 @@ const AffiliateNetwork = () => {
     error,
     data: allWebsites
   } = useQuery(['allWebsites', filterValue], getAllWebsites)
+  console.log('filtler value', filterValue)
   const {
     isLoading: isLoadingRecentReviews,
     error: errorRecentReviews,
     data: recentReviews
   } = useQuery('recent-reviews', getRecentReviews)
 
-  // useEffect(() => {
-  //   getAllFilter().then((res) => {
-  //     setAllFilter(res)
-  //   })
-  // }, [])
+  useEffect(() => {
+    getAllFilter().then((res) => {
+      setAllFilter(res)
+    })
+  }, [])
 
   return (
     <React.Fragment>
