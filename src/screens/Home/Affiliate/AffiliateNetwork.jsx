@@ -34,7 +34,8 @@ import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-const AffiliateNetwork = () => {
+import { BANNER } from '~/constants/name'
+const AffiliateNetwork = (props) => {
   const navigate = useNavigate()
   const [allFilter, setAllFilter] = useState([])
   const [filterValue, setFilterValue] = useState({ type: 3 })
@@ -43,12 +44,15 @@ const AffiliateNetwork = () => {
     error,
     data: allWebsites
   } = useQuery(['allWebsites', filterValue], getAllWebsites)
-  console.log('filtler value', filterValue)
   const {
     isLoading: isLoadingRecentReviews,
     error: errorRecentReviews,
     data: recentReviews
   } = useQuery('recent-reviews', getRecentReviews)
+
+  const listBannerSmall = props?.listBanner.filter((item) => item.type === BANNER['SIDEBAR'])
+  const listBannerBig = props?.listBanner.filter((item) => item.type === BANNER['MAIN'])
+  const defaultBannerBig = listBannerBig[0]
 
   useEffect(() => {
     getAllFilter().then((res) => {
@@ -203,16 +207,23 @@ const AffiliateNetwork = () => {
               <Box sx={{ px: '0.75rem', py: 2 }}>
                 <Box
                   component="img"
-                  src={clickdealerImg}
+                  src={listBannerBig[0]?.link_of_image}
                   sx={{ display: 'block', width: '100%', mb: 2 }}
                 />
 
                 <Grid container gap={1} justifyContent="space-between">
-                  {listGifs.map((item, index) => (
-                    <Grid key={index} item xs={5.6}>
-                      <Box component="img" src={item} alt="gif" sx={{ width: '100%' }} />
-                    </Grid>
-                  ))}
+                  {listBannerSmall.map((item, index) =>
+                    index > 5 ? null : (
+                      <Grid key={index} item xs={5.85}>
+                        <Box
+                          component="img"
+                          src={item.link_of_image}
+                          alt="gif"
+                          sx={{ width: '100%' }}
+                        />
+                      </Grid>
+                    )
+                  )}
                 </Grid>
               </Box>
             </BoxContainer>

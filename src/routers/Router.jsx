@@ -13,12 +13,12 @@ import { ADMIN_EMAIL } from '~/constants/name'
 import EditNetWork from '~/screens/Dashboard/EditNetWork'
 import { AdvertisingNetworks, AffiliatePrograms, PremiumNetworks } from '~/screens/Network'
 
-export const Router = () => {
+export const Router = (props) => {
   const userInfo = getUserLocalStorage()
   const isAdmin = ADMIN_EMAIL.includes(userInfo?.email)
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home listBanner={props?.listBanner} />} />
       <Route path="/websites/show/:id" element={<Detail />} />
       <Route path="/affiliate-networks/category/:category_id" element={<Category />} />
 

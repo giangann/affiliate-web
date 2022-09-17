@@ -27,10 +27,14 @@ import { useQuery, useQueryClient } from 'react-query'
 import { getTop10Networks, getRecentReviews, getFeaturesNetwork } from '~/apis'
 import { ListSkeleton } from '~/components/Skeleton'
 import { FeaturedNetwork } from './FeaturedNetwork'
+import { BANNER } from '~/constants/name'
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const { isLoading, error, data: top10Networks } = useQuery('top-10-networks', getTop10Networks)
-  
+  const listBannerSmall = props?.listBanner.filter((item) => item.type === BANNER['SIDEBAR'])
+  const listBannerBig = props?.listBanner.filter((item) => item.type === BANNER['MAIN'])
+  const defaultBannerBig = listBannerBig[0]
+
   const {
     isLoading: isLoadingRecentReviews,
     error: errorRecentReviews,
@@ -68,10 +72,10 @@ const Sidebar = () => {
           />
 
           <Grid container gap={1} justifyContent="space-between">
-            {listGifs.map((item, index) =>
+            {listBannerSmall.map((item, index) =>
               index > 5 ? null : (
                 <Grid key={index} item xs={5.85}>
-                  <Box component="img" src={item} alt="gif" sx={{ width: '100%' }} />
+                  <Box component="img" src={item.link_of_image} alt="gif" sx={{ width: '100%' }} />
                 </Grid>
               )
             )}
@@ -124,39 +128,84 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <FeaturedNetwork mainColor={baseColor.blue} callback={getFeaturesNetwork} heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <FeaturedNetwork
+          mainColor={baseColor.blue}
+          callback={getFeaturesNetwork}
+          heading="Featured Networks"
+          Item={FeaturedNetworkItem}
+        />
       </BoxContainer>
 
       <BoxContainer>
-        <Box component="img" src={Olmera} alt="gif" sx={{ width: '100%' }} />
+        <Box
+          component="img"
+          src={listBannerBig[0]?.link_of_image}
+          alt="gif"
+          sx={{ width: '100%' }}
+        />
       </BoxContainer>
 
       <BoxContainer>
-        <Box component="img" src={Giantmobi} alt="gif" sx={{ width: '100%' }} />
+        <Box
+          component="img"
+          src={listBannerBig[1]?.link_of_image ?? defaultBannerBig?.link_of_image}
+          alt="gif"
+          sx={{ width: '100%' }}
+        />
       </BoxContainer>
 
       <BoxContainer>
-        <FeaturedNetwork mainColor={baseColor.yellow} callback={getFeaturesNetwork} heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <FeaturedNetwork
+          mainColor={baseColor.yellow}
+          callback={getFeaturesNetwork}
+          heading="Featured Networks"
+          Item={FeaturedNetworkItem}
+        />
       </BoxContainer>
 
       <BoxContainer>
-        <Box component="img" src={CDD} alt="gif" sx={{ width: '100%' }} />
+        <Box
+          component="img"
+          src={listBannerBig[2]?.link_of_image ?? defaultBannerBig?.link_of_image}
+          alt="gif"
+          sx={{ width: '100%' }}
+        />
       </BoxContainer>
 
       <BoxContainer>
-        <Box component="img" src={InfinityTelecom} alt="gif" sx={{ width: '100%' }} />
+        <Box
+          component="img"
+          src={listBannerBig[3]?.link_of_image ?? defaultBannerBig?.link_of_image}
+          alt="gif"
+          sx={{ width: '100%' }}
+        />
       </BoxContainer>
 
       <BoxContainer>
-        <FeaturedNetwork mainColor={baseColor.orange} callback={getFeaturesNetwork} heading="Featured Networks" Item={FeaturedNetworkItem} />
+        <FeaturedNetwork
+          mainColor={baseColor.orange}
+          callback={getFeaturesNetwork}
+          heading="Featured Networks"
+          Item={FeaturedNetworkItem}
+        />
       </BoxContainer>
 
       <BoxContainer>
-        <Box component="img" src={DynulnMedia} alt="gif" sx={{ width: '100%' }} />
+        <Box
+          component="img"
+          src={listBannerBig[4]?.link_of_image ?? defaultBannerBig?.link_of_image}
+          alt="gif"
+          sx={{ width: '100%' }}
+        />
       </BoxContainer>
 
       <BoxContainer>
-        <Box component="img" src={c3pa} alt="gif" sx={{ width: '100%' }} />
+        <Box
+          component="img"
+          src={listBannerBig[5]?.link_of_image ?? defaultBannerBig?.link_of_image}
+          alt="gif"
+          sx={{ width: '100%' }}
+        />
       </BoxContainer>
 
       <BoxContainer>
@@ -190,7 +239,12 @@ const Sidebar = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <Box component="img" src={lemonad_easy_peasy} alt="gif" sx={{ width: '100%' }} />
+        <Box
+          component="img"
+          src={listBannerBig[6]?.link_of_image ?? defaultBannerBig?.link_of_image}
+          alt="gif"
+          sx={{ width: '100%' }}
+        />
       </BoxContainer>
 
       <BoxContainer>
