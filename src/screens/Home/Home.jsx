@@ -6,7 +6,7 @@ import Reels from './Reels'
 function Home() {
   return (
     <Stack spacing={3}>
-      <Reels />
+      {/* <Reels /> */}
       <Affiliate />
     </Stack>
   )

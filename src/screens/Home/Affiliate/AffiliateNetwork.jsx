@@ -33,8 +33,9 @@ import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 const AffiliateNetwork = () => {
+  const navigate = useNavigate()
   const [allFilter, setAllFilter] = useState([])
   const [filterValue, setFilterValue] = useState({ type: 2 })
   const {
@@ -48,11 +49,12 @@ const AffiliateNetwork = () => {
     data: recentReviews
   } = useQuery('recent-reviews', getRecentReviews)
 
-  useEffect(() => {
-    getAllFilter().then((res) => {
-      setAllFilter(res)
-    })
-  }, [])
+  // useEffect(() => {
+  //   getAllFilter().then((res) => {
+  //     setAllFilter(res)
+  //   })
+  // }, [])
+
   return (
     <React.Fragment>
       {isLoading ? (
@@ -61,7 +63,7 @@ const AffiliateNetwork = () => {
         <>
           <BoxWithHeader
             mainColor={baseColor.blue}
-            data={allWebsites}
+            data={allWebsites?.slice(0, 10)}
             allFilter={allFilter}
             filterValue={filterValue}
             setFilterValue={setFilterValue}
@@ -123,6 +125,7 @@ const AffiliateNetwork = () => {
                     fontWeight: 'bold'
                   }}
                   className="scale-sm ml-3 rounded px-1"
+                  onClick={() => navigate('/affiliate-networks')}
                 >
                   See more affiliate networks
                 </Button>
@@ -286,7 +289,7 @@ const AffiliateNetwork = () => {
 
           <BoxWithHeader
             mainColor={baseColor.yellow}
-            data={allWebsites}
+            data={allWebsites?.slice(0, 5)}
             title={() => (
               <Grid container>
                 <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
@@ -308,6 +311,7 @@ const AffiliateNetwork = () => {
                     fontWeight: 'bold'
                   }}
                   className="ml-3 rounded px-1"
+                  onClick={() => navigate('/advertising-networks')}
                 >
                   See more offers on affplus
                 </Button>
@@ -350,7 +354,7 @@ const AffiliateNetwork = () => {
 
           <BoxWithHeader
             mainColor={baseColor.yellow}
-            data={allWebsites}
+            data={allWebsites?.slice(0, 5)}
             title={() => (
               <Grid container sx={{ borderBottom: '1px solid #ccc' }}>
                 <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
@@ -372,6 +376,7 @@ const AffiliateNetwork = () => {
                     fontWeight: 'bold'
                   }}
                   className="ml-3 rounded px-1"
+                  onClick={() => navigate('/affiliate-programs')}
                 >
                   See more offers on affplus
                 </Button>

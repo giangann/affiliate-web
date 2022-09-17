@@ -1,26 +1,26 @@
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { getWebsitesByCategoryId } from '~/apis'
+import React, { useEffect, useState } from 'react'
+import { getWebsitesByCategoryId, getWebsiteByType } from '~/apis'
 import { BoxWithPagination } from '~/components/Pagination'
-import { List } from '~/components/List'
-import { FlexBoxAlignCenterJustifyBetween, FlexBoxAlignCenter } from '~/styles'
 import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
-import { AffiliateNetworkItem, Filter } from '~/screens/Home'
+import { AffiliateNetworkItem } from '~/screens/Home'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { Grid, Typography, Avatar, Stack } from '@mui/material'
 import { baseColor } from '~/styles'
 import { Button } from '~/components/Buttons'
 import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
-
-export const Category = () => {
-  const { category_id } = useParams()
+import { NETWORK_TYPE } from '~/libs/utils'
+export const PremiumNetworks = () => {
   const [filterValue, setFilterValue] = useState()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <>
       <BoxWithPagination
-        api={getWebsitesByCategoryId}
-        paramsApi={{ id: Number(category_id) }}
+        api={getWebsiteByType}
+        paramsApi={{ type: NETWORK_TYPE['ADVERTISER'] }}
         removePadding={true}
       >
         <BoxWithHeader

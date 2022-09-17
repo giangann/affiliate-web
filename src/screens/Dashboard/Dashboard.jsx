@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import { Controller, useForm } from 'react-hook-form'
-
+import { NETWORK_TYPE } from '~/libs/utils/constants'
 import DialogTitle from '@mui/material/DialogTitle'
 import { useQuery } from 'react-query'
 import { getAllWebsites, getBanners } from '~/apis'
@@ -23,7 +23,7 @@ function Dashboard() {
     isLoading,
     error,
     data: websites
-  } = useQuery(['allWebsites', { type: 1 }], () => getAllWebsites())
+  } = useQuery(['allWebsites', { type: NETWORK_TYPE['ADVERTISER'] }], () => getAllWebsites())
   const { data: banners } = useQuery(['allBanners'], () => getBanners())
   const [openAddDialog, setOpenAddDialog] = useState(false)
   const [openAlertDialog, setOpenAlertDialog] = useState(false)

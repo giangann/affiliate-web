@@ -179,8 +179,8 @@ export const Navbar = () => {
                   display: { xs: 'block', md: 'none' }
                 }}
               >
-                {navBarItem.map((item) => (
-                  <MenuItem key={item.name} onClick={() => hanldeChooseElNav(item)}>
+                {navBarItem.map((item, index) => (
+                  <MenuItem key={index} onClick={() => hanldeChooseElNav(item)}>
                     <Typography textAlign="center">{item.name}</Typography>
                   </MenuItem>
                 ))}
@@ -205,9 +205,9 @@ export const Navbar = () => {
 
           <Hidden mdDown>
             <Box sx={{ display: 'flex' }}>
-              {navBarItem.map((item) => (
+              {navBarItem.map((item, index) => (
                 <Button
-                  key={item}
+                  key={index}
                   onClick={() => hanldeChooseElNav(item)}
                   sx={{ my: 2, color: 'white', display: 'block', fontWeight: 900 }}
                 >
