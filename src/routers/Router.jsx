@@ -22,11 +22,11 @@ export const Router = () => {
       <Route path="/affiliate-networks/category/:category_id" element={<Category />} />
       <Route path="/:slug" element={<Detail />} />
       <Route path="/resources" element={<Resource />} />
-      <Route path="/dashboard" element={isAdmin ? <Dashboard /> : <NotFound />} />
-      <Route path="/dashboard/add-network" element={isAdmin ? <AddNetworkForm /> : <NotFound />} />
+      <Route path="/dashboard" element={true ? <Dashboard /> : <NotFound />} />
+      <Route path="/dashboard/add-network" element={true ? <AddNetworkForm /> : <NotFound />} />
       <Route
         path="/dashboard/edit-network/:network_id"
-        element={isAdmin ? <EditNetWork /> : <NotFound />}
+        element={true ? <EditNetWork /> : <NotFound />}
       />
 
       <Route path="*" element={<NotFound />} />

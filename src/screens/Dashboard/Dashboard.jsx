@@ -22,7 +22,7 @@ function Dashboard() {
   const {
     isLoading,
     error,
-    data: websites
+    data: allWebsites
   } = useQuery(['allWebsites', { type: 1 }], () => getAllWebsites())
   const { data: banners } = useQuery(['allBanners'], () => getBanners())
   const [openAddDialog, setOpenAddDialog] = useState(false)
@@ -42,7 +42,6 @@ function Dashboard() {
         alert('Thêm mới thành công')
         setOpenAddDialog(false)
       }
-      console.log('res of edit', res)
     } catch (error) {
       alert(error)
     }
@@ -62,7 +61,6 @@ function Dashboard() {
   const handleClickAddBtn = () => {
     setOpenAddDialog(true)
   }
-  let allWebsites
 
   const gridFull = { xs: 12, md: 12 }
 

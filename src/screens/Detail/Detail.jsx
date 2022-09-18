@@ -121,7 +121,7 @@ export const Detail = () => {
       {
         id: 2,
         title: 'Commission Type',
-        content: 'CPA, CPL, CGR'
+        content: dataDetail?.commission_type
       },
       {
         id: 3,
@@ -149,7 +149,7 @@ export const Detail = () => {
   const approciateName = ['Excellent', 'Very Good', 'Averge', 'Poor', 'Terrible']
   let approciateArray = []
   approciateName.map((name, index) => {
-    let countScoreReview=0
+    let countScoreReview = 0
     dataDetail?.reviews.map((review) => {
       if (review?.score == 5 - index) {
         countScoreReview++
@@ -160,7 +160,7 @@ export const Detail = () => {
       value: countScoreReview
     })
   })
-
+  console.log('ge', affiliateProgramDetails)
   return (
     <>
       {isLoading || isLoadingComment ? (
@@ -313,7 +313,10 @@ export const Detail = () => {
                         <TextGrey>{item.title}</TextGrey>
                       </Grid>
                       <Grid item md={8}>
-                        <TextGrey>{item.content}</TextGrey>
+                        <TextGrey>
+                          {': '}
+                          {item.content ? item.content : 'N/A'}
+                        </TextGrey>
                       </Grid>
                     </Grid>
                   ))}
