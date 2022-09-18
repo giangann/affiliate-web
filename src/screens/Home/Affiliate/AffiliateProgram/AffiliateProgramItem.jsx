@@ -50,7 +50,7 @@ export const AffiliateProgramItem = ({ data, ...props }) => {
           <img
             style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
             className="bg-white shadow-lg rounded"
-            src={data_api?.profile_banner || data?.link_banner}
+            src={data?.link_banner}
             alt="1"
           />
           <Hidden mdUp>
@@ -72,16 +72,16 @@ export const AffiliateProgramItem = ({ data, ...props }) => {
                 className="text-gray"
                 sx={{ fontSize: '0.75rem', color: '#b8c2cc', fontWeight: 'bold', ...webkitBox }}
               >
-                {data_api?.description ? (
-                  <div dangerouslySetInnerHTML={{ __html: data_api?.description }} />
+                {data?.description ? (
+                  <div dangerouslySetInnerHTML={{ __html: data?.description }} />
                 ) : (
                   'Great'
                 )}
               </Typography>
               <Typography sx={{ fontSize: '0.75rem', color: '#606f7b', fontWeight: 'bold' }}>
-                {data?.reviews?.length} Reviews / {data?.data_api?.offer_count || 0} Offers{' '}
-                {data_api?.platform && `/ ${data_api?.platform}`}{' '}
-                {data_api?.payment_freq && `/ ${data_api?.payment_freq}`}
+                {data?.reviews?.length} Reviews / {data?.offer_count || 0} Offers{' '}
+                {data?.tracking_software && `/ ${data?.tracking_software}`}{' '}
+                {data?.payment_frequency && `/ ${data?.payment_frequency}`}
               </Typography>
             </Grid>
             <Hidden mdDown>

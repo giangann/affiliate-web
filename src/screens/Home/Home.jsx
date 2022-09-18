@@ -1,13 +1,13 @@
 import React from 'react'
 import { styled, Typography, Stack } from '@mui/material'
-import { Affiliate } from './Affiliate'
-import Reels from './Reels'
+import { AffiliateNetwork } from './Affiliate'
+import { Reels } from '~/screens/Home/Reels/Reels'
 
-function Home() {
+function Home(props) {
   return (
     <Stack spacing={3}>
       <Reels />
-      <Affiliate />
+      <AffiliateNetwork listBanner={props?.listBanner} />
     </Stack>
   )
 }

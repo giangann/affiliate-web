@@ -418,8 +418,7 @@ export const Detail = () => {
               <BoxWithPagination
                 removePadding={true}
                 api={getListComments}
-                id={Number(id)}
-                user_id={user[0]?.id}
+                paramsApi={{ id: Number(id), user_id: user[0]?.id }}
                 refetchBoxComment={refetchBoxComment}
               >
                 <List

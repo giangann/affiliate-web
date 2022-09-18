@@ -15,9 +15,10 @@ import { SubNavbar } from './SubNavbar'
 import { Hidden } from '@mui/material'
 import { useEffect } from 'react'
 import { getBanners } from '~/apis'
+import { BANNER } from '~/constants/name'
 
-function Header() {
-  const [listImages, setListImages] = useState([])
+function Header(props) {
+  const listImages = props?.listImages.filter((item) => item.type === BANNER['HEADER'])
 
   const items = listImages.map((item, index) => (
     <CarouselItem image={item} key={index} index={index} />
@@ -29,11 +30,6 @@ function Header() {
     900: { items: 2 }
   }
 
-  useEffect(() => {
-    getBanners().then((res) => {
-      setListImages(res)
-    })
-  }, [])
   return (
     <>
       <ResponsiveContainer sx={{ position: 'relative' }}>
