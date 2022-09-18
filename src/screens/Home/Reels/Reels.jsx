@@ -11,7 +11,7 @@ import { FeaturedNetwork } from '~/components/Layouts/Sidebar/FeaturedNetwork'
 import { TextContent, TextHeading } from '~/styles'
 import { baseColor } from '~/styles/colors'
 
-function Reels() {
+export const Reels = () => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} sm={6}>
@@ -102,5 +102,3 @@ function Reels() {
     </Grid>
   )
 }
-
-export { Reels }
