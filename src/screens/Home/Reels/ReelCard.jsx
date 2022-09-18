@@ -1,16 +1,5 @@
 import React from 'react'
-import {
-  Divider,
-  Grid,
-  Typography,
-  Stack,
-  Box,
-  Paper,
-  Menu,
-  MenuItem,
-  List,
-  ListItem
-} from '@mui/material'
+import { Grid, Typography, Stack, Box, List, ListItem } from '@mui/material'
 import { useState } from 'react'
 import { baseColor, red } from '~/styles/colors'
 import Circel from '~/assets/svgs/circle.svg'
