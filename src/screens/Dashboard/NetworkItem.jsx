@@ -61,7 +61,7 @@ export const NetworkItem = ({ data, ...props }) => {
         <img
           style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
           className="bg-white shadow-lg rounded"
-          src={data?.link_banner}
+          src={data?.link_banner ?? 'https://via.placeholder.com/80x20'}
           alt="1"
         />
         <Hidden mdUp>

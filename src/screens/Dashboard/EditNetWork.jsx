@@ -85,7 +85,7 @@ function AddNetworkForm() {
 
       if (res.status === 200) {
         alert('sửa thành công')
-        // navigate(-1)
+        navigate(-1)
       }
     } catch (error) {
       alert(error)
