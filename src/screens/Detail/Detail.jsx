@@ -81,7 +81,7 @@ export const Detail = () => {
   useEffect(() => {
     dataDetail?.reviews.forEach((review) => {
       if (review?.user_id === user[0]?.id) {
-        setIsUserReviewed(true)``
+        setIsUserReviewed(true)
         return true
       }
     })
