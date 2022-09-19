@@ -17,6 +17,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { addNetWork, getApiResource } from '~/apis'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
+import { NETWORK_TYPE } from '~/constants'
 import { convertDataforApi, filterOptions } from '~/libs'
 import { baseColor } from '~/styles'
 import { convertIdOptions, convertOptions } from './EditNetWork'
@@ -26,8 +27,12 @@ function AddNetworkForm() {
   const [trackingSoftwares, setTrackingSoftware] = React.useState([])
   const [paymentMethods, setPaymentMethod] = React.useState([])
   const [paymentFrequencies, setPaymentFrequencies] = React.useState([])
-  const [websiteTypes, setWebsiteTypes] = React.useState([])
-
+  const networkType = Object.entries(NETWORK_TYPE).map((item) => {
+    return {
+      value: item[1],
+      label: item[0]
+    }
+  })
   const { handleSubmit, control, watch, setValue } = useForm({
     email: 'onSubmit',
     reValidateMode: 'onChange',
@@ -38,10 +43,9 @@ function AddNetworkForm() {
 
   const onSubmit = async (data) => {
     try {
-      debugger
       // const checkData = await axios.get(watch('api'))
       // if (checkData.status === 200 || checkData.status === 201) {
-      data['website_type_id'] = data['website_type_id']?.value
+      data['type'] = data['type']?.value
       data['category_id'] = data['category_id']?.value
       data['tracking_software'] = convertDataforApi(data['tracking_software'])
       data['payment_method'] = convertDataforApi(data['payment_method'])
@@ -77,16 +81,11 @@ function AddNetworkForm() {
       const listOfPaymentFrequencies = await getApiResource('payment_frequencies')
       setPaymentFrequencies(convertOptions(listOfPaymentFrequencies))
     }
-    const getListWebsiteType = async () => {
-      const listWebsiteType = await getApiResource('website_types')
-      setWebsiteTypes(convertIdOptions(listWebsiteType))
-    }
 
     getCategories()
     getTrackingSoftwares()
     getPaymentMethods()
     getPaymentFrequencies()
-    getListWebsiteType()
   }, [])
 
   const grid = { xs: 12, md: 6 }
@@ -337,7 +336,7 @@ function AddNetworkForm() {
               name="website_type_id"
               render={({ field: { onChange, value } }) => (
                 <Autocomplete
-                  options={websiteTypes ? websiteTypes : []}
+                  options={networkType}
                   onChange={(event, newValue) => {
                     console.log(newValue)
                     setValue('website_type_id', newValue)
@@ -356,7 +355,7 @@ function AddNetworkForm() {
                 <Autocomplete
                   options={categories ? categories : []}
                   onChange={(event, newValue) => {
-                    console.log(123,newValue)
+                    console.log(123, newValue)
                     setValue('category_id', newValue)
                   }}
                   value={value}

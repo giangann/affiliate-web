@@ -18,6 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { editNetWork, getApiResource, getWebsite } from '~/apis'
 import BoxWithHeader from '~/components/Box/BoxWithHeader'
 import { ListSkeleton } from '~/components/Skeleton'
+import { NETWORK_TYPE } from '~/constants'
 import { convertDataforApi, defaultValueAutocomplete, filterOptions } from '~/libs'
 import { baseColor } from '~/styles'
 
@@ -26,7 +27,12 @@ function AddNetworkForm() {
   const [trackingSoftwares, setTrackingSoftware] = React.useState([])
   const [paymentMethods, setPaymentMethod] = React.useState([])
   const [paymentFrequencies, setPaymentFrequencies] = React.useState([])
-  const [websiteTypes, setWebsiteTypes] = React.useState([])
+  const networkType = Object.entries(NETWORK_TYPE).map((item) => {
+    return {
+      value: item[1],
+      label: item[0]
+    }
+  })
 
   const params = useParams()
 
@@ -41,6 +47,7 @@ function AddNetworkForm() {
     () => getWebsite(params?.network_id),
     {
       onSuccess: (data) => {
+        const type = networkType.find((item) => item.value == data?.type)
         setValue('name', data?.name)
         setValue('link', data?.link)
         setValue('link_banner', data?.link_banner)
@@ -60,10 +67,7 @@ function AddNetworkForm() {
         setValue('offer_count', data?.offer_count)
         setValue('commision_type', data?.commision_type)
         setValue('is_net_work_of_the_month', data?.is_net_work_of_the_month)
-        setValue('website_type_id', {
-          value: data?.website_type?.id,
-          label: data?.website_type?.name
-        })
+        setValue('type', type)
       }
     }
   )
@@ -71,7 +75,7 @@ function AddNetworkForm() {
 
   const onSubmit = async (data) => {
     try {
-      data['website_type_id'] = data['website_type_id']?.value
+      data['type'] = data['type']?.value
       data['category_id'] = data['category_id']?.value
       data['tracking_software'] = convertDataforApi(data['tracking_software'])
       data['payment_method'] = convertDataforApi(data['payment_method'])
@@ -87,7 +91,7 @@ function AddNetworkForm() {
       alert(error)
     }
   }
-  
+
   useEffect(() => {
     const getCategories = async () => {
       const listOfCategory = await getApiResource('categories')
@@ -105,16 +109,11 @@ function AddNetworkForm() {
       const listOfPaymentFrequencies = await getApiResource('payment_frequencies')
       setPaymentFrequencies(convertOptions(listOfPaymentFrequencies))
     }
-    const getListWebsiteType = async () => {
-      const listWebsiteType = await getApiResource('website_types')
-      setWebsiteTypes(convertIdOptions(listWebsiteType))
-    }
 
     getCategories()
     getTrackingSoftwares()
     getPaymentMethods()
     getPaymentFrequencies()
-    getListWebsiteType()
   }, [])
 
   const grid = { xs: 12, md: 6 }
@@ -360,13 +359,13 @@ function AddNetworkForm() {
               <Grid item {...grid}>
                 <Controller
                   control={control}
-                  name="website_type_id"
+                  name="type"
                   render={({ field: { onChange, value } }) => (
                     <Autocomplete
-                      options={websiteTypes ? websiteTypes : []}
+                      options={networkType}
                       onChange={(event, newValue) => {
                         console.log(newValue)
-                        setValue('website_type_id', newValue)
+                        setValue('type', newValue)
                       }}
                       value={value}
                       renderInput={(params) => <TextField {...params} label="Type" />}
