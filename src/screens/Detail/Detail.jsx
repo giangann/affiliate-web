@@ -332,11 +332,7 @@ export const Detail = () => {
                 <Grid item xs={12} sm={4}>
                   <Box
                     component="img"
-                    src={
-                      dataDetail?.link_banner.match(validUrlRegex)
-                        ? dataDetail?.link_banner
-                        : 'https://via.placeholder.com/80x20'
-                    }
+                    src={dataDetail?.link_banner ?? 'https://via.placeholder.com/80x20'}
                     width="100%"
                   />
                 </Grid>
