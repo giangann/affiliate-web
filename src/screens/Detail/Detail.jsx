@@ -385,7 +385,7 @@ export const Detail = () => {
                         }
                       }}
                     >
-                      {dataDetail?.rating}
+                      {financial(dataDetail?.aveScore)}
                     </TextGrey>
                   </Box>
 

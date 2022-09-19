@@ -28,7 +28,7 @@ const defaultValueAutocomplete = (data = '') => {
 const convertDataforApi = (data = []) => {
   let value = ''
   data.map((item, index) => {
-    let comma = ','
+    let comma = ', '
     if (index >= data.length - 1) {
       comma = ''
     }
