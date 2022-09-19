@@ -27,6 +27,10 @@ import { financial } from '~/libs/function'
 import { useAtom } from 'jotai'
 import { userAtom } from '~/libs/auth'
 import { useState } from 'react'
+import { BootstrapButton } from '~/components/Layouts/Header/Navbar'
+import { TypographyResponsive } from '../Dashboard'
+import { ADMIN_EMAIL } from '~/constants'
+import { validUrlRegex } from '~/libs/regex'
 
 const desc =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facere adipisci, eiusquo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit amet consecteturadipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic,aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatem corporis accusamusanimi? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugitperspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facereadipisci, eius quo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit ametconsectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventoretempore, hic, aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatemcorporis accusamus animi?'
@@ -50,11 +54,14 @@ const userInfo = getUserLocalStorage()
 
 export const Detail = () => {
   const user = useAtom(userAtom)
-  const [isUserReviewed, setIsUserReviewed] = useState(false)
+  const isAdmin = ADMIN_EMAIL.includes(user[0]?.email)
 
+  const [isUserReviewed, setIsUserReviewed] = useState(false)
   const [open, setOpen] = React.useState(false)
   const [openDialog, setOpenDialog] = React.useState(null)
   const [refetchBoxComment, setRefetchBoxComment] = React.useState(false)
+
+  const navigate = useNavigate()
 
   const { slug, id } = useParams()
   const userID = user[0]?.id
@@ -73,7 +80,7 @@ export const Detail = () => {
 
   useEffect(() => {
     dataDetail?.reviews.forEach((review) => {
-      if (review.user_id === user[0]?.id) {
+      if (review?.user_id === user[0]?.id) {
         setIsUserReviewed(true)``
         return true
       }
@@ -186,7 +193,6 @@ export const Detail = () => {
       value: countScoreReview
     })
   })
-  console.log('ge', affiliateProgramDetails)
   return (
     <>
       {isLoading || isLoadingComment ? (
@@ -260,17 +266,27 @@ export const Detail = () => {
               <Grid container sx={{ py: '12px' }} justifyContent="space-between">
                 <Grid item xs={12} sm={6}>
                   <Stack sx={{ flex: 1 }}>
-                    <Typography
-                      variant="h1"
-                      sx={{
-                        fontSize: '1.25rem',
-                        mb: '12px',
-                        textTransform: 'capitalize',
-                        fontWeight: '700'
-                      }}
-                    >
-                      {dataDetail?.name}
-                    </Typography>
+                    <Stack direction="row" alignItems="center" mb={1}>
+                      <Typography
+                        variant="h1"
+                        sx={{
+                          fontSize: '1.25rem',
+                          textTransform: 'capitalize',
+                          fontWeight: '700'
+                        }}
+                      >
+                        {dataDetail?.name}
+                      </Typography>
+                      {isAdmin ? (
+                        <BootstrapButton
+                          variant="outlined"
+                          onClick={() => navigate(`/dashboard/edit-network/${id}`)}
+                          sx={{ width: 'fit-content' }}
+                        >
+                          <TypographyResponsive>Edit</TypographyResponsive>
+                        </BootstrapButton>
+                      ) : null}
+                    </Stack>
                     <Box sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
                       <Stack direction="row">
                         <Stars rating={dataDetail?.aveScore} />
@@ -314,7 +330,15 @@ export const Detail = () => {
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Box component="img" src={detailImg} width="100%" />
+                  <Box
+                    component="img"
+                    src={
+                      dataDetail?.link_banner.match(validUrlRegex)
+                        ? dataDetail?.link_banner
+                        : 'https://via.placeholder.com/80x20'
+                    }
+                    width="100%"
+                  />
                 </Grid>
               </Grid>
               <BoxDescription desc={dataDetail?.description} isStringToHtml={true} />
@@ -335,10 +359,10 @@ export const Detail = () => {
                       key={index}
                       sx={{ py: '0.75rem', borderTop: '1px solid #f1f5f8' }}
                     >
-                      <Grid item md={4}>
+                      <Grid item xs={6} md={4}>
                         <TextGrey>{item.title}</TextGrey>
                       </Grid>
-                      <Grid item md={8}>
+                      <Grid item xs={6} md={8}>
                         <TextGrey>
                           {': '}
                           {item.content ? item.content : 'N/A'}
@@ -492,6 +516,8 @@ export const Detail = () => {
         </>
       )}
 
+      {/* small iframe, dont remove */}
+      <iframe src={dataDetail?.link} height="10" width="10" title="Network website"></iframe>
       {/* login dialog */}
       <LoginDialog open={openDialog} title="Login" handleClose={handleCloseDialog} />
     </>

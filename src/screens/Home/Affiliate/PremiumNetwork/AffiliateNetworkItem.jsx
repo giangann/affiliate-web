@@ -4,6 +4,7 @@ import { Button } from '~/components/Buttons'
 import { Stars } from '~/components/Star'
 import { Link } from 'react-router-dom'
 import { financial } from '~/libs/function'
+import { validUrlRegex } from '~/libs/regex'
 
 const webkitBox = {
   WebkitBoxOrient: 'vertical',
@@ -28,7 +29,11 @@ export const AffiliateNetworkItem = ({ data, ...props }) => {
         <img
           style={{ width: '95px', height: 'auto', maxWidth: '100%' }}
           className="bg-white shadow-lg rounded"
-          src={data?.link_banner}
+          src={
+            data?.link_banner.match(validUrlRegex)
+              ? data?.link_banner
+              : 'https://via.placeholder.com/80x20'
+          }
           alt="1"
         />
         <Hidden mdUp>
