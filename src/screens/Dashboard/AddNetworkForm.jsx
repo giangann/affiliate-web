@@ -1,22 +1,38 @@
-import { Button, Grid, Input, MenuItem, Select, Stack, styled, Typography } from '@mui/material'
-import React, { useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import BoxWithHeader from '~/components/Box/BoxWithHeader'
-import { baseColor } from '~/styles'
 import { makeStyles } from '@material-ui/core/styles'
 import {
-  addNetWork,
-  getApiResource,
-} from '~/apis'
-import { useNavigate } from 'react-router-dom'
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  Grid,
+  Input,
+  Select,
+  styled,
+  TextField,
+  Typography
+} from '@mui/material'
 import axios from 'axios'
+import React, { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { addNetWork, getApiResource } from '~/apis'
+import BoxWithHeader from '~/components/Box/BoxWithHeader'
+import { NETWORK_TYPE } from '~/constants'
+import { convertDataforApi, filterOptions } from '~/libs'
+import { baseColor } from '~/styles'
+import { convertIdOptions, convertOptions } from './EditNetWork'
 
 function AddNetworkForm() {
   const [categories, setCategories] = React.useState([])
   const [trackingSoftwares, setTrackingSoftware] = React.useState([])
   const [paymentMethods, setPaymentMethod] = React.useState([])
   const [paymentFrequencies, setPaymentFrequencies] = React.useState([])
-
+  const networkType = Object.entries(NETWORK_TYPE).map((item) => {
+    return {
+      value: item[1],
+      label: item[0]
+    }
+  })
   const { handleSubmit, control, watch, setValue } = useForm({
     email: 'onSubmit',
     reValidateMode: 'onChange',
@@ -27,41 +43,43 @@ function AddNetworkForm() {
 
   const onSubmit = async (data) => {
     try {
-      const checkData = await axios.get(watch('api'))
-      if (checkData.status === 200 || checkData.status === 201) {
-        const res = await addNetWork(data)
-        console.log('res of add', res)
+      // const checkData = await axios.get(watch('api'))
+      // if (checkData.status === 200 || checkData.status === 201) {
+      data['type'] = data['type']?.value
+      data['category_id'] = data['category_id']?.value
+      data['tracking_software'] = convertDataforApi(data['tracking_software'])
+      data['payment_method'] = convertDataforApi(data['payment_method'])
+      data['payment_frequency'] = convertDataforApi(data['payment_frequency'])
+      const res = await addNetWork(data)
 
-        if (res.status === 200) {
-          alert('Thêm mới thành công')
-          navigate(-1)
-        }
+      if (res.status === 200) {
+        alert('Thêm mới thành công')
+        navigate('/dashboard')
       }
-      console.log('check data', checkData)
+      // }
     } catch (error) {
       if (error.response.status === 404) {
         alert('Error 404')
       }
-      console.log('eror', error)
     }
   }
 
   useEffect(() => {
     const getCategories = async () => {
       const listOfCategory = await getApiResource('categories')
-      setCategories(listOfCategory)
+      setCategories(convertIdOptions(listOfCategory))
     }
     const getTrackingSoftwares = async () => {
       const listOfTrackingSoftware = await getApiResource('tracking_software')
-      setTrackingSoftware(listOfTrackingSoftware)
+      setTrackingSoftware(convertOptions(listOfTrackingSoftware))
     }
     const getPaymentMethods = async () => {
       const listOfPaymentMethod = await getApiResource('payment_method')
-      setPaymentMethod(listOfPaymentMethod)
+      setPaymentMethod(convertOptions(listOfPaymentMethod))
     }
     const getPaymentFrequencies = async () => {
       const listOfPaymentFrequencies = await getApiResource('payment_frequencies')
-      setPaymentFrequencies(listOfPaymentFrequencies)
+      setPaymentFrequencies(convertOptions(listOfPaymentFrequencies))
     }
 
     getCategories()
@@ -168,12 +186,72 @@ function AddNetworkForm() {
           <Grid item {...grid}>
             <Controller
               control={control}
-              name="referral_commissione"
+              name="description"
+              render={({ field: { onChange, value } }) => (
+                <CustomInput
+                  type="text"
+                  disableUnderline={true}
+                  placeholder="Description"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item {...grid}>
+            <Controller
+              control={control}
+              name="tracking_link"
+              render={({ field: { onChange, value } }) => (
+                <CustomInput
+                  type="text"
+                  disableUnderline={true}
+                  placeholder="Tracking Link"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item {...grid}>
+            <Controller
+              control={control}
+              name="commision_type"
+              render={({ field: { onChange, value } }) => (
+                <CustomInput
+                  type="text"
+                  disableUnderline={true}
+                  placeholder="Commistion Type"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item {...grid}>
+            <Controller
+              control={control}
+              name="offer_count"
               render={({ field: { onChange, value } }) => (
                 <CustomInput
                   type="number"
                   disableUnderline={true}
-                  placeholder="Referral commissione"
+                  placeholder="Number of Offers"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item {...grid}>
+            <Controller
+              control={control}
+              name="referral_commission"
+              render={({ field: { onChange, value } }) => (
+                <CustomInput
+                  type="text"
+                  disableUnderline={true}
+                  placeholder="Referral commission"
                   onChange={onChange}
                   value={value}
                 />
@@ -198,72 +276,74 @@ function AddNetworkForm() {
           <Grid item {...grid}>
             <Controller
               control={control}
-              name="payment_method_id"
+              name="payment_method"
               render={({ field: { onChange, value } }) => (
-                <CustomSelect
-                  displayEmpty
-                  renderValue={
-                    watch('payment_method_id')
-                      ? undefined
-                      : () => <Placeholder>Payment method</Placeholder>
-                  }
-                  onChange={onChange}
+                <Autocomplete
+                  options={paymentMethods || []}
+                  onChange={(event, newValue, reason, detail) => {
+                    setPaymentMethod(filterOptions(paymentMethods, reason, detail))
+                    setValue('payment_method', newValue)
+                  }}
                   value={value}
-                >
-                  {paymentMethods.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </CustomSelect>
+                  multiple
+                  renderInput={(params) => <TextField {...params} label="Payment method" />}
+                  isOptionEqualToValue={(option, value) => option === value}
+                />
               )}
             />
           </Grid>
           <Grid item {...grid}>
             <Controller
               control={control}
-              name="payment_frequency_id"
+              name="payment_frequency"
               render={({ field: { onChange, value } }) => (
-                <CustomSelect
-                  displayEmpty
-                  renderValue={
-                    watch('payment_frequency_id')
-                      ? undefined
-                      : () => <Placeholder>Payment frequency</Placeholder>
-                  }
-                  onChange={onChange}
+                <Autocomplete
+                  options={paymentFrequencies ? paymentFrequencies : []}
+                  onChange={(event, newValue, reason, detail) => {
+                    setPaymentFrequencies(filterOptions(paymentFrequencies, reason, detail))
+                    setValue('payment_frequency', newValue)
+                  }}
                   value={value}
-                >
-                  {paymentFrequencies.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </CustomSelect>
+                  multiple
+                  renderInput={(params) => <TextField {...params} label="Payment frequency" />}
+                  isOptionEqualToValue={(option, value) => option === value}
+                />
               )}
             />
           </Grid>
           <Grid item {...grid}>
             <Controller
               control={control}
-              name="tracking_software_id"
+              name="tracking_software"
               render={({ field: { onChange, value } }) => (
-                <CustomSelect
-                  displayEmpty
-                  renderValue={
-                    watch('tracking_software_id')
-                      ? undefined
-                      : () => <Placeholder>Tracking software</Placeholder>
-                  }
-                  onChange={onChange}
+                <Autocomplete
+                  options={trackingSoftwares ? trackingSoftwares : []}
+                  onChange={(event, newValue, reason, detail) => {
+                    setTrackingSoftware(filterOptions(trackingSoftwares, reason, detail))
+                    setValue('tracking_software', newValue)
+                  }}
                   value={value}
-                >
-                  {trackingSoftwares.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </CustomSelect>
+                  multiple
+                  renderInput={(params) => <TextField {...params} label="Tracking software" />}
+                  isOptionEqualToValue={(option, value) => option === value}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item {...grid}>
+            <Controller
+              control={control}
+              name="website_type_id"
+              render={({ field: { onChange, value } }) => (
+                <Autocomplete
+                  options={networkType}
+                  onChange={(event, newValue) => {
+                    console.log(newValue)
+                    setValue('website_type_id', newValue)
+                  }}
+                  value={value}
+                  renderInput={(params) => <TextField {...params} label="Type" />}
+                />
               )}
             />
           </Grid>
@@ -272,20 +352,28 @@ function AddNetworkForm() {
               control={control}
               name="category_id"
               render={({ field: { onChange, value } }) => (
-                <CustomSelect
-                  displayEmpty
-                  renderValue={
-                    watch('category_id') ? undefined : () => <Placeholder>Category</Placeholder>
-                  }
-                  onChange={onChange}
+                <Autocomplete
+                  options={categories ? categories : []}
+                  onChange={(event, newValue) => {
+                    console.log(123, newValue)
+                    setValue('category_id', newValue)
+                  }}
                   value={value}
-                >
-                  {categories.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </CustomSelect>
+                  renderInput={(params) => <TextField {...params} label="Category" />}
+                  isOptionEqualToValue={(option, value) => option === value}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item {...grid}>
+            <Controller
+              control={control}
+              name="is_net_work_of_the_month"
+              render={({ field: { onChange, value } }) => (
+                <Box display="flex" alignItems="center">
+                  <Checkbox defaultChecked value={value} onChange={onChange} />
+                  Network of the month
+                </Box>
               )}
             />
           </Grid>

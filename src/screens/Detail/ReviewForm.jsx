@@ -345,7 +345,7 @@ const ReviewForm = (props) => {
             </TitleReviewForm>
             <Grid container>
               {reviewDetails.map((item, index) => (
-                <Grid item xs={6} key={index}>
+                <Grid item xs={12} sm={6} key={index}>
                   <Controller
                     control={control}
                     name={`${item.label.toLocaleLowerCase()}`}

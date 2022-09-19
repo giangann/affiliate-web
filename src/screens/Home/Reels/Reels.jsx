@@ -1,41 +1,17 @@
-import { Avatar, Box, Grid, Link, Stack, Typography } from '@mui/material'
-import { useState } from 'react'
-import { ReactComponent as DiamondIcon } from '~/assets/images/diamond.svg'
+import { Box, Grid, Link, Stack, Typography } from '@mui/material'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
-import { AffiliateNetworkItem } from '~/screens/Home'
-import { useQuery } from 'react-query'
-import { getAllWebsites, getFeaturesNetwork } from '~/apis'
+import { getFeaturesNetwork } from '~/apis'
 import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
-import AlgoAffiliatesImg from '~/assets/images/algo-650x80-u.jpg'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import { Stars } from '~/components'
-import BoxWithHeader from '~/components/Box/BoxWithHeader'
-import { Button } from '~/components/Buttons'
+
 import { BoxContainer, FeaturedNetworkItem } from '~/components/Layouts/Sidebar'
 import { FeaturedNetwork } from '~/components/Layouts/Sidebar/FeaturedNetwork'
-import { ListSkeleton } from '~/components/Skeleton'
-import { useWebsites } from '~/libs/hooks/useWebsites'
+
 import { TextContent, TextHeading } from '~/styles'
 import { baseColor } from '~/styles/colors'
-import { useEffect } from 'react'
-import { getAllFilter } from '~/apis'
 
-function Reels() {
-  const [filterValue, setFilterValue] = useState({ type: 2 })
-  const [allFilter, setAllFilter] = useState([])
-  const {
-    isLoading,
-    error,
-    data: websites
-  } = useQuery(['allWebsites', filterValue], getAllWebsites)
-
-  useEffect(() => {
-    getAllFilter().then((res) => {
-      setAllFilter(res)
-    })
-    console.log('use effect call')
-  }, [])
-
+export const Reels = () => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} sm={6}>
@@ -126,5 +102,3 @@ function Reels() {
     </Grid>
   )
 }
-
-export default Reels

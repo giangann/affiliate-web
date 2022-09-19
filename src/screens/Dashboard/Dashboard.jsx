@@ -59,7 +59,6 @@ function Dashboard() {
         alert('Thêm mới thành công')
         setOpenAddDialog(false)
       }
-      console.log('res of edit', res)
     } catch (error) {
       alert(error)
     }

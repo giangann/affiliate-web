@@ -27,6 +27,10 @@ import { financial } from '~/libs/function'
 import { useAtom } from 'jotai'
 import { userAtom } from '~/libs/auth'
 import { useState } from 'react'
+import { BootstrapButton } from '~/components/Layouts/Header/Navbar'
+import { TypographyResponsive } from '../Dashboard'
+import { ADMIN_EMAIL } from '~/constants'
+import { validUrlRegex } from '~/libs/regex'
 
 const desc =
   'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facere adipisci, eiusquo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit amet consecteturadipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventore tempore, hic,aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatem corporis accusamusanimi? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente ex fugitperspiciatis quas cum, saepe inventore tempore, hic, aliquam animi accusantium. Facereadipisci, eius quo fugit voluptatem corporis accusamus animi? Lorem ipsum dolor, sit ametconsectetur adipisicing elit. Sapiente ex fugit perspiciatis quas cum, saepe inventoretempore, hic, aliquam animi accusantium. Facere adipisci, eius quo fugit voluptatemcorporis accusamus animi?'
@@ -50,11 +54,14 @@ const userInfo = getUserLocalStorage()
 
 export const Detail = () => {
   const user = useAtom(userAtom)
-  const [isUserReviewed, setIsUserReviewed] = useState(false)
+  const isAdmin = ADMIN_EMAIL.includes(user[0]?.email)
 
+  const [isUserReviewed, setIsUserReviewed] = useState(false)
   const [open, setOpen] = React.useState(false)
   const [openDialog, setOpenDialog] = React.useState(null)
   const [refetchBoxComment, setRefetchBoxComment] = React.useState(false)
+
+  const navigate = useNavigate()
 
   const { slug, id } = useParams()
   const userID = user[0]?.id
@@ -73,13 +80,12 @@ export const Detail = () => {
 
   useEffect(() => {
     dataDetail?.reviews.forEach((review) => {
-      if (review.user_id === user[0]?.id) {
-        setIsUserReviewed(true)
+      if (review?.user_id === user[0]?.id) {
+        setIsUserReviewed(true)``
         return true
       }
     })
   }, [])
-
   // useEffect(() => {
   //   console.log('dataComment', dataComment)
   // }, [dataComment])
@@ -111,6 +117,7 @@ export const Detail = () => {
     window.scrollTo(0, 0)
   }, [])
 
+  console.log('data detail:', dataDetail)
   const affiliateProgramDetails = useMemo(
     () => [
       {
@@ -121,7 +128,7 @@ export const Detail = () => {
       {
         id: 2,
         title: 'Commission Type',
-        content: 'CPA, CPL, CGR'
+        content: dataDetail?.commission_type
       },
       {
         id: 3,
@@ -131,8 +138,34 @@ export const Detail = () => {
       {
         id: 4,
         title: 'Payment Frequency',
-        content: dataDetail?.payment_freq
+        content: dataDetail?.payment_frequency
+      },
+      {
+        id: 5,
+        title: 'Payment Method',
+        content: dataDetail?.payment_method
+      },
+      {
+        id: 6,
+        title: 'Referral Commission',
+        content: dataDetail?.referral_commission
+      },
+      {
+        id: 7,
+        title: 'Tracking Software',
+        content: dataDetail?.tracking_software
+      },
+      {
+        id: 8,
+        title: 'Tracking Link',
+        content: dataDetail?.tracking_link
+      },
+      {
+        id: 9,
+        title: 'Affiliate Manager',
+        content: dataDetail?.manager
       }
+
       // {
       //   id: 5,
       //   title: 'Commission Type',
@@ -160,7 +193,6 @@ export const Detail = () => {
       value: countScoreReview
     })
   })
-
   return (
     <>
       {isLoading || isLoadingComment ? (
@@ -234,21 +266,31 @@ export const Detail = () => {
               <Grid container sx={{ py: '12px' }} justifyContent="space-between">
                 <Grid item xs={12} sm={6}>
                   <Stack sx={{ flex: 1 }}>
-                    <Typography
-                      variant="h1"
-                      sx={{
-                        fontSize: '1.25rem',
-                        mb: '12px',
-                        textTransform: 'capitalize',
-                        fontWeight: '700'
-                      }}
-                    >
-                      {dataDetail?.name}
-                    </Typography>
+                    <Stack direction="row" alignItems="center" mb={1}>
+                      <Typography
+                        variant="h1"
+                        sx={{
+                          fontSize: '1.25rem',
+                          textTransform: 'capitalize',
+                          fontWeight: '700'
+                        }}
+                      >
+                        {dataDetail?.name}
+                      </Typography>
+                      {isAdmin ? (
+                        <BootstrapButton
+                          variant="outlined"
+                          onClick={() => navigate(`/dashboard/edit-network/${id}`)}
+                          sx={{ width: 'fit-content' }}
+                        >
+                          <TypographyResponsive>Edit</TypographyResponsive>
+                        </BootstrapButton>
+                      ) : null}
+                    </Stack>
                     <Box sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
                       <Stack direction="row">
                         <Stars rating={dataDetail?.aveScore} />
-                        <TextGrey ml={1}>{dataComment?.length} reviews</TextGrey>
+                        <TextGrey ml={1}>{dataDetail?.reviews.length} reviews</TextGrey>
                       </Stack>
                       <Stack direction="row" gap={0.5}>
                         <Icon src={emailImg} sx={{ width: '12px', height: '12px' }} />
@@ -288,7 +330,15 @@ export const Detail = () => {
                   </Stack>
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <Box component="img" src={detailImg} width="100%" />
+                  <Box
+                    component="img"
+                    src={
+                      dataDetail?.link_banner.match(validUrlRegex)
+                        ? dataDetail?.link_banner
+                        : 'https://via.placeholder.com/80x20'
+                    }
+                    width="100%"
+                  />
                 </Grid>
               </Grid>
               <BoxDescription desc={dataDetail?.description} isStringToHtml={true} />
@@ -309,11 +359,14 @@ export const Detail = () => {
                       key={index}
                       sx={{ py: '0.75rem', borderTop: '1px solid #f1f5f8' }}
                     >
-                      <Grid item md={4}>
+                      <Grid item xs={6} md={4}>
                         <TextGrey>{item.title}</TextGrey>
                       </Grid>
-                      <Grid item md={8}>
-                        <TextGrey>{item.content}</TextGrey>
+                      <Grid item xs={6} md={8}>
+                        <TextGrey>
+                          {': '}
+                          {item.content ? item.content : 'N/A'}
+                        </TextGrey>
                       </Grid>
                     </Grid>
                   ))}
@@ -356,7 +409,7 @@ export const Detail = () => {
                         }
                       }}
                     >
-                      {dataDetail?.rating}
+                      {financial(dataDetail?.aveScore)}
                     </TextGrey>
                   </Box>
 
@@ -424,7 +477,6 @@ export const Detail = () => {
                   handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
                   handleOpenEditReview={handleOpenEditReview}
                   sx={{ px: 3, pb: 2 }}
-                  // data={dataComment?.data}
                   header={() => (
                     <FlexBoxAlignCenterJustifyBetween
                       sx={{
@@ -437,7 +489,10 @@ export const Detail = () => {
                       borderBottom="1px solid #d6eaff"
                     >
                       <FlexBoxAlignCenter gap="1.25rem">
-                        <Button type="button-blue"> All Reviews ({dataComment.length})</Button>
+                        <Button type="button-blue">
+                          {' '}
+                          All Reviews ({dataDetail?.reviews.length})
+                        </Button>
                         <Button type="button-grey">Payment Proofs</Button>
                         <Button type="button-grey">Questions</Button>
                       </FlexBoxAlignCenter>
@@ -457,76 +512,12 @@ export const Detail = () => {
               </BoxWithPagination>
             </Stack>
             {/* End Affiliate Reviews */}
-            {/* Affiliate Offers */}
-            {/* <BoxWithPagination pageSize={12}> */}
-            <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
-              <List
-                sx={{ px: 3, pb: 2 }}
-                header={() => (
-                  <>
-                    <Grid container sx={{ borderBottom: { xs: 'none', md: '1px solid #ccc' } }}>
-                      <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
-                        <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                          <Typography
-                            variant="h1"
-                            sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                          >
-                            Affiliate Offers
-                          </Typography>
-                          <Typography
-                            sx={{
-                              fontStyle: 'italic',
-                              color: '#b8c2cc',
-                              fontSize: '.75rem',
-                              fontWeight: 'bold'
-                            }}
-                          >
-                            Data Provided by Affplus.com
-                          </Typography>
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Stack
-                          direction="row"
-                          alignItems="center"
-                          justifyContent="flex-end"
-                          className="h-100"
-                          spacing={2}
-                        >
-                          <Button variant="contained" type="button-blue">
-                            Top Converting
-                          </Button>
-                          <Button variant="contained" type="button-gray">
-                            Lastest
-                          </Button>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </>
-                )}
-                Item={AffiliateOfferItem}
-                footer={() => (
-                  <div className="d-flex justify-content-center pt-3">
-                    <Button
-                      sx={{
-                        color: '#2779bd',
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold'
-                      }}
-                      className="ml-3 rounded px-1"
-                    >
-                      See more offers on affplus
-                    </Button>
-                  </div>
-                )}
-              />
-            </Stack>
-            {/* </BoxWithPagination> */}
-            {/* End Affiliate Offers */}
           </Stack>
         </>
       )}
 
+      {/* small iframe, dont remove */}
+      <iframe src={dataDetail?.link} height="10" width="10" title="Network website"></iframe>
       {/* login dialog */}
       <LoginDialog open={openDialog} title="Login" handleClose={handleCloseDialog} />
     </>
