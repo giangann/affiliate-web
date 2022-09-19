@@ -74,12 +74,11 @@ export const Detail = () => {
   useEffect(() => {
     dataDetail?.reviews.forEach((review) => {
       if (review.user_id === user[0]?.id) {
-        setIsUserReviewed(true)
+        setIsUserReviewed(true)``
         return true
       }
     })
   }, [])
-
   // useEffect(() => {
   //   console.log('dataComment', dataComment)
   // }, [dataComment])
@@ -111,6 +110,7 @@ export const Detail = () => {
     window.scrollTo(0, 0)
   }, [])
 
+  console.log('data detail:', dataDetail)
   const affiliateProgramDetails = useMemo(
     () => [
       {
@@ -131,8 +131,34 @@ export const Detail = () => {
       {
         id: 4,
         title: 'Payment Frequency',
-        content: dataDetail?.payment_freq
+        content: dataDetail?.payment_frequency
+      },
+      {
+        id: 5,
+        title: 'Payment Method',
+        content: dataDetail?.payment_method
+      },
+      {
+        id: 6,
+        title: 'Referral Commission',
+        content: dataDetail?.referral_commission
+      },
+      {
+        id: 7,
+        title: 'Tracking Software',
+        content: dataDetail?.tracking_software
+      },
+      {
+        id: 8,
+        title: 'Tracking Link',
+        content: dataDetail?.tracking_link
+      },
+      {
+        id: 9,
+        title: 'Affiliate Manager',
+        content: dataDetail?.manager
       }
+
       // {
       //   id: 5,
       //   title: 'Commission Type',
@@ -248,7 +274,7 @@ export const Detail = () => {
                     <Box sx={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
                       <Stack direction="row">
                         <Stars rating={dataDetail?.aveScore} />
-                        <TextGrey ml={1}>{dataComment?.length} reviews</TextGrey>
+                        <TextGrey ml={1}>{dataDetail?.reviews.length} reviews</TextGrey>
                       </Stack>
                       <Stack direction="row" gap={0.5}>
                         <Icon src={emailImg} sx={{ width: '12px', height: '12px' }} />
@@ -427,7 +453,6 @@ export const Detail = () => {
                   handleRefetchComment={() => setRefetchBoxComment(!refetchBoxComment)}
                   handleOpenEditReview={handleOpenEditReview}
                   sx={{ px: 3, pb: 2 }}
-                  // data={dataComment?.data}
                   header={() => (
                     <FlexBoxAlignCenterJustifyBetween
                       sx={{
@@ -440,7 +465,10 @@ export const Detail = () => {
                       borderBottom="1px solid #d6eaff"
                     >
                       <FlexBoxAlignCenter gap="1.25rem">
-                        <Button type="button-blue"> All Reviews ({dataComment.length})</Button>
+                        <Button type="button-blue">
+                          {' '}
+                          All Reviews ({dataDetail?.reviews.length})
+                        </Button>
                         <Button type="button-grey">Payment Proofs</Button>
                         <Button type="button-grey">Questions</Button>
                       </FlexBoxAlignCenter>
@@ -460,72 +488,6 @@ export const Detail = () => {
               </BoxWithPagination>
             </Stack>
             {/* End Affiliate Reviews */}
-            {/* Affiliate Offers */}
-            {/* <BoxWithPagination pageSize={12}> */}
-            <Stack sx={{ backgroundColor: 'white', mb: '8px' }}>
-              <List
-                sx={{ px: 3, pb: 2 }}
-                header={() => (
-                  <>
-                    <Grid container sx={{ borderBottom: { xs: 'none', md: '1px solid #ccc' } }}>
-                      <Grid item xs={12} md={6} sx={{ justifyContent: 'center' }}>
-                        <Stack direction="row" alignItems="center" gap={1} paddingY={3}>
-                          <Typography
-                            variant="h1"
-                            sx={{ fontSize: '1rem', lineHeight: 1, fontWeight: 'bold' }}
-                          >
-                            Affiliate Offers
-                          </Typography>
-                          <Typography
-                            sx={{
-                              fontStyle: 'italic',
-                              color: '#b8c2cc',
-                              fontSize: '.75rem',
-                              fontWeight: 'bold'
-                            }}
-                          >
-                            Data Provided by Affplus.com
-                          </Typography>
-                        </Stack>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Stack
-                          direction="row"
-                          alignItems="center"
-                          justifyContent="flex-end"
-                          className="h-100"
-                          spacing={2}
-                        >
-                          <Button variant="contained" type="button-blue">
-                            Top Converting
-                          </Button>
-                          <Button variant="contained" type="button-gray">
-                            Lastest
-                          </Button>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </>
-                )}
-                Item={AffiliateOfferItem}
-                footer={() => (
-                  <div className="d-flex justify-content-center pt-3">
-                    <Button
-                      sx={{
-                        color: '#2779bd',
-                        fontSize: '0.75rem',
-                        fontWeight: 'bold'
-                      }}
-                      className="ml-3 rounded px-1"
-                    >
-                      See more offers on affplus
-                    </Button>
-                  </div>
-                )}
-              />
-            </Stack>
-            {/* </BoxWithPagination> */}
-            {/* End Affiliate Offers */}
           </Stack>
         </>
       )}
