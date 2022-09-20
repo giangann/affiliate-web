@@ -1,33 +1,24 @@
-import React from 'react'
-import { Stack, Box, Typography, Link, styled, Grid, Paper } from '@mui/material'
+import { Box, Grid, Link, Paper, Stack, styled, Typography } from '@mui/material'
 
+import { Button as MyButton } from '~/components/Buttons'
 import {
   FeaturedNetworkItem,
   RecentReviewItem,
   Top10RatedNetworkItem
 } from '~/components/Layouts/Sidebar'
-import { Stars } from '~/components/Star'
-import { Button as MyButton } from '~/components/Buttons'
 import { List } from '~/components/List'
+import { Stars } from '~/components/Star'
 
-import { listGifs } from '~/assets/fake-data/list-gifs'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
 import clickdealerImg from '~/assets/images/sidebar/clickdealer.png'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
 
-import Olmera from '~/assets/gifs/sidebar/Olmera.gif'
-import Giantmobi from '~/assets/gifs/sidebar/Giantmobi.gif'
-import CDD from '~/assets/gifs/sidebar/CDD.gif'
-import InfinityTelecom from '~/assets/gifs/sidebar/InfinityTelecom.gif'
-import DynulnMedia from '~/assets/gifs/sidebar/DynuInMedia.gif'
-import c3pa from '~/assets/gifs/sidebar/c3pa-300.gif'
-import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
-import { baseColor, blue, grey, red } from '~/styles/colors'
-import { useQuery, useQueryClient } from 'react-query'
-import { getTop10Networks, getRecentReviews, getFeaturesNetwork } from '~/apis'
+import { useQuery } from 'react-query'
+import { getFeaturesNetwork, getRecentReviews, getTop10Networks } from '~/apis'
 import { ListSkeleton } from '~/components/Skeleton'
-import { FeaturedNetwork } from './FeaturedNetwork'
 import { BANNER } from '~/constants/name'
+import { baseColor, grey } from '~/styles/colors'
+import { FeaturedNetwork } from './FeaturedNetwork'
 
 const Sidebar = (props) => {
   const { isLoading, error, data: top10Networks } = useQuery('top-10-networks', getTop10Networks)
