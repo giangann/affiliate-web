@@ -13,13 +13,13 @@ import { TextContent, TextHeading } from '~/styles'
 import { baseColor } from '~/styles/colors'
 import { useQuery } from 'react-query'
 export const Reels = () => {
-  const { isLoading, data } = useQuery('getNetworkOfTheMonth', getNetworkOfTheMonth)
+  const { isLoading, data, isError } = useQuery('getNetworkOfTheMonth', getNetworkOfTheMonth)
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} sm={6}>
         {isLoading ? (
           <ListSkeleton />
-        ) : (
+        ) : isError ? null : (
           <BoxContainer sx={{ border: `3px solid ${baseColor.lightOrangeBtn}` }}>
             <Stack
               direction="row"
