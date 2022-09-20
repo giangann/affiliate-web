@@ -39,7 +39,9 @@ function AddNetworkForm() {
   const { handleSubmit, control, watch, setValue, reset } = useForm({
     email: 'onSubmit',
     reValidateMode: 'onChange',
-    defaultValues: {}
+    defaultValues: {
+      is_network_of_the_month: false
+    }
   })
 
   const { isLoading, isError, isSuccess } = useQuery(
@@ -47,6 +49,8 @@ function AddNetworkForm() {
     () => getWebsite(params?.network_id),
     {
       onSuccess: (data) => {
+        console.log(data)
+
         const type = networkType.find((item) => item.value == data?.type)
         setValue('name', data?.name)
         setValue('link', data?.link)
@@ -66,7 +70,7 @@ function AddNetworkForm() {
         setValue('tracking_link', data?.tracking_link)
         setValue('offer_count', data?.offer_count)
         setValue('commision_type', data?.commision_type)
-        setValue('is_net_work_of_the_month', data?.is_net_work_of_the_month)
+        setValue('is_network_of_the_month', !!data?.is_network_of_the_month)
         setValue('type', type)
       }
     }
@@ -80,6 +84,8 @@ function AddNetworkForm() {
       data['tracking_software'] = convertDataforApi(data['tracking_software'])
       data['payment_method'] = convertDataforApi(data['payment_method'])
       data['payment_frequency'] = convertDataforApi(data['payment_frequency'])
+      data['is_network_of_the_month'] = data['is_network_of_the_month'] ? 1 : 0
+      console.log(data)
 
       const res = await editNetWork(params?.network_id, data)
 
@@ -391,12 +397,22 @@ function AddNetworkForm() {
                 />
               </Grid>
               <Grid item {...grid}>
-                <Controller
+                {/* <Controller
                   control={control}
                   name="is_net_work_of_the_month"
                   render={({ field: { onChange, value } }) => (
                     <Box display="flex" alignItems="center">
                       <Checkbox defaultChecked value={value} onChange={onChange} />
+                      Network of the month
+                    </Box>
+                  )}
+                /> */}
+                <Controller
+                  control={control}
+                  name="is_network_of_the_month"
+                  render={({ field: { onChange, value, ref } }) => (
+                    <Box display="flex" alignItems="center">
+                      <Checkbox onChange={onChange} checked={value} inputRef={ref} />
                       Network of the month
                     </Box>
                   )}

@@ -1,64 +1,88 @@
 import { Box, Grid, Link, Stack, Typography } from '@mui/material'
+import { Link as LinkRouter } from 'react-router-dom'
 import medal_icon from '~/assets/svgs/sidebar/medal_icon.svg'
-import { getFeaturesNetwork } from '~/apis'
+import { getFeaturesNetwork, getNetworkOfTheMonth } from '~/apis'
 import lemonad_easy_peasy from '~/assets/gifs/sidebar/lemonad_easy_peasy.gif'
 import algoImg from '~/assets/images/sidebar/algo-268x118-3.jpg'
-import { Stars } from '~/components'
+import { Stars, ListSkeleton } from '~/components'
 
 import { BoxContainer, FeaturedNetworkItem } from '~/components/Layouts/Sidebar'
 import { FeaturedNetwork } from '~/components/Layouts/Sidebar/FeaturedNetwork'
 
 import { TextContent, TextHeading } from '~/styles'
 import { baseColor } from '~/styles/colors'
-
+import { useQuery } from 'react-query'
 export const Reels = () => {
+  const { isLoading, data } = useQuery('getNetworkOfTheMonth', getNetworkOfTheMonth)
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} sm={6}>
-        <BoxContainer sx={{ border: `3px solid ${baseColor.lightOrangeBtn}` }}>
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-            alignItems="center"
-            sx={{ backgroundColor: baseColor.lightOrangeBtn, p: '0.75rem' }}
-          >
-            <TextHeading sx={{ color: 'white' }} varient="h3">
-              Network of The Month
-            </TextHeading>
-            <Box
-              component="img"
-              sx={{
-                height: '1.25rem',
-                width: '1.25rem'
-              }}
-              alt="medal icon"
-              src={medal_icon}
-            />
-          </Stack>
-
-          <Stack sx={{ pt: 1.5, px: 1.5, pb: 1 }}>
-            <Link href="https://algo-affiliates.com/register/?algo-refer=69" target="_blank">
+        {isLoading ? (
+          <ListSkeleton />
+        ) : (
+          <BoxContainer sx={{ border: `3px solid ${baseColor.lightOrangeBtn}` }}>
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              alignItems="center"
+              sx={{ backgroundColor: baseColor.lightOrangeBtn, p: '0.75rem' }}
+            >
+              <TextHeading sx={{ color: 'white' }} varient="h3">
+                Network of The Month
+              </TextHeading>
               <Box
                 component="img"
-                src={algoImg}
-                alt="algo image"
-                sx={{ width: '100%', display: 'block' }}
+                sx={{
+                  height: '1.25rem',
+                  width: '1.25rem'
+                }}
+                alt="medal icon"
+                src={medal_icon}
               />
-            </Link>
-            <Stack sx={{ pt: 1.5, pb: 0.25 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Stars rating={2.5} />
-                <Typography sx={{ fontSize: '0.75rem', color: '#3d4852', fontWeight: 'bold' }}>
-                  Pat
-                </Typography>
-              </Box>
-              <TextContent>
-                Algo Affiliates is the top cpa network for crypto offers. For those who have crypto
-                traffic, you have to join....
-              </TextContent>
             </Stack>
-          </Stack>
-        </BoxContainer>
+
+            <Stack sx={{ pt: 1.5, px: 1.5, pb: 1 }}>
+              <Link href={data?.link_offer} target="_blank">
+                <Box
+                  component="img"
+                  src={data?.link_banner}
+                  alt="algo image"
+                  sx={{ width: '100%', display: 'block' }}
+                />
+              </Link>
+              <Stack sx={{ pt: 1.5, pb: 0.25 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Stars rating={data?.aveScore ?? 5} />
+                  <LinkRouter to={`/websites/show/${data?.id}`} style={{ textDecoration: 'none' }}>
+                    <Typography
+                      component="a"
+                      className="no-underline"
+                      sx={{
+                        textDecoration: 'none',
+                        '&:hover': {
+                          color: '#f60'
+                        },
+                        color: '#2779bd',
+                        marginRight: 1,
+                        fontWeight: 'bold',
+                        fontSize: '0.9rem'
+                      }}
+                    >
+                      {data?.name}
+                    </Typography>
+                  </LinkRouter>
+                </Box>
+                <TextContent sx={{ WebkitLineClamp: '3', ...webkitBox }}>
+                  {data?.description ? (
+                    <div dangerouslySetInnerHTML={{ __html: data?.description }} />
+                  ) : (
+                    'greate'
+                  )}
+                </TextContent>
+              </Stack>
+            </Stack>
+          </BoxContainer>
+        )}
 
         {/* <BoxContainer>
           <Box sx={{ backgroundColor: blue['lightest'], p: '0.75rem' }}>
@@ -101,4 +125,10 @@ export const Reels = () => {
       </Grid>
     </Grid>
   )
+}
+
+const webkitBox = {
+  WebkitBoxOrient: 'vertical',
+  display: '-webkit-box',
+  overflow: 'hidden'
 }

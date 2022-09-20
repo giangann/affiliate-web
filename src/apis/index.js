@@ -21,6 +21,13 @@ export const getAllWebsites = async (query) => {
 
   return response.data
 }
+
+export const getNetworkOfTheMonth = async () => {
+  const response = await request.get(`websites/getNetworkOfTheMonth`)
+
+  return response.data
+}
+
 // paginate
 export const getWebsiteByType = async (params) => {
   const response = await request.get(`websites`, { params })
